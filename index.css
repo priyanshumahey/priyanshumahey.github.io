@@ -3,6 +3,7 @@
     font-size: 60px !important;
     animation: flash 5s infinite !important;
     animation: bounce 2s infinite !important;
+    font-family: 'Helvetica';
   }
 
 @keyframes flash{
