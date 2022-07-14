@@ -5,10 +5,10 @@ function App() {
     <div className="App">
       <header className="App-header">
         Welcome to my website!
+        <p>
+          Still in development!
+        </p>
       </header>
-      <p>
-        Still in development!
-      </p>
     </div>
   );
 }
