@@ -5,11 +5,33 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Routes, Route } from 'react-router'
 
+function About () {
+  return(
+    <p>About Component</p>
+  )
+}
+
+function Contact () {
+  return(
+    <p>Contact Component</p>
+  )
+}
+
+//Website Structure
+
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+  <BrowserRouter>
+  <Routes>
+    <Route path="/" element={<App />} />
+    <Route path="AboutMe" element={<About />} />
+    <Route path="Experiences" element={<Experiences />} />
+    <Route path="Contact" element={<Contact />} />
+  </Routes>
+  </BrowserRouter>
+
 );
+
 
 reportWebVitals();
