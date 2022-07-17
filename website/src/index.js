@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
+import Homepage from './App';
 import reportWebVitals from './reportWebVitals';
 import { HashRouter, Routes, Route, Link } from "react-router-dom";
 
@@ -31,6 +31,18 @@ function Experiences () {
   )
 }
 
+function WhoIAm () {
+  return(
+    <p>WhoIAm Component</p>
+  )
+}
+
+function WhatIDo () {
+  return(
+    <p>WhatIDo Component</p>
+  )
+}
+
 //---Website Structure
 //|Homepage
 //|About Me
@@ -44,8 +56,10 @@ root.render(
   <> 
     <HashRouter>
       <Routes>
-        <Route path="/" element={<App />} />
+        <Route path="/" element={<Homepage />} />
         <Route path="/AboutMe" element={<About />} />
+        <Route path="/WhoIAm" element={<WhoIAm />} />
+        <Route path="/WhatIDo" element={<WhatIDo />} />
         <Route path="/Experiences" element={<Experiences />} />
         <Route path="/Contact" element={<Contact />} />
       </Routes>
