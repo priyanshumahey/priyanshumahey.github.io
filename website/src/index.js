@@ -5,6 +5,8 @@ import Homepage from './App';
 import reportWebVitals from './reportWebVitals';
 import { HashRouter, Routes, Route, Link } from "react-router-dom";
 
+import Contact from './Components/Contact'
+
 function About () {
   return(
     <div>
@@ -19,11 +21,6 @@ function About () {
   )
 }
 
-function Contact () {
-  return(
-    <p>Contact Component</p>
-  )
-}
 
 function Experiences () {
   return(
