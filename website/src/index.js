@@ -9,8 +9,12 @@ function About () {
   return(
     <div>
       <p>About Component</p>
-      <Link to="/">Home</Link>
-      <Link to="/AboutMe">About</Link>
+      <li>
+        <Link to="/">Home</Link>
+      </li>
+      <li>
+        <Link to="/AboutMe">About</Link>
+      </li>
   </div> 
   )
 }

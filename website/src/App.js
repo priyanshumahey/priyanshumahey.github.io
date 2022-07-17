@@ -10,8 +10,13 @@ function App() {
           Still in development!
         </p>
         <div>
-          <Link to="/">Home</Link>
-          <Link to="/AboutMe">About</Link>
+          <p>About Component</p>
+          <li>
+            <Link to="/">Home</Link>
+          </li>
+          <li>
+            <Link to="/AboutMe">About</Link>
+          </li>
         </div> 
       </header>
     </div>
