@@ -10,7 +10,6 @@ function Homepage() {
           Still in development!
         </p>
         <div>
-          <p>About Component</p>
           <li>
             <Link to="/">Home</Link>
           </li>
