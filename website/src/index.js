@@ -23,8 +23,13 @@ function Experiences () {
   )
 }
 
-//Website Structure
-
+//---Website Structure
+//|Homepage
+//|About Me
+//|--Who I Am
+//|--What I Do
+//|Experiences
+//|Contact Me
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
