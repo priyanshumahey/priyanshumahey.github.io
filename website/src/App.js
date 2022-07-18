@@ -9,14 +9,6 @@ function Homepage() {
         <p>
           Still in development!
         </p>
-        <div>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/AboutMe">About</Link>
-          </li>
-        </div> 
       </header>
     </div>
   );
