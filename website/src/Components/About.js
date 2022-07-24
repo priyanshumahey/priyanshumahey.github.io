@@ -13,7 +13,9 @@ import { Link } from "react-router-dom";
 function About () {
     return(
       <div>
-        <p>About Component</p>
+        <h3>About Component</h3>
+        <p>I am Priyanshu, a 4th year integrated sciences student with many passions.</p>
+        <p>To learn more about me, visit the following links!</p>
         <li>
           <Link to="/">Home</Link>
         </li>
