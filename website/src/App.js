@@ -8,8 +8,13 @@ function Homepage() {
         <p>
           Still in development!
           To get more information on me, please visit
-          <a href="www.linkedin.com/in/priyanshu-mahey">Visit my linkedin!</a>
         </p>
+        <a
+        target="_blank"
+        rel="noreferrer"
+        href="https://www.linkedin.com/in/priyanshu-mahey">
+          Visit my linkedin!
+        </a>
       </header>
     </div>
   );
