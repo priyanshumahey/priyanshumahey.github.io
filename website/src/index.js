@@ -15,7 +15,7 @@ import WhoIAm from './Components/WhoIAm'
 
 import WhatIDo from './Components/WhatIDo'
 
-
+import ButtonAppBar from './Components/Shared/Header'
 
 
 //---Website Structure
@@ -29,6 +29,7 @@ import WhatIDo from './Components/WhatIDo'
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <> 
+  <ButtonAppBar />
     <HashRouter>
       <Routes>
         <Route path="/" element={<Homepage />} />
