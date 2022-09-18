@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  padding: 2vw;
 }
 
 .App-header {
@@ -11,4 +12,18 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+}
+
+.Head_Title {
+  animation: fadeIn 1s;
+  font-size: calc(10px + 7vmin);
+  text-align: left;
+}
+
+.fade-in { animation: fadeIn 1s; }
+
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
 }

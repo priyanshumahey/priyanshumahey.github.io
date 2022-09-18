@@ -87,25 +87,23 @@ function CustomizedMenus() {
         open={open}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleClose}  disableRipple>
-          <a href="/">Home</a>
-        </MenuItem>
-        <MenuItem onClick={handleClose} disableRipple>
-          <a href="/#/AboutMe">About Me</a>
-        </MenuItem>
-        <MenuItem onClick={handleClose} disableRipple>
-          <a href="/#/WhatIDo">What I Do</a>
-        </MenuItem>
-        <MenuItem onClick={handleClose} disableRipple>
-          <a href="/#/WhoIAm">Who I Am</a>
-        </MenuItem>
-        <MenuItem onClick={handleClose} disableRipple>
-          <a href="/#/Experiences">Experiences</a>
-        </MenuItem>
+        <a href="/"><MenuItem onClick={handleClose}  disableRipple>Home
+        </MenuItem></a>
+        <a href="/#/AboutMe"><MenuItem onClick={handleClose} disableRipple>
+          About Menu
+        </MenuItem></a>
+        <a href="/#/WhatIDo"><MenuItem onClick={handleClose} disableRipple>
+          What I Do
+        </MenuItem></a>
+        <a href="/#/WhoIAm"><MenuItem onClick={handleClose} disableRipple>
+          Who I Am
+        </MenuItem></a>
+        <a href="/#/Experiences"><MenuItem onClick={handleClose} disableRipple>
+          Experiences
+        </MenuItem></a>
         <Divider sx={{ my: 0.5 }} />
-        <MenuItem onClick={handleClose} disableRipple>
-          <a href="/#/Contact">Contact</a>
-        </MenuItem>
+        <a href="/#/Contact"><MenuItem onClick={handleClose} disableRipple>Contact
+        </MenuItem></a>
       </StyledMenu>
     </div>
   );
@@ -114,7 +112,7 @@ function CustomizedMenus() {
 export default function ButtonAppBar() {
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+      <AppBar position="static" >
         <Toolbar>
           <IconButton
             size="large"
@@ -127,7 +125,6 @@ export default function ButtonAppBar() {
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
           </Typography>
-          <Button color="inherit">Welcome!</Button>
         </Toolbar>
       </AppBar>
     </Box>
