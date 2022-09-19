@@ -5,7 +5,12 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
-import MultiActionAreaCard from './ExpCard'
+import MultiActionAreaCard from './Shared/ExpCard';
+import ModalBlock from './Shared/Modal';
+
+function text34 () {
+  return (<div> Hello</div>)
+}
 
 function SimpleAccordion() {
   return (
@@ -23,7 +28,14 @@ function SimpleAccordion() {
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
             malesuada lacus ex, sit amet blandit leo lobortis eget.
           <div>
-            <MultiActionAreaCard image="https://cdn.eso.org/images/screen/eso1907a.jpg"/>
+            <MultiActionAreaCard 
+              image="https://cdn.eso.org/images/screen/eso1907a.jpg" 
+              alt="Black Hole" 
+              title="Black Hole" 
+              text="Picture of a black hole!" 
+              website="https://en.wikipedia.org/wiki/Black_hole"
+              extra_button1={<ModalBlock title="Title" text={text34}/>}
+            />
             <MultiActionAreaCard image="https://cdn.eso.org/images/screen/eso1907a.jpg"/>
           </div>  
           </Typography>
@@ -117,7 +129,7 @@ const accordian_style = {
 
 function Experiences () {
     return(
-      <div >
+      <div style={{paddingBottom:'5vh'}}>
         <div style={{paddingLeft:'2vw', paddingRight:'2vw'}}>
           <h1 >My experiences</h1>
           <h2>I do a variety of different things! Click on a category to learn more about some relevant experiences I have!</h2>

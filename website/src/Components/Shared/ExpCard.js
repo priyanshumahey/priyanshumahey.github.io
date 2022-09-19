@@ -12,24 +12,28 @@ export default function MultiActionAreaCard(props) {
       <CardActionArea>
         <CardMedia
           component="img"
-          height="140"
+          height="175"
           image={props.image}
-          alt="green iguana"
+          alt={props.alt}
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
-            Lizard
+            {props.title}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            Lizards are a widespread group of squamate reptiles, with over 6,000
-            species, ranging across all continents except Antarctica
+            {props.text}
           </Typography>
         </CardContent>
       </CardActionArea>
       <CardActions>
+        <a target="_blank" rel="noreferrer"  href={props.website}>
         <Button size="small" color="primary">
-          Share
+          Website
         </Button>
+        </a>
+        {props.extra_button1}
+        {props.extra_button2}
+        {props.extra_button3}
       </CardActions>
     </Card>
     </span>
