@@ -8,9 +8,6 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MultiActionAreaCard from './Shared/ExpCard';
 import ModalBlock from './Shared/Modal';
 
-function text34 () {
-  return (<div> Hello</div>)
-}
 
 function SimpleAccordion() {
   return (
@@ -34,7 +31,7 @@ function SimpleAccordion() {
               title="Black Hole" 
               text="Picture of a black hole!" 
               website="https://en.wikipedia.org/wiki/Black_hole"
-              extra_button1={<ModalBlock title="Title" text={text34}/>}
+              extra_button1={<ModalBlock title="Title" text="text"/>}
             />
             <MultiActionAreaCard image="https://cdn.eso.org/images/screen/eso1907a.jpg"/>
           </div>  
