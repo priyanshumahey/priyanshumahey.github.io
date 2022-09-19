@@ -89,9 +89,9 @@ function CustomizedMenus() {
       >
         <a href="/"><MenuItem onClick={handleClose}  disableRipple>Home
         </MenuItem></a>
-        <a href="/#/AboutMe"><MenuItem onClick={handleClose} disableRipple>
+        {/* <a href="/#/AboutMe"><MenuItem onClick={handleClose} disableRipple>
           About Menu
-        </MenuItem></a>
+        </MenuItem></a> */}
         <a href="/#/WhatIDo"><MenuItem onClick={handleClose} disableRipple>
           What I Do
         </MenuItem></a>
@@ -112,7 +112,7 @@ function CustomizedMenus() {
 export default function ButtonAppBar() {
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" >
+      <AppBar position="static" style={{backgroundColor:"#72c3f7"}}>
         <Toolbar>
           <IconButton
             size="large"
