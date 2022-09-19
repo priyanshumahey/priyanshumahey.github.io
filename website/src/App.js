@@ -12,7 +12,7 @@ function Homepage() {
         <h2>I am a:<span className="changingText"></span></h2>
         <div style={{textAlign:"left"}}>
           <h2 >Who am I?</h2>
-          <img alt="Priyanshu's profile" style={{ width: "100%",  maxWidth: "50vh", height: "auto", textAlign:"left"}} src={require("./Images/pf.jpg")} />
+          <img alt="Priyanshu's profile" style={{ width: "100%",  maxWidth: "50vh", height: "auto", textAlign:"left", border:"solid"}} src={require("./Images/pf.jpg")} />
         </div>
         <h2>
           Still in development!
