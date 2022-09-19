@@ -4,6 +4,7 @@ import "swiper/css";
 import "swiper/css/effect-coverflow";
 import "swiper/css/pagination";
 //import { EffectCoverflow, Pagination } from "swiper";
+import { Link } from 'react-router-dom'
 
 function Homepage() {
   return (
@@ -14,6 +15,7 @@ function Homepage() {
           <h2 >Who am I?</h2>
           <img alt="Priyanshu's profile" style={{ width: "100%",  maxWidth: "50vh", height: "auto", textAlign:"left", border:"solid"}} src={require("./Images/pf.jpg")} />
         </div>
+        <h2><Link to="/Experiences">View my experiences here!</Link></h2>
         <h2>
           Still in development!
           To get more information on me, please visit
