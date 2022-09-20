@@ -7,8 +7,8 @@ import { Button, CardActionArea, CardActions } from '@mui/material';
 
 export default function MultiActionAreaCard(props) {
   return (
-    <span style={{display:"inline-flex", padding:"0.5vw"}}>
-    <Card sx={{ maxWidth: 345 }}>
+    <span style={{display:"inline-flex", padding:"0.5vw" }}>
+    <Card sx={{ maxWidth: 345, width:'30vh', boxShadow:"0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19)"}}>
       <CardActionArea>
         <CardMedia
           component="img"
@@ -16,7 +16,7 @@ export default function MultiActionAreaCard(props) {
           image={props.image}
           alt={props.alt}
         />
-        <CardContent>
+        <CardContent style={{backgroundColor:props.color}}>
           <Typography gutterBottom variant="h5" component="div">
             {props.title}
           </Typography>
@@ -28,7 +28,7 @@ export default function MultiActionAreaCard(props) {
       <CardActions>
         <a target="_blank" rel="noreferrer"  href={props.website}>
         <Button size="small" color="primary">
-          Website
+          {props.website_but_name}
         </Button>
         </a>
         {props.extra_button1}

@@ -39,8 +39,8 @@ export default function ModalBlock(props) {
       >
         <Fade in={open}>
           <Box sx={style}>
-            <Typography id="transition-modal-title" variant="h6" component="h2">
-              {props.title}
+            <Typography id="transition-modal-title" variant="h6" component="h1">
+              <h1>{props.title}</h1>
             </Typography>
             <Typography id="transition-modal-description">
               {props.text}
