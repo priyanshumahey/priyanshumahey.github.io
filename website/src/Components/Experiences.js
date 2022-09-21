@@ -98,7 +98,7 @@ function SimpleAccordion() {
                 </Accordion>
             <h3>My Experiences:</h3>
           <div>
-            {/* */}
+            {/*Purple Lotus*/}
             <MultiActionAreaCard 
               image="https://raw.githubusercontent.com/priyanshumahey/Purple-Lotus/main/site/src/Pages/Intro/Logo.png" 
               alt="Purple Lotus" 
@@ -129,30 +129,71 @@ function SimpleAccordion() {
                 </p>
                 <h2>Skills Required</h2>
                   <h3>Technical Skills</h3>
-                    <p>Typescript, Javascript, Node, Express, Electron, HTML/CSS, SCSS, MongoDB, FireBase, Git</p>
+                    <p>Typescript, Javascript, Node, Express, Electron, HTML/CSS, SCSS, MongoDB, FireBase, Git, UI/UX, Figma</p>
                   <h3>Soft Skills</h3>
-                    <p>Management, Leadership, Bussiness Management</p>
+                    <p>Management, Leadership, Bussiness Management, Presentation and Pitching</p>
                 
                 <h2>Resume Points</h2>
                 <ul>
-                <li>Point 1</li>
-                <li>Point 2</li>
-                <li>Point 3</li>
+                <li>Built the busisness from the ground up, pitched startup idea to an accelerator and received 10k in funding through pitching to 
+                  investors.
+                </li>
+                <li>Did user reserch to develop interactive modules based on user surveys and designed wireframes on Figma after doing UI/UX research and user testing</li>
+                <li>Working on market-ready early prototype developed with TypeScript, HTML/CSS, SCSS, and Electron</li>
+                <li>Backend created using Electron and user authentication done via Firebase with database Management done using Mongoose and MongoDB. Currently hosted on Netlify with plans to move hosting to AWS</li>
                 </ul>
                 <h2>More Information</h2>
-                  <p>More information to come!</p>
+                  <p>View figma prototype here: <a rel="noreferrer" target="_blank" href="https://www.figma.com/proto/MnjHsOPpTzQNDvejxt1aNh/purple-lotus?node-id=2%3A41&scaling=scale-down&page-id=0%3A1&starting-point-node-id=2%3A41">Figma</a></p>
+                  <p>View early prototype here: <a rel="noreferrer" target="_blank" href="https://purple-lotus.netlify.app/">Netlify App</a></p>
               </div>
             } 
             />}
             />
+
+            {/*UpToSpeed Cloud Computing Intern*/}
             <MultiActionAreaCard 
-              image="https://raw.githubusercontent.com/priyanshumahey/Purple-Lotus/main/site/src/Pages/Intro/Logo.png" 
-              alt="alt name for image" 
+              image="https://i.ibb.co/tcjTdCf/172323471-2814968615409193-8493806087803677793-n.png" 
+              alt="UpToSpeed Logo" 
+              color="#a2cce3"
+              title="UpToSpeed Intern" 
+              text="AWS Cloud Computing Intern"
+              website_but_name = "Website"
+              website='https://www.uptospeedyou.com/'
+              extra_button1={<ModalBlock title="Name shown on modal" text={
+                <div>
+                  <hr></hr>
+                  <h2>Overview</h2>
+                    <p>
+                    </p>
+                  <h2>Skills Required</h2>
+                    <h3>Technical Skills</h3>
+                      <p></p>
+                    <h3>Soft Skills</h3>
+                      <p></p>
+                  
+                  <h2>Resume Points</h2>
+                  <ul>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                  </ul>
+                  <h2>More Information</h2>
+                    <p></p>
+                </div>
+              }
+            />}
+            />
+
+            
+            {/*Bring It Up FullStack Developer*/}
+            <MultiActionAreaCard 
+              image="https://avatars.githubusercontent.com/u/98800486?s=200&v=4" 
+              alt="BringItUP Github Logo" 
               color="#e9bff2 (background color_"
-              title="Title for Card" 
-              text="Overview of the project (1 line)"
-              website_but_name = "Name of website this button links to"
-              website='Website link'
+              title="Bring It Up" 
+              text="Full Stack Developer"
+              website_but_name = "Github"
+              website='https://github.com/bring-it-up'
               extra_button1={<ModalBlock title="Name shown on modal" text={
               <div>
                 <h2>Overview</h2>
@@ -161,30 +202,16 @@ function SimpleAccordion() {
             } 
             />}
             />
+
+            {/*MINT*/}
             <MultiActionAreaCard 
-              image="https://raw.githubusercontent.com/priyanshumahey/Purple-Lotus/main/site/src/Pages/Intro/Logo.png" 
-              alt="alt name for image" 
+              image="https://ubcmint.github.io/img/main-page/mint-logo.png" 
+              alt="MINT Logo" 
               color="#e9bff2 (background color_"
-              title="Title for Card" 
-              text="Overview of the project (1 line)"
-              website_but_name = "Name of website this button links to"
-              website='Website link'
-              extra_button1={<ModalBlock title="Name shown on modal" text={
-              <div>
-                <h2>Overview</h2>
-                <p></p>
-              </div>
-            } 
-            />}
-            />
-            <MultiActionAreaCard 
-              image="https://raw.githubusercontent.com/priyanshumahey/Purple-Lotus/main/site/src/Pages/Intro/Logo.png" 
-              alt="alt name for image" 
-              color="#e9bff2 (background color_"
-              title="Title for Card" 
-              text="Overview of the project (1 line)"
-              website_but_name = "Name of website this button links to"
-              website='Website link'
+              title="MINT" 
+              text="MINT Team Lead"
+              website_but_name = "Website"
+              website='https://ubcmint.github.io/'
               extra_button1={<ModalBlock title="Name shown on modal" text={
               <div>
                 <h2>Overview</h2>
