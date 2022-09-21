@@ -104,21 +104,96 @@ function SimpleAccordion() {
               alt="Purple Lotus" 
               color="#e9bff2"
               title="Purple Lotus" 
-              text="Fullstack Mental Health Application"
+              text="Mental Health Software Startup"
               website_but_name = "github"
               website='https://github.com/priyanshumahey/Purple-Lotus'
               extra_button1={<ModalBlock title="Purple Lotus" text={
               <div>
-                <h1>Overview</h1>
-                <p>Purple Lotus is a mental health application</p>
+                <hr></hr>
+                <h2>Overview</h2>
+                <p>Purple Lotus is a start-up started by me and another co-founder. The main thing produced
+                   by the startup is the Purple Lotus software which is a mental health platform targeting the mental 
+                  health of Asian Canadians through the use of community based education and interactive online platform. The 
+                  platform is currently being tuned to include Asian adults as well as include well as creating a new unique 
+                  method for Therapists to be trained.
+                </p>
+                <p>
+                  Currently we have finished a first round accelerator as well as have recieved early round funding to complete 
+                  the project. We'll be working to finish the prototype before the end of the year and will be looking for more 
+                  funding following.
+                </p>
+                <p>
+                  My main role is to serve as co-founder which includes being responsible for managing the team and hiring the correct 
+                  people for the jobs we need. Furthermore, my role is to serve as developer and build the actual application itself. The 
+                  application is built using Typescript, REACT, SASS, Node, MongoDB, and FireBase.
+                </p>
+                <h2>Skills Required</h2>
+                  <h3>Technical Skills</h3>
+                    <p>Typescript, Javascript, Node, Express, Electron, HTML/CSS, SCSS, MongoDB, FireBase, Git</p>
+                  <h3>Soft Skills</h3>
+                    <p>Management, Leadership, Bussiness Management</p>
+                
+                <h2>Resume Points</h2>
+                <ul>
+                <li>Point 1</li>
+                <li>Point 2</li>
+                <li>Point 3</li>
+                </ul>
+                <h2>More Information</h2>
+                  <p>More information to come!</p>
               </div>
             } 
             />}
             />
             <MultiActionAreaCard 
-              image="https://cdn.eso.org/images/screen/eso1907a.jpg"
-              color="#fffff"
+              image="https://raw.githubusercontent.com/priyanshumahey/Purple-Lotus/main/site/src/Pages/Intro/Logo.png" 
+              alt="alt name for image" 
+              color="#e9bff2 (background color_"
+              title="Title for Card" 
+              text="Overview of the project (1 line)"
+              website_but_name = "Name of website this button links to"
+              website='Website link'
+              extra_button1={<ModalBlock title="Name shown on modal" text={
+              <div>
+                <h2>Overview</h2>
+                <p></p>
+              </div>
+            } 
+            />}
             />
+            <MultiActionAreaCard 
+              image="https://raw.githubusercontent.com/priyanshumahey/Purple-Lotus/main/site/src/Pages/Intro/Logo.png" 
+              alt="alt name for image" 
+              color="#e9bff2 (background color_"
+              title="Title for Card" 
+              text="Overview of the project (1 line)"
+              website_but_name = "Name of website this button links to"
+              website='Website link'
+              extra_button1={<ModalBlock title="Name shown on modal" text={
+              <div>
+                <h2>Overview</h2>
+                <p></p>
+              </div>
+            } 
+            />}
+            />
+            <MultiActionAreaCard 
+              image="https://raw.githubusercontent.com/priyanshumahey/Purple-Lotus/main/site/src/Pages/Intro/Logo.png" 
+              alt="alt name for image" 
+              color="#e9bff2 (background color_"
+              title="Title for Card" 
+              text="Overview of the project (1 line)"
+              website_but_name = "Name of website this button links to"
+              website='Website link'
+              extra_button1={<ModalBlock title="Name shown on modal" text={
+              <div>
+                <h2>Overview</h2>
+                <p></p>
+              </div>
+            } 
+            />}
+            />
+
 
           </div>  
           </Typography>

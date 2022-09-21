@@ -25,7 +25,7 @@ export default function MultiActionAreaCard(props) {
           </Typography>
         </CardContent>
       </CardActionArea>
-      <CardActions>
+      <CardActions style={{backgroundColor:props.color}}>
         <a target="_blank" rel="noreferrer"  href={props.website}>
         <Button size="small" color="primary">
           {props.website_but_name}
