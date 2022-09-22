@@ -11,10 +11,10 @@ function Homepage() {
     <div className="App fade-in">
         <h1 className="Head_Title">Hello! I'm Priyanshu Mahey!</h1>
         <h2>I am a:<span className="changingText"></span></h2>
-        <div style={{textAlign:"left"}}>
+        {/* <div style={{textAlign:"left"}}>
           <h2 >Who am I?</h2>
           <img alt="Priyanshu's profile" style={{ width: "100%",  maxWidth: "50vh", height: "auto", textAlign:"left", border:"solid"}} src={require("./Images/pf.jpg")} />
-        </div>
+        </div> */}
         <h2><Link to="/Experiences">View my experiences here!</Link></h2>
         <h2>
           Still in development!
