@@ -9,8 +9,6 @@ import Contact from './Components/Contact'
 
 import About from './Components/About'
 
-import Experiences from './Components/Experiences'
-
 import WhoIAm from './Components/WhoIAm'
 
 import WhatIDo from './Components/WhatIDo'
@@ -36,7 +34,6 @@ root.render(
         <Route path="/AboutMe" element={<About />} />
         <Route path="/WhoIAm" element={<WhoIAm />} />
         <Route path="/WhatIDo" element={<WhatIDo />} />
-        <Route path="/Experiences" element={<Experiences />} />
         <Route path="/Contact" element={<Contact />} />
       </Routes>
     </HashRouter>
