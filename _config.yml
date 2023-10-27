@@ -82,11 +82,11 @@ analytics:
 author:
   name             : "Priyanshu Mahey"
   avatar           : "profile.png"
-  bio              : "Your biography for the left-hand sidebar"
+  bio              : "Software and Research Engineer"
   employer         :
   pubmed           :
   googlescholar    : "https://scholar.google.com/citations?user=xqj7WxUAAAAJ&hl=en"
-  email            :
+  email            : "pmahey@student.ubc.ca"
   researchgate     :  # example: "https://www.researchgate.net/profile/yourprofile"
   uri              :
   bitbucket        :
@@ -95,13 +95,13 @@ author:
   flickr           :
   facebook         :
   foursquare       :
-  github           : "https://github.com/priyanshumahey"
+  github           : "priyanshumahey"
   google_plus      :
   keybase          :
   instagram        :
   impactstory      : #"https://profiles.impactstory.org/u/xxxx-xxxx-xxxx-xxxx"
   lastfm           :
-  linkedin         : https://www.linkedin.com/in/priyanshu-mahey
+  linkedin         : "priyanshu-mahey"
   orcid            : 
   pinterest        :
   soundcloud       :
