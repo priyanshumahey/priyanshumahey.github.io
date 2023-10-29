@@ -8,14 +8,15 @@ redirect_from:
   - /about.html
 ---
 
-Hi! My name is Priyanshu!
+Hi 👋! My name is Priyanshu!
 
 Who I Am
 ======
 
-Who I am
+Currently studying at the University of British Columbia, my studies intersect computer science with cellular anatomy and physiology. My research focus is on applied machine learning, neuroscience and reinforcement learning
+
+
 
 My Interests
 ======
 
-My Interests
