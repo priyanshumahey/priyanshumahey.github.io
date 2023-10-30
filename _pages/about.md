@@ -15,11 +15,12 @@ Who I Am
 
 Currently studying at the University of British Columbia, my studies intersect computer science with cellular anatomy and physiology. My research focus is on applied machine learning, neuroscience and reinforcement learning. My career currently bridges applied machine learning and software engineering with a focus on biological problems.
 
+Currently I'm focused on developing software tools centered on impact.
 
 
-My Interests
+My Research Interests
 ======
-- 🧠 Neuroscience
+- 🖥️ Software Engineering
 - 🤖 Reinforcement Learning
 - 🧬 Computational Biology
 - 🧮 Applied Machine Learning
