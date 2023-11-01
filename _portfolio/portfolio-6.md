@@ -4,25 +4,23 @@ excerpt: "A virtual pet that repsonds to your brain waves<br/>SWE, DL"
 collection: portfolio
 ---
 
-# MUSE-Pet
-
 ## Overview
 
 MUSE Pet is a virtual simulator where the health of the pet is affected by the user's mental state. The MUSE headset is used to collect user EEG data, and real time signal processing predicts the user's attentiveness to display on a web app interface.  
 
-![Web App Home](images/WebAppHome.png)
+![Web App Home](../images/WebAppHome.png)
 
-![Login/Registration](images/LoginRegistration.png)
+![Login/Registration](../images/LoginRegistration.png)
 
-![Pet Selection](images/PetSelection.png)
+![Pet Selection](../images/PetSelection.png)
 
-![Update Pet](images/UpdatePet.png)
+![Update Pet](../images/UpdatePet.png)
 
 ## Hardware
 
 The hardware used for this project is the MUSE headset. The MUSE headset is a consumer grade EEG headset that is used to collect EEG data.
 
-![MUSE](/Images/MuseHeadsetDiagram.jpg)
+![MUSE](../images/MuseHeadsetDiagram.jpg)
 
 ## Software Architecture
 
@@ -30,7 +28,7 @@ The software architecture below demonstrates how the MERN stack communicates wit
 
 The attentiveness values are then sent to the web app via HTTP APIs using Axios. The web app displays the user's attentiveness and the pet's health.
 
-![Software Architecture](/Images/SoftwareArchitecture.png)
+![Software Architecture](../images/SoftwareArchitecture.png)
 
 The frontend layer consists of React.js and Axios, which is a HTTP client library for making requests from the frontend to the backend.
 
