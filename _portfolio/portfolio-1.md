@@ -6,6 +6,7 @@ collection: portfolio
 
 ## Overview
 
-As part of my final project for Neuromatch Academy's [deep learning class](https://deeplearning.neuromatch.io/tutorials/intro.html).
+As part of my final project for Neuromatch Academy's [deep learning class](https://deeplearning.neuromatch.io/tutorials/intro.html). 
 
-![RL Ant gif](../images/antgif.gif)
+![RL Ant gif](https://github.com/priyanshumahey/priyanshumahey.github.io/blob/gh-pages/images/antgif.gif)
+
