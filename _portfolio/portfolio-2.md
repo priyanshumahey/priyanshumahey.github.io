@@ -8,11 +8,11 @@ collection: portfolio
 
 MUSE Pet is a virtual simulator where the health of the pet is affected by the user's mental state. The MUSE headset is used to collect user EEG data, and real time signal processing predicts the user's attentiveness to display on a web app interface.  
 
-![Web App Home](https://github.com/priyanshumahey/priyanshumahey.github.io/blob/gh-pages/images/WebAppHome.png)
+![Web App Home](https://raw.githubusercontent.com/priyanshumahey/priyanshumahey.github.io/gh-pages/images/WebAppHome.png)
 
-![Login/Registration](https://github.com/priyanshumahey/priyanshumahey.github.io/blob/gh-pages/images/LoginRegistration.png)
+![Login/Registration](https://raw.githubusercontent.com/priyanshumahey/priyanshumahey.github.io/gh-pages/images/LoginRegistration.png)
 
-![Pet Selection](https://github.com/priyanshumahey/priyanshumahey.github.io/blob/gh-pages/images/PetSelection.png)
+![Pet Selection](../images/PetSelection.png)
 
 ![Update Pet](https://github.com/priyanshumahey/priyanshumahey.github.io/blob/gh-pages/images/UpdatePet.png)
 
