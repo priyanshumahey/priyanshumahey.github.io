@@ -12,15 +12,15 @@ MUSE Pet is a virtual simulator where the health of the pet is affected by the u
 
 ![Login/Registration](https://raw.githubusercontent.com/priyanshumahey/priyanshumahey.github.io/gh-pages/images/LoginRegistration.png)
 
-![Pet Selection](../images/PetSelection.png)
+![Pet Selection](https://raw.githubusercontent.com/priyanshumahey/priyanshumahey.github.io/gh-pages/images/PetSelection.png)
 
-![Update Pet](https://github.com/priyanshumahey/priyanshumahey.github.io/blob/gh-pages/images/UpdatePet.png)
+![Update Pet](https://raw.githubusercontent.com/priyanshumahey/priyanshumahey.github.io/gh-pages/images/UpdatePet.png)
 
 ## Hardware
 
 The hardware used for this project is the MUSE headset. The MUSE headset is a consumer grade EEG headset that is used to collect EEG data.
 
-![MUSE](https://github.com/priyanshumahey/priyanshumahey.github.io/blob/gh-pages/images/MuseHeadsetDiagram.jpg)
+![MUSE](https://raw.githubusercontent.com/priyanshumahey/priyanshumahey.github.io/gh-pages/images/MuseHeadsetDiagram.jpg)
 
 ## Software Architecture
 
