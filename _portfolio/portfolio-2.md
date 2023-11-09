@@ -28,7 +28,7 @@ The software architecture below demonstrates how the MERN stack communicates wit
 
 The attentiveness values are then sent to the web app via HTTP APIs using Axios. The web app displays the user's attentiveness and the pet's health.
 
-![Software Architecture](https://github.com/priyanshumahey/priyanshumahey.github.io/blob/gh-pages/images/SoftwareArchitecture.png)
+![Software Architecture](https://raw.githubusercontent.com/priyanshumahey/priyanshumahey.github.io/gh-pages/images/SoftwareArchitecture.png)
 
 The frontend layer consists of React.js and Axios, which is a HTTP client library for making requests from the frontend to the backend.
 
