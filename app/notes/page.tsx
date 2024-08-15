@@ -1,4 +1,5 @@
 import { Header } from "@/components/Header";
+import { Separator } from "@/components/ui/separator";
 
 export default function Page() {
   return (
@@ -8,11 +9,12 @@ export default function Page() {
       </div>
 
       <section className="text-lg">
-        <h2 className="text-3xl font-semibold tracking-tight">
-          notes
-        </h2>
-        <p className="mt-3 max-w-xl"></p>
+        <h1 className="text-3xl font-semibold tracking-tight">notes</h1>
+        <p className="mt-3 max-w-xl b"></p>
       </section>
+
+      <Separator className="border-[#dadada] border-2" />
+      <p className="mt-3 max-w-xl"></p>
     </main>
   );
 }
