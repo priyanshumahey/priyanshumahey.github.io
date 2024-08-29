@@ -24,6 +24,7 @@ import { useMediaQuery } from "@/hooks/use-media-query";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import { ScrollArea } from "./ui/scroll-area";
 
 type ProjectProp = {
   name: string;
@@ -46,7 +47,7 @@ export const ProjectCard = ({
   const isDesktop = useMediaQuery("(min-width: 768px)");
 
   const DialogDrawerContent = () => (
-    <>
+    <ScrollArea className="h-[calc(80vh-4rem)] pr-4">
       <div className="mt-2 relative aspect-[16/10] overflow-hidden rounded-xl">
         <Image
           className="object-cover"
@@ -59,7 +60,7 @@ export const ProjectCard = ({
       <h2 className="text-2xl font-bold mt-4">{name}</h2>
       <p className="mt-2">{description}</p>
       {children && <div className="mt-4">{children}</div>}
-    </>
+      </ScrollArea>
   );
 
   if (isDesktop) {
