@@ -1,5 +1,6 @@
 import { Header } from "@/components/Header";
 import { ProjectCard } from "@/components/Project";
+import { LinkPreview } from "@/components/ui/link-preview";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
@@ -32,17 +33,18 @@ export default function Home() {
 
       <Section>
         <h3 className="text-2xl font-bold tracking-tight">About Me</h3>
-        <div className="mt-2 text-lg  tracking-tight">
+        <div className="mt-2 text-lg tracking-tight">
           <p>
             My name is Priyanshu and I am a software engineer. Currently,
-            I&apos;m working on{" "}
-            <span className="font-medium decoration-blue-400 decoration-2 underline-offset-2 underline">
+            I&apos;m working at{" "}
+            <LinkPreview url="https://product-demo-pi.vercel.app/" className="font-medium decoration-blue-400 decoration-2 underline-offset-2 underline">
               Purple Lotus
-            </span>{" "}
-            and {""}
-            <span className="font-medium decoration-blue-400 decoration-2 underline-offset-2 underline">
-              Social Network
-            </span>
+            </LinkPreview>{" "}
+           
+            and building out {""}
+            <LinkPreview url="https://www.inputretrieval.com/" className="font-medium decoration-blue-400 decoration-2 underline-offset-2 underline">
+              Input/Retrieval
+            </LinkPreview>
             .
           </p>
         </div>
@@ -53,17 +55,25 @@ export default function Home() {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mt-2">
           <ProjectCard
             name="Purple Lotus"
-            description="A platform to share your thoughts and ideas."
-            image="/hero.jpg"
+            description="Mental health data analytics platform with AI automation for therapists."
+            image="/plpic.png"
             badgeName="Visit"
             badgeUrl="https://www.lotus-mh.ca/"
-          />
+          >
+            <div>
+              <h3>Additional Content</h3>
+              <p>
+                This is some extra information about the project that will
+                appear in the dialog/drawer.
+              </p>
+            </div>
+          </ProjectCard>
           <ProjectCard
-            name="Purple Lotus"
-            description="A platform to share your thoughts and ideas."
-            image="/hero.jpg"
+            name="Input/Retrieval"
+            description="Notetaking with voice and semantic search."
+            image="/irpic.png"
             badgeName="Visit"
-            badgeUrl="https://www.lotus-mh.ca/"
+            badgeUrl="https://app.inputretrieval.com/"
           />
         </div>
       </Section>
