@@ -1,14 +1,14 @@
 "use client";
 
-import { usePathname, useSearchParams } from "next/navigation";
 import {
   Pagination,
   PaginationContent,
   PaginationItem,
   PaginationLink,
-  PaginationPrevious,
   PaginationNext,
+  PaginationPrevious,
 } from "@/components/ui/pagination";
+import { usePathname, useSearchParams } from "next/navigation";
 
 interface QueryPaginationProps {
   totalPages: number;
