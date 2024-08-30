@@ -22,12 +22,12 @@ export default function Home() {
         <Header />
       </div>
 
-      <Section>
+      <section className="text-lg">
         <h1 className="text-3xl font-semibold tracking-tight">
           priyanshu mahey
         </h1>
         <p className="mt-3 max-w-xl b"></p>
-      </Section>
+      </section>
 
       <Separator className="border-[#dadada] border-2" />
 
@@ -37,12 +37,17 @@ export default function Home() {
           <p>
             My name is Priyanshu and I am a software engineer. Currently,
             I&apos;m working at{" "}
-            <LinkPreview url="https://product-demo-pi.vercel.app/" className="font-medium decoration-blue-400 decoration-2 underline-offset-2 underline">
+            <LinkPreview
+              url="https://product-demo-pi.vercel.app/"
+              className="font-medium decoration-blue-400 decoration-2 underline-offset-2 underline"
+            >
               Purple Lotus
             </LinkPreview>{" "}
-           
             and building out {""}
-            <LinkPreview url="https://www.inputretrieval.com/" className="font-medium decoration-blue-400 decoration-2 underline-offset-2 underline">
+            <LinkPreview
+              url="https://www.inputretrieval.com/"
+              className="font-medium decoration-blue-400 decoration-2 underline-offset-2 underline"
+            >
               Input/Retrieval
             </LinkPreview>
             .

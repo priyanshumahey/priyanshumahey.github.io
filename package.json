@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "velite": "npx velite"
   },
   "dependencies": {
     "@radix-ui/react-accordion": "^1.2.0",
@@ -23,9 +24,13 @@
     "qss": "^3.0.0",
     "react": "^18",
     "react-dom": "^18",
+    "rehype-autolink-headings": "^7.1.0",
+    "rehype-pretty-code": "^0.14.0",
+    "rehype-slug": "^6.0.0",
     "tailwind-merge": "^2.5.2",
     "tailwindcss-animate": "^1.0.7",
-    "vaul": "^0.9.1"
+    "vaul": "^0.9.1",
+    "velite": "^0.1.1"
   },
   "devDependencies": {
     "@types/node": "^20",

@@ -1,0 +1,19 @@
+[
+  {
+    "slug": "notes/purple-lotus",
+    "title": "Purple Lotus - Coming Soon",
+    "authors": [
+      "Priyanshu Mahey"
+    ],
+    "description": "What Purple lotus is and our upcoming launch.",
+    "date": "2024-08-19T00:00:00.000Z",
+    "published": true,
+    "tags": [
+      "purple-lotus",
+      "coming-soon"
+    ],
+    "body": "const{jsx:t}=arguments[0];function _createMdxContent(n){const e={p:\"p\",...n.components};return t(e.p,{children:\"Purple Lotus is a new platform that connects clients to therapists. We'll be launching more details soon! Coming out on September 9th.\"})}return{default:function(n={}){const{wrapper:e}=n.components||{};return e?t(e,{...n,children:t(_createMdxContent,{...n})}):_createMdxContent(n)}};",
+    "image": "",
+    "slugAsParams": "purple-lotus"
+  }
+]
