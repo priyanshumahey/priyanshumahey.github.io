@@ -1,46 +1,12 @@
 import { posts } from "#site/content";
 import { Header } from "@/components/Header";
-import { QueryPagination } from "@/components/notes/query-pagination";
 import { Separator } from "@/components/ui/separator";
-import {
-  cn,
-  formatDate,
-  getAllTags,
-  sortPosts,
-  sortTagsByCount,
-} from "@/lib/utils";
+import { formatDate, sortPosts } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 
-const POSTS_PER_PAGE = 5;
-
-interface BlogPageProps {
-  searchParams: {
-    page?: string;
-  };
-}
-function Section({
-  children,
-  className,
-}: {
-  children: React.ReactNode;
-  className?: string;
-}) {
-  return <section className={cn("mt-10 mb-20", className)}>{children}</section>;
-}
-
-export default async function BlogPage({ searchParams }: BlogPageProps) {
-  const currentPage = Number(searchParams?.page) || 1;
-  const sortedPosts = sortPosts(posts.filter((post) => post.published));
-  const totalPages = Math.ceil(sortedPosts.length / POSTS_PER_PAGE);
-
-  const displayPosts = sortedPosts.slice(
-    POSTS_PER_PAGE * (currentPage - 1),
-    POSTS_PER_PAGE * currentPage
-  );
-
-  const tags = getAllTags(posts);
-  const sortedTags = sortTagsByCount(tags);
+export default async function BlogPage() {
+  const displayPosts = sortPosts(posts);
 
   return (
     <>
@@ -99,10 +65,6 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
               ) : (
                 <p>No posts published.</p>
               )}
-              <QueryPagination
-                totalPages={totalPages}
-                className="justify-end mt-4"
-              />
             </div>
           </div>
         </div>
