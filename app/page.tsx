@@ -38,7 +38,7 @@ export default function Home() {
             My name is Priyanshu and I am a software engineer. Currently,
             I&apos;m working at{" "}
             <LinkPreview
-              url="https://product-demo-pi.vercel.app/"
+              url="https://purplelotusmh.com/"
               className="font-medium decoration-blue-400 decoration-2 underline-offset-2 underline"
             >
               Purple Lotus
