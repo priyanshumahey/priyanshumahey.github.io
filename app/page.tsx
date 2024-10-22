@@ -1,5 +1,6 @@
 import { Header } from "@/components/Header";
-import { ProjectCard } from "@/components/Project";
+import { MiniProjectCard, ProjectCard } from "@/components/Project";
+import { Badge } from "@/components/ui/badge";
 import { LinkPreview } from "@/components/ui/link-preview";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
@@ -13,6 +14,18 @@ function Section({
   className?: string;
 }) {
   return <section className={cn("mt-10 mb-20", className)}>{children}</section>;
+}
+
+function BadgeList({ badges }: { badges: string[] }) {
+  return (
+    <div className="mb-2 flex flex-wrap">
+      {badges.map((badge, index) => (
+        <div key={index} className="px-1">
+          <Badge>{badge}</Badge>
+        </div>
+      ))}
+    </div>
+  );
 }
 
 export default function Home() {
@@ -35,7 +48,7 @@ export default function Home() {
         <h3 className="text-2xl font-bold tracking-tight">About Me</h3>
         <div className="mt-2 text-lg tracking-tight">
           <p>
-            My name is Priyanshu and I am a software engineer. Currently,
+            My name is Priyanshu and I&apos;m a software engineer. Currently,
             I&apos;m working at{" "}
             <LinkPreview
               url="https://purplelotusmh.com/"
@@ -66,6 +79,75 @@ export default function Home() {
             badgeUrl="https://www.lotus-mh.ca/"
           >
             <div>
+              Frontend:
+              <BadgeList
+                badges={[
+                  "React",
+                  "TypeScript",
+                  "Next.js",
+                  "AWS",
+                  "ElasticSearch",
+                  "Docker",
+                  "Kubernetes",
+                  "Redis",
+                  "Python",
+                  "PostgreSQL",
+                ]}
+              />
+              Backend:
+              <BadgeList
+                badges={[
+                  "Node.js",
+                  "Express",
+                  "AWS",
+                  "Docker",
+                  "Kubernetes",
+                  "Redis",
+                  "Python",
+                  "PostgreSQL",
+                ]}
+              />
+              Infrastructure:
+              <BadgeList
+                badges={["Docker", "Kubernetes", "Prometheus", "Grafana"]}
+              />
+              <h3>Additional Content</h3>
+              <p>
+                This is some extra information about the project that will
+                appear in the dialog/drawer.
+              </p>
+            </div>
+          </ProjectCard>
+          <ProjectCard
+            name="Brane Lab - EEG GAN"
+            description="Simulate EEG data with GANs for training AI models."
+            image="/EEGpaper.png"
+            badgeName="Read"
+            badgeUrl="https://link.springer.com/article/10.1007/s10548-023-00986-5"
+          >
+            <div>
+              Backend:
+              <BadgeList badges={["Python", "PyTorch", "CUDA"]} />
+              Infrastructure:
+              <BadgeList badges={["Docker", "Kubernetes", "MLflow"]} />
+              <h3>Additional Content</h3>
+              <p>
+                This is some extra information about the project that will
+                appear in the dialog/drawer.
+              </p>
+            </div>
+          </ProjectCard>
+          <ProjectCard
+            name="MOSS"
+            description="Simulate EEG data with GANs for training AI models."
+            image="/MOSS.png"
+            badgeName="Coming Soon"
+          >
+            <div>
+              Backend:
+              <BadgeList badges={["Python", "PyTorch", "CUDA"]} />
+              Infrastructure:
+              <BadgeList badges={["Docker", "Kubernetes", "MLflow"]} />
               <h3>Additional Content</h3>
               <p>
                 This is some extra information about the project that will
@@ -80,6 +162,45 @@ export default function Home() {
             badgeName="Visit"
             badgeUrl="https://app.inputretrieval.com/"
           />
+        </div>
+      </Section>
+
+      <Section>
+        <h3 className="text-2xl font-bold tracking-tight">My Projects</h3>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mt-2">
+          <ProjectCard
+            name="Idetic"
+            description="Search through videos using natural language."
+            image="/hero.jpg"
+            badgeName="Visit"
+            badgeUrl="https://devpost .com/software/idetic"
+          />
+          <ProjectCard
+            name="Polytope"
+            description="Ontology Based Search Engine for Research Papers."
+            image="/hero.jpg"
+            badgeName="Visit"
+            badgeUrl="https://devpost.com/software/idetic"
+          />
+          <MiniProjectCard
+            name="Muse Pet"
+            description="A Tamagotchi style game for Muse headband users."
+            badgeName="Visit"
+            badgeUrl="https://github.com/UBCMint/MUSE-Pet"
+          />
+          <MiniProjectCard
+            name="CUP Prediction"
+            description="Predicting the CUPs of a patient using Machine Learning."
+            badgeName="Visit"
+            badgeUrl="https://github.com/priyanshumahey/Prediction-of-CUPs"
+            />
+          <MiniProjectCard
+            name="GAN Data Matching"
+            description="Matching GAN generated data with real data to find closest match in clinical data."
+            badgeName="Visit"
+            badgeUrl="https://github.com/priyanshumahey/GAN-Data-Matching"
+            />
+
         </div>
       </Section>
 

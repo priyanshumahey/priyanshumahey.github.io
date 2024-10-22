@@ -35,6 +35,114 @@ type ProjectProp = {
   children?: React.ReactNode;
 };
 
+export const MiniProjectCard = ({
+  name,
+  description,
+  badgeName,
+  badgeUrl,
+  children,
+}: Partial<ProjectProp>) => {
+  const [open, setOpen] = useState(false);
+  const isDesktop = useMediaQuery("(min-width: 768px)");
+
+  const DialogDrawerContent = () => (
+    <ScrollArea className="h-[calc(80vh-4rem)] pr-4">
+      <div className="mt-2 relative aspect-[16/10] overflow-hidden rounded-xl"></div>
+      <h2 className="text-2xl font-bold mt-4">{name}</h2>
+      <p className="mt-2">{description}</p>
+      {children && <div className="mt-4">{children}</div>}
+    </ScrollArea>
+  );
+
+  if (isDesktop) {
+    return (
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogTrigger asChild>
+          <div className="relative rounded-xl px-5 py-6 shadow-lg border-2 border-[#dadada] bg-opacity-25 bg-white cursor-pointer">
+            <div className="flex flex-row flex-wrap items-start justify-between">
+              <h4 className="text-xl font-semibold">{name}</h4>
+              {badgeName && (
+                <div>
+                  {badgeUrl ? (
+                    <Link href={badgeUrl}>
+                      <Badge
+                        variant="outline"
+                        className="bg-blue-100 text-blue-800 px-4 py-2 rounded-md cursor-pointer hover:bg-blue-200"
+                      >
+                        {badgeName}
+                      </Badge>
+                    </Link>
+                  ) : (
+                    <Badge
+                      variant="outline"
+                      className="bg-red-100 text-red-800"
+                    >
+                      {badgeName}
+                    </Badge>
+                  )}
+                </div>
+              )}
+            </div>
+            <p className="text-black">{description}</p>
+          </div>
+        </DialogTrigger>
+        <DialogContent className="sm:max-w-[625px]">
+          <DialogHeader>
+            <DialogTitle>{name}</DialogTitle>
+            <DialogDescription>{description}</DialogDescription>
+          </DialogHeader>
+          <DialogDrawerContent />
+        </DialogContent>
+      </Dialog>
+    );
+  }
+
+  return (
+    <Drawer open={open} onOpenChange={setOpen}>
+      <DrawerTrigger asChild>
+        <div className="relative rounded-xl px-5 py-6 shadow-lg border-2 border-[#dadada] bg-opacity-25 bg-white cursor-pointer">
+          <div className="flex flex-row flex-wrap items-start justify-between">
+            <h4 className="text-xl font-semibold">{name}</h4>
+            {badgeName && (
+              <div>
+                {badgeUrl ? (
+                  <Link href={badgeUrl}>
+                    <Badge
+                      variant="outline"
+                      className="bg-blue-100 text-blue-800 px-4 py-2 rounded-md cursor-pointer hover:bg-blue-200"
+                    >
+                      {badgeName}
+                    </Badge>
+                  </Link>
+                ) : (
+                  <Badge variant="outline" className="bg-red-100 text-red-800">
+                    {badgeName}
+                  </Badge>
+                )}
+              </div>
+            )}
+          </div>
+          <p className="text-black">{description}</p>
+        </div>
+      </DrawerTrigger>
+      <DrawerContent>
+        <DrawerHeader className="text-left">
+          <DrawerTitle>{name}</DrawerTitle>
+          <DrawerDescription>{description}</DrawerDescription>
+        </DrawerHeader>
+        <div className="px-4">
+          <DialogDrawerContent />
+        </div>
+        <DrawerFooter className="pt-2">
+          <DrawerClose asChild>
+            <Button variant="outline">Close</Button>
+          </DrawerClose>
+        </DrawerFooter>
+      </DrawerContent>
+    </Drawer>
+  );
+};
+
 export const ProjectCard = ({
   name,
   description,
@@ -60,7 +168,7 @@ export const ProjectCard = ({
       <h2 className="text-2xl font-bold mt-4">{name}</h2>
       <p className="mt-2">{description}</p>
       {children && <div className="mt-4">{children}</div>}
-      </ScrollArea>
+    </ScrollArea>
   );
 
   if (isDesktop) {
@@ -82,7 +190,10 @@ export const ProjectCard = ({
                       </Badge>
                     </Link>
                   ) : (
-                    <Badge variant="outline" className="bg-red-100 text-red-800">
+                    <Badge
+                      variant="outline"
+                      className="bg-red-100 text-red-800"
+                    >
                       {badgeName}
                     </Badge>
                   )}
