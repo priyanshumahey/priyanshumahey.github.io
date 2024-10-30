@@ -13,7 +13,7 @@
       "coming-soon"
     ],
     "body": "const{jsx:t}=arguments[0];function _createMdxContent(n){const e={p:\"p\",...n.components};return t(e.p,{children:\"Purple Lotus is a new platform that connects clients to therapists. We'll be launching more details soon! Coming out on September 9th.\"})}return{default:function(n={}){const{wrapper:e}=n.components||{};return e?t(e,{...n,children:t(_createMdxContent,{...n})}):_createMdxContent(n)}};",
-    "image": "",
+    "image": "/hero.jpg",
     "slugAsParams": "purple-lotus"
   }
 ]

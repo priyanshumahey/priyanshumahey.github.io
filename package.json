@@ -25,6 +25,7 @@
     "qss": "^3.0.0",
     "react": "^18",
     "react-dom": "^18",
+    "recharts": "^2.13.0",
     "rehype-autolink-headings": "^7.1.0",
     "rehype-pretty-code": "^0.14.0",
     "rehype-slug": "^6.0.0",
