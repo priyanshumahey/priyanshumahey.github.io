@@ -2,7 +2,6 @@ import { cn } from "@/lib/utils";
 import "@/styles/globals.css";
 import type { Metadata } from "next";
 import { Inter as FontSans } from "next/font/google";
-import Head from "next/head";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -21,7 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <Head>
+      <head>
         <title>Priyanshu Mahey Portfolio</title>
         <meta
           name="description"
@@ -34,11 +33,11 @@ export default function RootLayout({
           content="width=device-width, initial-scale=1.0"
         />
         <link rel="icon" type="image/ico" href="/favicon.ico" />
-      </Head>
+      </head>
       <body
         className={cn(
-          "min-h-screen bg-[#ededed] font-sans antialiased",
-          fontSans.variable
+          "min-h-screen bg-[#ededed] antialiased",
+          fontSans.className
         )}
       >
         {children}

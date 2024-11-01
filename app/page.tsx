@@ -63,7 +63,7 @@ export default function Home() {
             >
               Input/Retrieval
             </LinkPreview>
-            .
+            . I love working with distrbuted systems and really enjoy tough technical problems.
           </p>
         </div>
       </Section>
