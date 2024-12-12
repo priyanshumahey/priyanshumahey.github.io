@@ -15,5 +15,22 @@
     "body": "const{jsx:t}=arguments[0];function _createMdxContent(n){const e={p:\"p\",...n.components};return t(e.p,{children:\"Purple Lotus is a new platform that connects clients to therapists. We'll be launching more details soon! Coming out on September 9th.\"})}return{default:function(n={}){const{wrapper:e}=n.components||{};return e?t(e,{...n,children:t(_createMdxContent,{...n})}):_createMdxContent(n)}};",
     "image": "/hero.jpg",
     "slugAsParams": "purple-lotus"
+  },
+  {
+    "slug": "notes/video-vector",
+    "title": "Video Embedding",
+    "authors": [
+      "Priyanshu Mahey"
+    ],
+    "description": "Text to Video Embedding Search",
+    "date": "2024-08-19T00:00:00.000Z",
+    "published": true,
+    "tags": [
+      "embeddings",
+      "vectors"
+    ],
+    "body": "const{jsx:e}=arguments[0];function _createMdxContent(n){const t={a:\"a\",h1:\"h1\",...n.components};return e(t.h1,{id:\"video-embedding\",children:e(t.a,{className:\"subheading-anchor\",\"aria-label\":\"Link to section\",href:\"#video-embedding\",children:\"Video Embedding\"})})}return{default:function(n={}){const{wrapper:t}=n.components||{};return t?e(t,{...n,children:e(_createMdxContent,{...n})}):_createMdxContent(n)}};",
+    "image": "/hero.jpg",
+    "slugAsParams": "video-vector"
   }
 ]
