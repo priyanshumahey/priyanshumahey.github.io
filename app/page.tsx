@@ -63,7 +63,7 @@ export default function Home() {
             >
               Input/Retrieval
             </LinkPreview>
-            . I'm an incoming Software Engineer at Microsoft but before I start my job, I'll be building cool projects! If you're interested in collaborating, feel free to reach out!
+            . I&apos;m an incoming Software Engineer at Microsoft but before I start my job, I&apos;ll be building cool projects! If you&apos;re interested in collaborating, feel free to reach out!
           </p>
         </div>
       </Section>
