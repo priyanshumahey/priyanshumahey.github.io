@@ -63,7 +63,7 @@ export default function Home() {
             >
               Input/Retrieval
             </LinkPreview>
-            . I love working with distrbuted systems and really enjoy tough technical problems.
+            . I'm an incoming Software Engineer at Microsoft but before I start my job, I'll be building cool projects! If you're interested in collaborating, feel free to reach out!
           </p>
         </div>
       </Section>
