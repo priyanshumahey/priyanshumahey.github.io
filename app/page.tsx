@@ -48,8 +48,8 @@ export default function Home() {
         <h3 className="text-2xl font-bold tracking-tight">About Me</h3>
         <div className="mt-2 text-lg tracking-tight">
           <p>
-            My name is Priyanshu and I&apos;m a software engineer. Currently,
-            I&apos;m working at{" "}
+            My name is Priyanshu and I&apos;m currently a software engineer at Microsoft! In the past,
+            I worked on{" "}
             <LinkPreview
               url="https://purplelotusmh.com/"
               className="font-medium decoration-blue-400 decoration-2 underline-offset-2 underline"
@@ -62,8 +62,7 @@ export default function Home() {
               className="font-medium decoration-blue-400 decoration-2 underline-offset-2 underline"
             >
               Input/Retrieval
-            </LinkPreview>
-            . I&apos;m an incoming Software Engineer at Microsoft but before I start my job, I&apos;ll be building cool projects! If you&apos;re interested in collaborating, feel free to reach out!
+            </LinkPreview>.
           </p>
         </div>
       </Section>
