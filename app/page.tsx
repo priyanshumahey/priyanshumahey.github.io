@@ -47,7 +47,7 @@ export default function Home() {
       <Section>
         <h3 className="text-2xl font-bold tracking-tight">About Me</h3>
         <div className="mt-2 text-lg tracking-tight">
-          <p>
+          <div>
             My name is Priyanshu and I&apos;m currently a software engineer at Microsoft! In the past,
             I worked on{" "}
             <LinkPreview
@@ -63,7 +63,7 @@ export default function Home() {
             >
               Input/Retrieval
             </LinkPreview>.
-          </p>
+          </div>
         </div>
       </Section>
 
