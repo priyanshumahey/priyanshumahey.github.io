@@ -160,7 +160,6 @@ export const ProjectCard = ({
         <Image
           className="object-cover"
           fill
-          layout="fill"
           src={image}
           alt={`${name} project cover image`}
         />
@@ -205,7 +204,6 @@ export const ProjectCard = ({
               <Image
                 className="object-cover"
                 fill
-                layout="fill"
                 src={image}
                 alt={`${name} project cover image`}
               />
@@ -253,7 +251,6 @@ export const ProjectCard = ({
             <Image
               className="object-cover"
               fill
-              layout="fill"
               src={image}
               alt={`${name} project cover image`}
             />
