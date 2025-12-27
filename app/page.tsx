@@ -1,14 +1,14 @@
 "use client"
 
+import { GallerySection, WorkSection, type ProjectData } from "@/components/projects"
 import { LinkPreview } from "@/components/ui/link-preview"
-import { WorkSection, GallerySection, ProjectGrid, type ProjectData } from "@/components/projects"
 import { motion } from "framer-motion"
 import { FileText, Github, Linkedin, Mail } from "lucide-react"
 import Link from "next/link"
 import { useEffect, useState } from "react"
 
 // Project data - Work experiences (ordered by year, newest first)
-const projects: ProjectData[] = [
+const workExperiences: ProjectData[] = [
   {
     title: "Microsoft",
     description: "Building agents, AI software, and recommendation systems.",
@@ -51,13 +51,6 @@ const projects: ProjectData[] = [
     isPrivate: true,
   },
   {
-    title: "WikiLLM",
-    description: "Bridging Wikipedia's knowledge with large language models for enhanced information retrieval.",
-    year: "2024",
-    link: "/projects/wikillm",
-    image: "/hero.jpg",
-  },
-  {
     title: "EEG Research",
     description: "Neural signal processing research at UBC exploring brain-computer interfaces.",
     year: "2022",
@@ -66,59 +59,14 @@ const projects: ProjectData[] = [
   },
 ]
 
-const smallProjects: ProjectData[] = [
-  {
-    title: "Task Manager",
-    description: "Minimal productivity app",
-    year: "2024",
-    image: "/hero.jpg",
-    link: "/projects/task-manager",
-  },
-  {
-    title: "Weather Dashboard",
-    description: "Real-time weather data visualization",
-    year: "2023",
-    image: "/hero.jpg",
-    link: "/projects/weather",
-  },
-  {
-    title: "Portfolio Template",
-    description: "Open source portfolio builder",
-    year: "2023",
-    image: "/hero.jpg",
-    link: "/projects/portfolio",
-  },
-  {
-    title: "Code Snippets",
-    description: "Developer utility tools collection",
-    year: "2024",
-    image: "/hero.jpg",
-    link: "/projects/snippets",
-  },
-  {
-    title: "Link Shortener",
-    description: "Fast URL shortening service",
-    year: "2022",
-    image: "/hero.jpg",
-    link: "/projects/shortener",
-  },
-  {
-    title: "Blog Engine",
-    description: "Lightweight markdown blogging",
-    year: "2023",
-    image: "/hero.jpg",
-    link: "/projects/blog",
-  },
-]
-
 // Additional full-width gallery projects
 const galleryProjects: ProjectData[] = [
   {
-    title: "E-commerce Platform",
-    description: "Full-stack shopping experience",
+    title: "GenWiki",
+    description: "AI-generated wiki that builds and maintains knowledge bases automatically.",
     year: "2024",
-    image: "/hero.jpg",
-    link: "/projects/ecommerce",
+    image: "/projects/genwiki.png",
+    link: "/projects/genwiki",
   },
   {
     title: "Social Network",
@@ -344,12 +292,7 @@ export default function Page() {
           <section className="py-12"></section>
 
           {/* Work */}
-          <WorkSection title="Selected Work" projects={projects} />
-
-          {/* Small Projects */}
-          <section className="space-y-6 mt-16">
-            <ProjectGrid projects={smallProjects} columns={1} />
-          </section>
+          <WorkSection title="Selected Work" projects={workExperiences} />
 
           {/* Social Links */}
           <footer className="flex items-center gap-3 pt-12 pb-6">
@@ -510,7 +453,7 @@ export default function Page() {
             {/* Projects Section */}
             <div className="px-12 xl:px-16 pb-24 space-y-16">
               {/* Selected Work */}
-              <WorkSection title="Selected Work" projects={projects} />
+              <WorkSection title="Selected Work" projects={workExperiences} />
             </div>
           </div>
         </div>
