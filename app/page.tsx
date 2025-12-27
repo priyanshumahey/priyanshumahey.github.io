@@ -289,7 +289,7 @@ export default function Page() {
             <div className="space-y-8">
               {projects.map((project) => (
                 <Link key={project.title} href={project.link} className="block group">
-                  <div className="relative aspect-[16/9] rounded-lg overflow-hidden bg-[#171717] mb-3">
+                  <div className="relative aspect-video rounded-lg overflow-hidden bg-[#171717] mb-3">
                     <Image
                       src={project.image || "/placeholder.svg"}
                       alt={project.title}
@@ -312,7 +312,7 @@ export default function Page() {
             <div className="grid grid-cols-1 gap-6">
               {smallProjects.map((project) => (
                 <Link key={project.title} href={project.link} className="group block">
-                  <div className="relative aspect-[4/3] rounded-lg overflow-hidden bg-[#171717] mb-3">
+                  <div className="relative aspect-4/3 rounded-lg overflow-hidden bg-[#171717] mb-3">
                     <Image
                       src={project.image || "/placeholder.svg"}
                       alt={project.title}
@@ -462,7 +462,7 @@ export default function Page() {
                 <div className="space-y-16">
                   {projects.map((project) => (
                     <Link key={project.title} href={project.link} className="block group">
-                      <div className="relative aspect-[16/9] rounded-xl overflow-hidden bg-[#0f0f0f] mb-4">
+                      <div className="relative aspect-video rounded-xl overflow-hidden bg-[#0f0f0f] mb-4">
                         <Image
                           src={"/hero.jpg"}
                           alt={project.title}
@@ -512,7 +512,7 @@ export default function Page() {
                       onMouseEnter={() => setHoveredGallery(originalIndex)}
                       onMouseLeave={() => setHoveredGallery(null)}
                     >
-                      <div className={`relative rounded-xl overflow-hidden bg-[#0a0a0a] ${isFirst ? 'aspect-[4/3] md:aspect-[2/1]' : 'aspect-[4/3]'}`}>
+                      <div className={`relative rounded-xl overflow-hidden bg-[#0a0a0a] ${isFirst ? 'aspect-4/3 md:aspect-2/1' : 'aspect-4/3'}`}>
                         <Image
                           src={"/hero.jpg"}
                           alt={project.title}
@@ -527,7 +527,7 @@ export default function Page() {
                         <h3 className="text-base font-medium text-[#fafafa] group-hover:text-[#d4d4d4] transition-colors truncate">
                           {project.description}
                         </h3>
-                        <p className="text-xs text-[#737373] uppercase tracking-wider whitespace-nowrap flex-shrink-0">
+                        <p className="text-xs text-[#737373] uppercase tracking-wider whitespace-nowrap shrink-0">
                           {project.title} · {project.year}
                         </p>
                       </div>
@@ -549,7 +549,7 @@ export default function Page() {
                       onMouseEnter={() => setHoveredGallery(originalIndex)}
                       onMouseLeave={() => setHoveredGallery(null)}
                     >
-                      <div className="relative rounded-xl overflow-hidden bg-[#0a0a0a] aspect-[4/3]">
+                      <div className="relative rounded-xl overflow-hidden bg-[#0a0a0a] aspect-4/3">
                         <Image
                           src={"/hero.jpg"}
                           alt={project.title}
@@ -564,7 +564,7 @@ export default function Page() {
                         <h3 className="text-base font-medium text-[#fafafa] group-hover:text-[#d4d4d4] transition-colors truncate">
                           {project.description}
                         </h3>
-                        <p className="text-xs text-[#737373] uppercase tracking-wider whitespace-nowrap flex-shrink-0">
+                        <p className="text-xs text-[#737373] uppercase tracking-wider whitespace-nowrap shrink-0">
                           {project.title} · {project.year}
                         </p>
                       </div>

@@ -47,7 +47,7 @@ export const MiniProjectCard = ({
 
   const DialogDrawerContent = () => (
     <ScrollArea className="h-[calc(80vh-4rem)] pr-4">
-      <div className="mt-2 relative aspect-[16/10] overflow-hidden rounded-xl"></div>
+      <div className="mt-2 relative aspect-16/10 overflow-hidden rounded-xl"></div>
       <h2 className="text-2xl font-bold mt-4">{name}</h2>
       <p className="mt-2">{description}</p>
       {children && <div className="mt-4">{children}</div>}
@@ -156,7 +156,7 @@ export const ProjectCard = ({
 
   const DialogDrawerContent = () => (
     <ScrollArea className="h-[calc(80vh-4rem)] pr-4">
-      <div className="mt-2 relative aspect-[16/10] overflow-hidden rounded-xl">
+      <div className="mt-2 relative aspect-16/10 overflow-hidden rounded-xl">
         <Image
           className="object-cover"
           fill
@@ -200,7 +200,7 @@ export const ProjectCard = ({
               )}
             </div>
             <p className="text-black">{description}</p>
-            <div className="mt-2 relative aspect-[16/10] overflow-hidden rounded-xl">
+            <div className="mt-2 relative aspect-16/10 overflow-hidden rounded-xl">
               <Image
                 className="object-cover"
                 fill
@@ -247,7 +247,7 @@ export const ProjectCard = ({
             )}
           </div>
           <p className="text-black">{description}</p>
-          <div className="mt-2 relative aspect-[16/10] overflow-hidden rounded-xl">
+          <div className="mt-2 relative aspect-16/10 overflow-hidden rounded-xl">
             <Image
               className="object-cover"
               fill
