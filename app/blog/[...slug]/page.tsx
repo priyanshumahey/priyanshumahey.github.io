@@ -81,7 +81,7 @@ export default async function PostPage({ params }: PostPageProps) {
                 <span>·</span>
                 <span>{readTime} min read</span>
               </div>
-              <h1 className="text-3xl font-bold tracking-tight mb-4 leading-tight">
+              <h1 className="text-3xl font-medium tracking-tight mb-4 leading-tight">
                 {post.title}
               </h1>
               {post.description && (
@@ -190,7 +190,7 @@ export default async function PostPage({ params }: PostPageProps) {
                   </>
                 )}
               </div>
-              <h1 className="text-4xl lg:text-5xl font-bold tracking-tight mb-6 leading-[1.1]">
+              <h1 className="text-[2.5rem] lg:text-[3rem] font-bold leading-tight tracking-tight mb-6">
                 {post.title}
               </h1>
               {post.description && (

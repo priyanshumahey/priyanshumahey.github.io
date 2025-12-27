@@ -71,7 +71,7 @@ export default async function BlogPage() {
 
         <main className="px-6 pb-16">
           <section className="py-12 border-b border-[#1a1a1a]">
-            <h1 className="text-3xl font-bold tracking-tight mb-3">Writing</h1>
+            <h1 className="text-3xl font-medium tracking-tight mb-3">Writing</h1>
             <p className="text-base text-[#a1a1a1] leading-relaxed">
               Thoughts on AI, software engineering, and building products.
             </p>
@@ -152,7 +152,7 @@ export default async function BlogPage() {
 
           {/* Title Section */}
           <section className="mb-16">
-            <h1 className="text-5xl font-bold tracking-tight mb-4">Writing</h1>
+            <h1 className="text-[2.5rem] font-bold leading-tight tracking-tight mb-4">Writing</h1>
             <p className="text-xl text-[#a1a1a1] leading-relaxed max-w-2xl">
               Thoughts on AI, software engineering, and building products. I write about what I&apos;m learning and building.
             </p>
