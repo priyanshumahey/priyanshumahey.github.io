@@ -8,10 +8,28 @@ const fontSans = FontSans({
   variable: "--font-sans",
 });
 
+
 export const metadata: Metadata = {
-  title: "Priyanshu Mahey",
+  title: "Priyanshu Mahey - AI & Software Engineer",
   description: "Priyanshu Mahey's personal website",
-};
+  icons: {
+    icon: [
+      {
+        url: "/icon-light-32x32.png",
+        media: "(prefers-color-scheme: light)",
+      },
+      {
+        url: "/icon-dark-32x32.png",
+        media: "(prefers-color-scheme: dark)",
+      },
+      {
+        url: "/icon.svg",
+        type: "image/svg+xml",
+      },
+    ],
+    apple: "/apple-icon.png",
+  },
+}
 
 export default function RootLayout({
   children,
@@ -25,7 +43,7 @@ export default function RootLayout({
         <meta
           name="description"
           content="Priyanshu Mahey's personal website"
-         />
+        />
         <meta charSet="UTF-8" />
         <meta name="author" content="Priyanshu Mahey" />
         <meta
@@ -39,6 +57,7 @@ export default function RootLayout({
           "min-h-screen bg-[#ededed] antialiased",
           fontSans.className
         )}
+        suppressHydrationWarning={true}
       >
         {children}
       </body>

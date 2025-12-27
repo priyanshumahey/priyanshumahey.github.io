@@ -1,241 +1,604 @@
-import { Header } from "@/components/Header";
-import { MiniProjectCard, ProjectCard } from "@/components/Project";
-import { Badge } from "@/components/ui/badge";
-import { LinkPreview } from "@/components/ui/link-preview";
-import { Separator } from "@/components/ui/separator";
-import { cn } from "@/lib/utils";
-import Link from "next/link";
+"use client"
 
-function Section({
-  children,
-  className,
-}: {
-  children: React.ReactNode;
-  className?: string;
-}) {
-  return <section className={cn("mt-10 mb-20", className)}>{children}</section>;
+import { LinkPreview } from "@/components/ui/link-preview"
+import { FileText, Github, Linkedin, Mail } from "lucide-react"
+import Image from "next/image"
+import Link from "next/link"
+import { useEffect, useState } from "react"
+
+// Project data
+const projects = [
+  {
+    title: "Purple Lotus",
+    description:
+      "Built a healthcare technology platform enabling better patient outcomes through AI-driven diagnostics.",
+    tags: ["Healthcare", "AI", "B2B"],
+    link: "/projects/purple-lotus",
+    year: "2023",
+    image: "/plpic.png",
+  },
+  {
+    title: "Index",
+    description: "AI-powered knowledge management system for organizing and retrieving information intelligently.",
+    tags: ["AI", "Productivity", "B2C"],
+    link: "/projects/index",
+    year: "2024",
+    image: "/irpic.png",
+  },
+  {
+    title: "WikiLLM",
+    description: "Bridging Wikipedia's knowledge with large language models for enhanced information retrieval.",
+    tags: ["AI", "Research", "Open Source"],
+    link: "/projects/wikillm",
+    year: "2024",
+    image: "/MOSS.png",
+  },
+  {
+    title: "EEG Research",
+    description: "Neural signal processing research at UBC exploring brain-computer interfaces.",
+    tags: ["Research", "Neuroscience", "UBC"],
+    link: "/projects/eeg",
+    year: "2022",
+    image: "/EEGpaper.png",
+  },
+]
+
+const smallProjects = [
+  {
+    title: "Task Manager",
+    description: "Minimal productivity app",
+    year: "2024",
+    image: "/task-management-app-interface.png",
+    link: "/projects/task-manager",
+  },
+  {
+    title: "Weather Dashboard",
+    description: "Real-time weather data visualization",
+    year: "2023",
+    image: "/weather-dashboard.png",
+    link: "/projects/weather",
+  },
+  {
+    title: "Portfolio Template",
+    description: "Open source portfolio builder",
+    year: "2023",
+    image: "/portfolio-website-template.png",
+    link: "/projects/portfolio",
+  },
+  {
+    title: "Code Snippets",
+    description: "Developer utility tools collection",
+    year: "2024",
+    image: "/code-editor-snippets.jpg",
+    link: "/projects/snippets",
+  },
+  {
+    title: "Link Shortener",
+    description: "Fast URL shortening service",
+    year: "2022",
+    image: "/link-shortener-app.jpg",
+    link: "/projects/shortener",
+  },
+  {
+    title: "Blog Engine",
+    description: "Lightweight markdown blogging",
+    year: "2023",
+    image: "/minimal-blog-engine.jpg",
+    link: "/projects/blog",
+  },
+]
+
+// Additional full-width gallery projects
+const galleryProjects = [
+  {
+    title: "E-commerce Platform",
+    description: "Full-stack shopping experience",
+    year: "2024",
+    image: "/ecommerce-platform.jpg",
+    link: "/projects/ecommerce",
+  },
+  {
+    title: "Social Network",
+    description: "Community engagement platform",
+    year: "2023",
+    image: "/social-network-app.jpg",
+    link: "/projects/social",
+  },
+  {
+    title: "Analytics Dashboard",
+    description: "Business intelligence tools",
+    year: "2024",
+    image: "/analytics-dashboard.jpg",
+    link: "/projects/analytics",
+  },
+  {
+    title: "Fitness Tracker",
+    description: "Health and workout logging",
+    year: "2023",
+    image: "/fitness-tracker.jpg",
+    link: "/projects/fitness",
+  },
+  {
+    title: "Recipe App",
+    description: "Culinary discovery platform",
+    year: "2022",
+    image: "/recipe-app.jpg",
+    link: "/projects/recipes",
+  },
+  {
+    title: "Music Player",
+    description: "Audio streaming service",
+    year: "2024",
+    image: "/music-player.jpg",
+    link: "/projects/music",
+  },
+  {
+    title: "Travel Planner",
+    description: "Trip organization system",
+    year: "2023",
+    image: "/travel-planner.jpg",
+    link: "/projects/travel",
+  },
+  {
+    title: "Note Taking",
+    description: "Knowledge management tool",
+    year: "2024",
+    image: "/note-taking-app.jpg",
+    link: "/projects/notes",
+  },
+  {
+    title: "Video Editor",
+    description: "Browser-based video tools",
+    year: "2022",
+    image: "/video-editor.jpg",
+    link: "/projects/video",
+  },
+]
+
+// Social/nav links
+const socialLinks = [
+  { href: "https://www.linkedin.com/in/priyanshu-mahey/", label: "LinkedIn", icon: "linkedin" },
+  { href: "https://x.com/PriyanshuMahey", label: "X", icon: "x" },
+  { href: "https://github.com/priyanshumahey", label: "GitHub", icon: "github" },
+  { href: "https://substack.com/@priyanshumahey", label: "Substack", icon: "substack" },
+  { href: "mailto:priyanshu.mahey02@gmail.com", label: "Email", icon: "email" },
+]
+
+const navLinks = [
+  { href: "/work", label: "Work" },
+  { href: "/writing", label: "Writing" },
+  { href: "/fun", label: "Fun" },
+  { href: "/about", label: "About" },
+  { href: "/contact", label: "Contact" },
+]
+
+const Icons = {
+  linkedin: () => <Linkedin className="w-5 h-5" />,
+  x: () => (
+    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+    </svg>
+  ),
+  github: () => <Github className="w-5 h-5" />,
+  substack: () => <FileText className="w-5 h-5" />,
+  email: () => <Mail className="w-5 h-5" />,
 }
 
-function BadgeList({ badges }: { badges: string[] }) {
+export default function Page() {
+  const [scrollProgress, setScrollProgress] = useState(0)
+  const [isMobile, setIsMobile] = useState(false)
+  const [hoveredGallery, setHoveredGallery] = useState<number | null>(null)
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 1024)
+    }
+    checkMobile()
+    window.addEventListener("resize", checkMobile)
+    return () => window.removeEventListener("resize", checkMobile)
+  }, [])
+
+  useEffect(() => {
+    if (isMobile) return
+
+    const handleScroll = () => {
+      const scrollY = window.scrollY
+      const windowHeight = window.innerHeight
+      const progress = Math.min(scrollY / (windowHeight * 0.5), 1)
+      setScrollProgress(progress)
+    }
+
+    window.addEventListener("scroll", handleScroll, { passive: true })
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [isMobile])
+
   return (
-    <div className="mb-2 flex flex-wrap">
-      {badges.map((badge, index) => (
-        <div key={index} className="px-1">
-          <Badge>{badge}</Badge>
-        </div>
-      ))}
-    </div>
-  );
-}
-
-export default function Home() {
-  return (
-    <main className="max-full mx-auto max-w-3xl px-4 pt-8 text-slate-900 xs:px-6 sm:px-8 md:pt-16">
-      <div className="mb-8">
-        <Header />
-      </div>
-
-      <section className="text-lg">
-        <h1 className="text-3xl font-semibold tracking-tight">
-          priyanshu mahey
-        </h1>
-        <p className="mt-3 max-w-xl b"></p>
-      </section>
-
-      <Separator className="border-[#dadada] border-2" />
-
-      <Section>
-        <h3 className="text-2xl font-bold tracking-tight">About Me</h3>
-        <div className="mt-2 text-lg tracking-tight">
+    <div className="min-h-screen bg-[#0a0a0a] text-[#fafafa]">
+      {/* Mobile Layout */}
+      <div className="lg:hidden">
+        {/* Header */}
+        <header className="space-y-6 px-6 pt-8">
           <div>
-            My name is Priyanshu and I&apos;m currently a software engineer at Microsoft! In the past,
-            I worked on{" "}
+            <h1 className="text-2xl leading-[1.1] font-medium tracking-tight">Priyanshu Mahey.</h1>
+            {/* Navigation Links */}
+            <nav className="flex flex-row gap-4 pt-3">
+              {navLinks.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="text-sm text-[#a1a1a1] hover:text-[#fafafa] transition-colors"
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </nav>
+          </div>
+          <div className="text-base leading-relaxed text-[#a1a1a1]">
+            Building agents, AI software, and recommendation systems at{" "}
+            <LinkPreview
+              url="https://www.microsoft.com/"
+              className="text-[#fafafa] hover:text-[#a1a1a1] transition-colors font-medium decoration-blue-400 decoration-2 underline-offset-2 underline"
+            >
+              Microsoft
+            </LinkPreview>
+            . Previously built{" "}
             <LinkPreview
               url="https://purplelotusmh.com/"
-              className="font-medium decoration-blue-400 decoration-2 underline-offset-2 underline"
+              className="text-[#fafafa] hover:text-[#a1a1a1] transition-colors font-medium decoration-blue-400 decoration-2 underline-offset-2 underline"
             >
               Purple Lotus
-            </LinkPreview>{" "}
-            and building out {""}
+            </LinkPreview>
+            ,{" "}
             <LinkPreview
-              url="https://www.inputretrieval.com/"
-              className="font-medium decoration-blue-400 decoration-2 underline-offset-2 underline"
+              url="https://www.zofiq.com/"
+              className="text-[#fafafa] hover:text-[#a1a1a1] transition-colors font-medium decoration-blue-400 decoration-2 underline-offset-2 underline"
             >
-              Input/Retrieval
-            </LinkPreview>.
+              Zofiq
+            </LinkPreview>
+            , research @ <span className="text-[#fafafa]">UBC</span>.
+          </div>
+
+          {/* Social Links */}
+          <div className="flex items-center gap-3 pt-2">
+            {socialLinks.map((link) => {
+              const IconComponent = Icons[link.icon as keyof typeof Icons]
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="w-9 h-9 rounded-full border border-[#333] flex items-center justify-center text-[#888] hover:text-white hover:border-[#555] transition-all"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={link.label}
+                >
+                  <IconComponent />
+                </Link>
+              )
+            })}
+          </div>
+        </header>
+
+        {/* Content */}
+        <main className="px-6 pb-16">
+          {/* Hero Section */}
+          <section className="py-12"></section>
+
+          {/* Projects */}
+          <section className="space-y-6">
+            <p className="text-xs uppercase tracking-wider text-[#525252]">Selected Work</p>
+            <div className="space-y-8">
+              {projects.map((project) => (
+                <Link key={project.title} href={project.link} className="block group">
+                  <div className="relative aspect-[16/9] rounded-lg overflow-hidden bg-[#171717] mb-3">
+                    <Image
+                      src={project.image || "/placeholder.svg"}
+                      alt={project.title}
+                      fill
+                      className="object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
+                    />
+                  </div>
+                  <h3 className="text-lg font-normal text-[#fafafa] group-hover:text-[#a1a1a1] transition-colors mb-1">
+                    {project.description}
+                  </h3>
+                  <p className="text-sm text-[#737373]">
+                    {project.tags.join(" · ")} · {project.year}
+                  </p>
+                </Link>
+              ))}
+            </div>
+          </section>
+
+          <section className="space-y-6">
+            <div className="grid grid-cols-1 gap-6">
+              {smallProjects.map((project) => (
+                <Link key={project.title} href={project.link} className="group block">
+                  <div className="relative aspect-[4/3] rounded-lg overflow-hidden bg-[#171717] mb-3">
+                    <Image
+                      src={project.image || "/placeholder.svg"}
+                      alt={project.title}
+                      fill
+                      className="object-cover opacity-85 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
+                    />
+                  </div>
+                  <div className="flex items-baseline justify-between">
+                    <h3 className="text-base font-medium group-hover:text-[#a1a1a1] transition-colors">
+                      {project.title}
+                    </h3>
+                    <span className="text-xs text-[#525252]">{project.year}</span>
+                  </div>
+                  <p className="text-sm text-[#737373] mt-1">{project.description}</p>
+                </Link>
+              ))}
+            </div>
+          </section>
+
+          {/* Social Links */}
+          <footer className="flex items-center gap-3 pt-12 pb-6">
+            {socialLinks.map((link) => {
+              const IconComponent = Icons[link.icon as keyof typeof Icons]
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="w-10 h-10 rounded-full border border-[#333] flex items-center justify-center text-[#888] hover:text-white hover:border-[#555] transition-all"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={link.label}
+                >
+                  <IconComponent />
+                </Link>
+              )
+            })}
+          </footer>
+        </main>
+      </div>
+
+      {/* Desktop Split Layout */}
+      <div className="hidden lg:block">
+        <div className="flex">
+          {/* Left Panel - Sticky */}
+          <div className="sticky top-0 h-screen overflow-y-auto border-r border-[#1a1a1a] w-[35%]">
+            <div className="p-12 xl:p-16 flex flex-col h-full justify-between">
+              {/* Top Content */}
+              <div className="space-y-8">
+                <div>
+                  <h1 className="font-bold text-[2.5rem] leading-tight text-[#fafafa] mb-4">Priyanshu Mahey</h1>
+                  <div className="text-base text-[#a1a1a1] leading-relaxed">
+                    Building agents, AI software, and recommendation systems at{" "}
+                    <LinkPreview
+                      url="https://www.microsoft.com/"
+                      className="text-[#fafafa] hover:text-[#d4d4d4] transition-colors font-medium decoration-blue-400 decoration-2 underline-offset-2 underline"
+                    >
+                      Microsoft
+                    </LinkPreview>
+                    . Previously built{" "}
+                    <LinkPreview
+                      url="https://purplelotusmh.com/"
+                      className="text-[#fafafa] hover:text-[#d4d4d4] transition-colors font-medium decoration-blue-400 decoration-2 underline-offset-2 underline"
+                    >
+                      Purple Lotus
+                    </LinkPreview>
+                    ,{" "}
+                    <LinkPreview
+                      url="https://www.zofiq.com/"
+                      className="text-[#fafafa] hover:text-[#d4d4d4] transition-colors font-medium decoration-blue-400 decoration-2 underline-offset-2 underline"
+                    >
+                      Zofiq
+                    </LinkPreview>
+                    , research @ <span className="text-[#fafafa]">UBC</span>.
+                  </div>
+                </div>
+
+                <nav
+                  className="flex flex-col gap-2.5 transition-all duration-700 ease-out"
+                  style={{
+                    opacity: scrollProgress,
+                    transform: `translateY(-${(1 - scrollProgress) * 10}px)`,
+                  }}
+                >
+                  {navLinks.map((link) => (
+                    <Link
+                      key={link.href}
+                      href={link.href}
+                      className="text-xs text-[#a1a1a1] hover:text-[#fafafa] transition-colors w-fit"
+                    >
+                      {link.label}
+                    </Link>
+                  ))}
+                </nav>
+              </div>
+
+              {/* Bottom - Social Links */}
+              <div className="flex items-center gap-3">
+                {socialLinks.map((link) => {
+                  const IconComponent = Icons[link.icon as keyof typeof Icons]
+                  return (
+                    <Link
+                      key={link.href}
+                      href={link.href}
+                      className="w-10 h-10 rounded-full border border-[#333] flex items-center justify-center text-[#888] hover:text-white hover:border-[#555] transition-all"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={link.label}
+                    >
+                      <IconComponent />
+                    </Link>
+                  )
+                })}
+              </div>
+            </div>
+          </div>
+
+          {/* Right Panel - Scrollable Content */}
+          <div className="w-[65%] relative">
+            <div className="h-[90vh] relative flex items-center justify-end px-20 xl:px-24">
+              <div
+                className="transition-all duration-700 ease-out"
+                style={{
+                  opacity: 1 - scrollProgress,
+                  transform: `translateX(${scrollProgress * 80}px)`,
+                  pointerEvents: scrollProgress > 0.5 ? "none" : "auto",
+                }}
+              >
+                <nav className="flex flex-col gap-5 items-end">
+                  {navLinks.map((link) => (
+                    <Link
+                      key={link.href}
+                      href={link.href}
+                      className="text-xs text-[#a1a1a1] hover:text-[#fafafa] transition-colors"
+                    >
+                      {link.label}
+                    </Link>
+                  ))}
+                </nav>
+              </div>
+            </div>
+
+            {/* Projects Section */}
+            <div className="px-12 xl:px-16 pb-24 space-y-16">
+              {/* Selected Work */}
+              <section className="space-y-8">
+                <p className="text-xs uppercase tracking-wider text-[#525252]">Selected Work</p>
+                <div className="space-y-16">
+                  {projects.map((project) => (
+                    <Link key={project.title} href={project.link} className="block group">
+                      <div className="relative aspect-[16/9] rounded-xl overflow-hidden bg-[#0f0f0f] mb-4">
+                        <Image
+                          src={"/hero.jpg"}
+                          alt={project.title}
+                          fill
+                          className="object-cover opacity-90 group-hover:opacity-100 group-hover:scale-[1.02] transition-all duration-700"
+                        />
+                      </div>
+                      <h3 className="text-lg font-normal text-[#fafafa] group-hover:text-[#d4d4d4] transition-colors mb-2 leading-relaxed">
+                        {project.description}
+                      </h3>
+                      <p className="text-sm text-[#737373]">
+                        {project.title} · {project.tags.join(" · ")}
+                      </p>
+                    </Link>
+                  ))}
+                </div>
+              </section>
+
+              {/* All Projects */}
+              <section className="space-y-8">
+                <p className="text-xs uppercase tracking-wider text-[#525252]">All Projects</p>
+                <div className="grid grid-cols-2 gap-8">
+
+                </div>
+              </section>
+            </div>
           </div>
         </div>
-      </Section>
+      </div>
 
-      <Section>
-        <h3 className="text-2xl font-bold tracking-tight">My Work</h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mt-2">
-          <ProjectCard
-            name="Purple Lotus"
-            description="Mental health data analytics platform with AI automation for therapists."
-            image="/plpic.png"
-            badgeName="Visit"
-            badgeUrl="https://www.lotus-mh.ca/"
-          >
-            <div>
-              Frontend:
-              <BadgeList
-                badges={[
-                  "React",
-                  "TypeScript",
-                  "Next.js",
-                  "AWS",
-                  "ElasticSearch",
-                  "Docker",
-                  "Kubernetes",
-                  "Redis",
-                  "Python",
-                  "PostgreSQL",
-                ]}
-              />
-              Backend:
-              <BadgeList
-                badges={[
-                  "Node.js",
-                  "Express",
-                  "AWS",
-                  "Docker",
-                  "Kubernetes",
-                  "Redis",
-                  "Python",
-                  "PostgreSQL",
-                ]}
-              />
-              Infrastructure:
-              <BadgeList
-                badges={["Docker", "Kubernetes", "Prometheus", "Grafana"]}
-              />
-              <h3>Additional Content</h3>
-              <p>
-                This is some extra information about the project that will
-                appear in the dialog/drawer.
-              </p>
+      {/* Full Width Gallery Section */}
+      <div className="w-full bg-[#050505] border-t border-[#1a1a1a]">
+        <div className="max-w-[1400px] mx-auto px-6 md:px-12 py-24">
+          <div className="flex flex-col md:flex-row gap-8">
+            {/* Left Column */}
+            <div className="flex-1 flex flex-col gap-12">
+              {galleryProjects
+                .filter((_, index) => index % 2 === 0)
+                .map((project, i) => {
+                  const originalIndex = i * 2
+                  const isFirst = i === 0
+                  return (
+                    <Link
+                      key={project.title}
+                      href={project.link}
+                      className="group block"
+                      onMouseEnter={() => setHoveredGallery(originalIndex)}
+                      onMouseLeave={() => setHoveredGallery(null)}
+                    >
+                      <div className={`relative rounded-xl overflow-hidden bg-[#0a0a0a] ${isFirst ? 'aspect-[4/3] md:aspect-[2/1]' : 'aspect-[4/3]'}`}>
+                        <Image
+                          src={"/hero.jpg"}
+                          alt={project.title}
+                          fill
+                          className="object-cover transition-all duration-700 group-hover:scale-105"
+                          style={{
+                            opacity: hoveredGallery === originalIndex ? 1 : 0.9,
+                          }}
+                        />
+                      </div>
+                      <div className="mt-4 flex items-baseline justify-between gap-4">
+                        <h3 className="text-base font-medium text-[#fafafa] group-hover:text-[#d4d4d4] transition-colors truncate">
+                          {project.description}
+                        </h3>
+                        <p className="text-xs text-[#737373] uppercase tracking-wider whitespace-nowrap flex-shrink-0">
+                          {project.title} · {project.year}
+                        </p>
+                      </div>
+                    </Link>
+                  )
+                })}
             </div>
-          </ProjectCard>
-          <ProjectCard
-            name="Brane Lab - EEG GAN"
-            description="Simulate EEG data with GANs for training AI models."
-            image="/EEGpaper.png"
-            badgeName="Read"
-            badgeUrl="https://link.springer.com/article/10.1007/s10548-023-00986-5"
-          >
-            <div>
-              Backend:
-              <BadgeList badges={["Python", "PyTorch", "CUDA"]} />
-              Infrastructure:
-              <BadgeList badges={["Docker", "Kubernetes", "MLflow"]} />
-              <h3>Additional Content</h3>
-              <p>
-                This is some extra information about the project that will
-                appear in the dialog/drawer.
-              </p>
+            {/* Right Column */}
+            <div className="flex-1 flex flex-col gap-12">
+              {galleryProjects
+                .filter((_, index) => index % 2 === 1)
+                .map((project, i) => {
+                  const originalIndex = i * 2 + 1
+                  return (
+                    <Link
+                      key={project.title}
+                      href={project.link}
+                      className="group block"
+                      onMouseEnter={() => setHoveredGallery(originalIndex)}
+                      onMouseLeave={() => setHoveredGallery(null)}
+                    >
+                      <div className="relative rounded-xl overflow-hidden bg-[#0a0a0a] aspect-[4/3]">
+                        <Image
+                          src={"/hero.jpg"}
+                          alt={project.title}
+                          fill
+                          className="object-cover transition-all duration-700 group-hover:scale-105"
+                          style={{
+                            opacity: hoveredGallery === originalIndex ? 1 : 0.9,
+                          }}
+                        />
+                      </div>
+                      <div className="mt-4 flex items-baseline justify-between gap-4">
+                        <h3 className="text-base font-medium text-[#fafafa] group-hover:text-[#d4d4d4] transition-colors truncate">
+                          {project.description}
+                        </h3>
+                        <p className="text-xs text-[#737373] uppercase tracking-wider whitespace-nowrap flex-shrink-0">
+                          {project.title} · {project.year}
+                        </p>
+                      </div>
+                    </Link>
+                  )
+                })}
             </div>
-          </ProjectCard>
-          <ProjectCard
-            name="MOSS"
-            description="Simulate EEG data with GANs for training AI models."
-            image="/MOSS.png"
-            badgeName="Coming Soon"
-          >
-            <div>
-              Backend:
-              <BadgeList badges={["Python", "PyTorch", "CUDA"]} />
-              Infrastructure:
-              <BadgeList badges={["Docker", "Kubernetes", "MLflow"]} />
-              <h3>Additional Content</h3>
-              <p>
-                This is some extra information about the project that will
-                appear in the dialog/drawer.
-              </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Footer */}
+      <footer className="w-full bg-[#050505] border-t border-[#1a1a1a] py-12">
+        <div className="max-w-[1400px] mx-auto px-6 md:px-12">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+            <p className="text-sm text-[#525252]">
+              © {new Date().getFullYear()} Priyanshu Mahey
+            </p>
+            <div className="flex items-center gap-6">
+              {socialLinks.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="text-xs text-[#737373] hover:text-[#fafafa] transition-colors uppercase tracking-wider"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {link.label}
+                </Link>
+              ))}
             </div>
-          </ProjectCard>
-          <ProjectCard
-            name="Input/Retrieval"
-            description="Notetaking with voice and semantic search."
-            image="/irpic.png"
-            badgeName="Visit"
-            badgeUrl="https://app.inputretrieval.com/"
-          />
+          </div>
         </div>
-      </Section>
-
-      <Section>
-        <h3 className="text-2xl font-bold tracking-tight">My Projects</h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mt-2">
-          <ProjectCard
-            name="Idetic"
-            description="Search through videos using natural language."
-            image="/hero.jpg"
-            badgeName="Visit"
-            badgeUrl="https://devpost .com/software/idetic"
-          />
-          <ProjectCard
-            name="Polytope"
-            description="Ontology Based Search Engine for Research Papers."
-            image="/hero.jpg"
-            badgeName="Visit"
-            badgeUrl="https://devpost.com/software/idetic"
-          />
-          <MiniProjectCard
-            name="Muse Pet"
-            description="A Tamagotchi style game for Muse headband users."
-            badgeName="Visit"
-            badgeUrl="https://github.com/UBCMint/MUSE-Pet"
-          />
-          <MiniProjectCard
-            name="CUP Prediction"
-            description="Predicting the CUPs of a patient using Machine Learning."
-            badgeName="Visit"
-            badgeUrl="https://github.com/priyanshumahey/Prediction-of-CUPs"
-            />
-          <MiniProjectCard
-            name="GAN Data Matching"
-            description="Matching GAN generated data with real data to find closest match in clinical data."
-            badgeName="Visit"
-            badgeUrl="https://github.com/priyanshumahey/GAN-Data-Matching"
-            />
-
-        </div>
-      </Section>
-
-      <Section>
-        <h3 className="text-2xl font-bold tracking-tight">Contact</h3>
-        <div className="text-lg mt-2 tracking-tight">
-          <p>
-            Message me with email{" "}
-            <Link
-              className="font-medium decoration-blue-400 decoration-2 underline-offset-2 outline-none hover:underline focus:underline"
-              href="mailto:priyanshu.mahey02@gmail.com"
-            >
-              priyanshu.mahey02@gmail.com
-            </Link>{" "}
-            or{" "}
-            <Link
-              className="font-medium decoration-cyan-400 decoration-2 underline-offset-2 outline-none hover:underline focus:underline"
-              href="https://twitter.com/PriyanshuMahey"
-              target="_blank"
-              rel="noreferrer"
-            >
-              DM me on Twitter{" "}
-            </Link>
-            or connect with me{" "}
-            <Link
-              className="font-medium decoration-blue-400 decoration-2 underline-offset-2 outline-none hover:underline focus:underline"
-              href="https://www.linkedin.com/in/priyanshu-mahey/"
-              target="_blank"
-              rel="noreferrer"
-            >
-              on LinkedIn here
-            </Link>
-            .
-          </p>
-        </div>
-      </Section>
-    </main>
-  );
+      </footer>
+    </div>
+  )
 }
