@@ -64,16 +64,17 @@ const galleryProjects: ProjectData[] = [
   {
     title: "GenWiki",
     description: "AI-generated wiki that builds and maintains knowledge bases automatically.",
-    year: "2024",
+    year: "2025",
     image: "/projects/genwiki.png",
     link: "/projects/genwiki",
   },
   {
-    title: "Social Network",
-    description: "Community engagement platform",
-    year: "2023",
-    image: "/hero.jpg",
-    link: "/projects/social",
+    title: "Vibration",
+    description: "AI music composition tool",
+    year: "2025",
+    link: "https://github.com/priyanshumahey/vibration",
+    image: "/projects/vibration1.png",
+    hoverImage: "/projects/vibration2.png",
   },
   {
     title: "Analytics Dashboard",
