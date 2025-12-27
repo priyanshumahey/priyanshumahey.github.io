@@ -22,8 +22,9 @@ const projects: ProjectData[] = [
     title: "Purple Lotus",
     description: "Built a healthcare technology platform enabling better patient outcomes through AI-driven diagnostics.",
     year: "2023",
-    link: "/projects/purple-lotus",
-    image: "/hero.jpg",
+    link: "https://purplelotusmh.com",
+    image: "/work/purplelotus1.png"
+
   },
   {
     title: "Index",
