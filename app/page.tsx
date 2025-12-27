@@ -15,7 +15,7 @@ const projects = [
     tags: ["Healthcare", "AI", "B2B"],
     link: "/projects/purple-lotus",
     year: "2023",
-    image: "/plpic.png",
+    image: "/hero.jpg",
   },
   {
     title: "Index",
@@ -23,7 +23,7 @@ const projects = [
     tags: ["AI", "Productivity", "B2C"],
     link: "/projects/index",
     year: "2024",
-    image: "/irpic.png",
+    image: "/hero.jpg",
   },
   {
     title: "WikiLLM",
@@ -31,7 +31,7 @@ const projects = [
     tags: ["AI", "Research", "Open Source"],
     link: "/projects/wikillm",
     year: "2024",
-    image: "/MOSS.png",
+    image: "/hero.jpg",
   },
   {
     title: "EEG Research",
@@ -39,7 +39,7 @@ const projects = [
     tags: ["Research", "Neuroscience", "UBC"],
     link: "/projects/eeg",
     year: "2022",
-    image: "/EEGpaper.png",
+    image: "/hero.jpg",
   },
 ]
 
@@ -48,42 +48,42 @@ const smallProjects = [
     title: "Task Manager",
     description: "Minimal productivity app",
     year: "2024",
-    image: "/task-management-app-interface.png",
+    image: "/hero.jpg",
     link: "/projects/task-manager",
   },
   {
     title: "Weather Dashboard",
     description: "Real-time weather data visualization",
     year: "2023",
-    image: "/weather-dashboard.png",
+    image: "/hero.jpg",
     link: "/projects/weather",
   },
   {
     title: "Portfolio Template",
     description: "Open source portfolio builder",
     year: "2023",
-    image: "/portfolio-website-template.png",
+    image: "/hero.jpg",
     link: "/projects/portfolio",
   },
   {
     title: "Code Snippets",
     description: "Developer utility tools collection",
     year: "2024",
-    image: "/code-editor-snippets.jpg",
+    image: "/hero.jpg",
     link: "/projects/snippets",
   },
   {
     title: "Link Shortener",
     description: "Fast URL shortening service",
     year: "2022",
-    image: "/link-shortener-app.jpg",
+    image: "/hero.jpg",
     link: "/projects/shortener",
   },
   {
     title: "Blog Engine",
     description: "Lightweight markdown blogging",
     year: "2023",
-    image: "/minimal-blog-engine.jpg",
+    image: "/hero.jpg",
     link: "/projects/blog",
   },
 ]
@@ -94,63 +94,63 @@ const galleryProjects = [
     title: "E-commerce Platform",
     description: "Full-stack shopping experience",
     year: "2024",
-    image: "/ecommerce-platform.jpg",
+    image: "/hero.jpg",
     link: "/projects/ecommerce",
   },
   {
     title: "Social Network",
     description: "Community engagement platform",
     year: "2023",
-    image: "/social-network-app.jpg",
+    image: "/hero.jpg",
     link: "/projects/social",
   },
   {
     title: "Analytics Dashboard",
     description: "Business intelligence tools",
     year: "2024",
-    image: "/analytics-dashboard.jpg",
+    image: "/hero.jpg",
     link: "/projects/analytics",
   },
   {
     title: "Fitness Tracker",
     description: "Health and workout logging",
     year: "2023",
-    image: "/fitness-tracker.jpg",
+    image: "/hero.jpg",
     link: "/projects/fitness",
   },
   {
     title: "Recipe App",
     description: "Culinary discovery platform",
     year: "2022",
-    image: "/recipe-app.jpg",
+    image: "/hero.jpg",
     link: "/projects/recipes",
   },
   {
     title: "Music Player",
     description: "Audio streaming service",
     year: "2024",
-    image: "/music-player.jpg",
+    image: "/hero.jpg",
     link: "/projects/music",
   },
   {
     title: "Travel Planner",
     description: "Trip organization system",
     year: "2023",
-    image: "/travel-planner.jpg",
+    image: "/hero.jpg",
     link: "/projects/travel",
   },
   {
     title: "Note Taking",
     description: "Knowledge management tool",
     year: "2024",
-    image: "/note-taking-app.jpg",
+    image: "/hero.jpg",
     link: "/projects/notes",
   },
   {
     title: "Video Editor",
     description: "Browser-based video tools",
     year: "2022",
-    image: "/video-editor.jpg",
+    image: "/hero.jpg",
     link: "/projects/video",
   },
 ]
@@ -188,6 +188,7 @@ export default function Page() {
   const [scrollProgress, setScrollProgress] = useState(0)
   const [isMobile, setIsMobile] = useState(false)
   const [hoveredGallery, setHoveredGallery] = useState<number | null>(null)
+  const [showAllGallery, setShowAllGallery] = useState(false)
 
   useEffect(() => {
     const checkMobile = () => {
@@ -287,13 +288,16 @@ export default function Page() {
           <section className="space-y-6">
             <p className="text-xs uppercase tracking-wider text-[#525252]">Selected Work</p>
             <div className="space-y-8">
-              {projects.map((project) => (
+              {projects.map((project, index) => (
                 <Link key={project.title} href={project.link} className="block group">
                   <div className="relative aspect-video rounded-lg overflow-hidden bg-[#171717] mb-3">
                     <Image
                       src={project.image || "/placeholder.svg"}
                       alt={project.title}
                       fill
+                      loading="eager"
+                      priority={index === 0}
+                      sizes="calc(100vw - 3rem)"
                       className="object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
                     />
                   </div>
@@ -317,6 +321,8 @@ export default function Page() {
                       src={project.image || "/placeholder.svg"}
                       alt={project.title}
                       fill
+                      loading="eager"
+                      sizes="calc(100vw - 3rem)"
                       className="object-cover opacity-85 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
                     />
                   </div>
@@ -460,13 +466,16 @@ export default function Page() {
               <section className="space-y-8">
                 <p className="text-xs uppercase tracking-wider text-[#525252]">Selected Work</p>
                 <div className="space-y-16">
-                  {projects.map((project) => (
+                  {projects.map((project, index) => (
                     <Link key={project.title} href={project.link} className="block group">
                       <div className="relative aspect-video rounded-xl overflow-hidden bg-[#0f0f0f] mb-4">
                         <Image
                           src={"/hero.jpg"}
                           alt={project.title}
                           fill
+                          loading="eager"
+                          priority={index === 0}
+                          sizes="(max-width: 1024px) 100vw, 65vw"
                           className="object-cover opacity-90 group-hover:opacity-100 group-hover:scale-[1.02] transition-all duration-700"
                         />
                       </div>
@@ -495,12 +504,13 @@ export default function Page() {
 
       {/* Full Width Gallery Section */}
       <div className="w-full bg-[#050505] border-t border-[#1a1a1a]">
-        <div className="max-w-[1400px] mx-auto px-6 md:px-12 py-24">
-          <div className="flex flex-col md:flex-row gap-8">
+        <div className="max-w-[1400px] mx-auto px-6 lg:px-12 py-24">
+          <div className="flex flex-col lg:flex-row gap-8">
             {/* Left Column */}
             <div className="flex-1 flex flex-col gap-12">
               {galleryProjects
                 .filter((_, index) => index % 2 === 0)
+                .slice(0, isMobile && !showAllGallery ? 3 : undefined)
                 .map((project, i) => {
                   const originalIndex = i * 2
                   const isFirst = i === 0
@@ -512,11 +522,13 @@ export default function Page() {
                       onMouseEnter={() => setHoveredGallery(originalIndex)}
                       onMouseLeave={() => setHoveredGallery(null)}
                     >
-                      <div className={`relative rounded-xl overflow-hidden bg-[#0a0a0a] ${isFirst ? 'aspect-4/3 md:aspect-2/1' : 'aspect-4/3'}`}>
+                      <div className={`relative rounded-xl overflow-hidden bg-[#0a0a0a] ${isFirst ? 'aspect-4/3 lg:aspect-2/1' : 'aspect-4/3'}`}>
                         <Image
                           src={"/hero.jpg"}
                           alt={project.title}
                           fill
+                          loading="eager"
+                          sizes="(max-width: 1024px) 100vw, 50vw"
                           className="object-cover transition-all duration-700 group-hover:scale-105"
                           style={{
                             opacity: hoveredGallery === originalIndex ? 1 : 0.9,
@@ -535,8 +547,8 @@ export default function Page() {
                   )
                 })}
             </div>
-            {/* Right Column */}
-            <div className="flex-1 flex flex-col gap-12">
+            {/* Right Column - Hidden on mobile/tablet, shown on desktop */}
+            <div className="hidden lg:flex flex-1 flex-col gap-12">
               {galleryProjects
                 .filter((_, index) => index % 2 === 1)
                 .map((project, i) => {
@@ -554,6 +566,8 @@ export default function Page() {
                           src={"/hero.jpg"}
                           alt={project.title}
                           fill
+                          loading="eager"
+                          sizes="(max-width: 1024px) 100vw, 50vw"
                           className="object-cover transition-all duration-700 group-hover:scale-105"
                           style={{
                             opacity: hoveredGallery === originalIndex ? 1 : 0.9,
@@ -573,13 +587,25 @@ export default function Page() {
                 })}
             </div>
           </div>
+          
+          {/* Show More Button - Only visible on mobile/tablet */}
+          {isMobile && !showAllGallery && galleryProjects.length > 6 && (
+            <div className="mt-12 flex justify-center">
+              <button
+                onClick={() => setShowAllGallery(true)}
+                className="px-6 py-3 text-sm text-[#a1a1a1] border border-[#333] rounded-full hover:text-[#fafafa] hover:border-[#555] transition-all"
+              >
+                Show more projects
+              </button>
+            </div>
+          )}
         </div>
       </div>
 
       {/* Footer */}
       <footer className="w-full bg-[#050505] border-t border-[#1a1a1a] py-12">
-        <div className="max-w-[1400px] mx-auto px-6 md:px-12">
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+        <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
             <p className="text-sm text-[#525252]">
               © {new Date().getFullYear()} Priyanshu Mahey
             </p>
