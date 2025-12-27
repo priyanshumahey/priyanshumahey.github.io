@@ -1,49 +1,55 @@
 "use client"
 
 import { LinkPreview } from "@/components/ui/link-preview"
+import { WorkSection, GallerySection, ProjectGrid, type ProjectData } from "@/components/projects"
+import { motion } from "framer-motion"
 import { FileText, Github, Linkedin, Mail } from "lucide-react"
-import Image from "next/image"
 import Link from "next/link"
 import { useEffect, useState } from "react"
 
-// Project data
-const projects = [
+// Project data - Work experiences (ordered by year, newest first)
+const projects: ProjectData[] = [
+  {
+    title: "Microsoft",
+    description: "Building agents, AI software, and recommendation systems.",
+    year: "2025",
+    link: "/projects/microsoft",
+    image: "/work/msft1.png",
+    hoverImage: "/work/msft2.png",
+    isPrivate: true,
+  },
   {
     title: "Purple Lotus",
-    description:
-      "Built a healthcare technology platform enabling better patient outcomes through AI-driven diagnostics.",
-    tags: ["Healthcare", "AI", "B2B"],
-    link: "/projects/purple-lotus",
+    description: "Built a healthcare technology platform enabling better patient outcomes through AI-driven diagnostics.",
     year: "2023",
+    link: "/projects/purple-lotus",
     image: "/hero.jpg",
   },
   {
     title: "Index",
     description: "AI-powered knowledge management system for organizing and retrieving information intelligently.",
-    tags: ["AI", "Productivity", "B2C"],
-    link: "/projects/index",
     year: "2024",
+    link: "/projects/index",
     image: "/hero.jpg",
+    isPrivate: true,
   },
   {
     title: "WikiLLM",
     description: "Bridging Wikipedia's knowledge with large language models for enhanced information retrieval.",
-    tags: ["AI", "Research", "Open Source"],
-    link: "/projects/wikillm",
     year: "2024",
+    link: "/projects/wikillm",
     image: "/hero.jpg",
   },
   {
     title: "EEG Research",
     description: "Neural signal processing research at UBC exploring brain-computer interfaces.",
-    tags: ["Research", "Neuroscience", "UBC"],
-    link: "/projects/eeg",
     year: "2022",
+    link: "/projects/eeg",
     image: "/hero.jpg",
   },
 ]
 
-const smallProjects = [
+const smallProjects: ProjectData[] = [
   {
     title: "Task Manager",
     description: "Minimal productivity app",
@@ -89,7 +95,7 @@ const smallProjects = [
 ]
 
 // Additional full-width gallery projects
-const galleryProjects = [
+const galleryProjects: ProjectData[] = [
   {
     title: "E-commerce Platform",
     description: "Full-stack shopping experience",
@@ -110,6 +116,7 @@ const galleryProjects = [
     year: "2024",
     image: "/hero.jpg",
     link: "/projects/analytics",
+    isPrivate: true,
   },
   {
     title: "Fitness Tracker",
@@ -187,7 +194,6 @@ const Icons = {
 export default function Page() {
   const [scrollProgress, setScrollProgress] = useState(0)
   const [isMobile, setIsMobile] = useState(false)
-  const [hoveredGallery, setHoveredGallery] = useState<number | null>(null)
   const [showAllGallery, setShowAllGallery] = useState(false)
 
   useEffect(() => {
@@ -218,23 +224,46 @@ export default function Page() {
       {/* Mobile Layout */}
       <div className="lg:hidden">
         {/* Header */}
-        <header className="space-y-6 px-6 pt-8">
+        <motion.header
+          className="space-y-6 px-6 pt-8"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+        >
           <div>
-            <h1 className="text-2xl leading-[1.1] font-medium tracking-tight">Priyanshu Mahey.</h1>
+            <motion.h1
+              className="text-2xl leading-[1.1] font-medium tracking-tight"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.2, duration: 0.5 }}
+            >
+              Priyanshu Mahey.
+            </motion.h1>
             {/* Navigation Links */}
             <nav className="flex flex-row gap-4 pt-3">
-              {navLinks.map((link) => (
-                <Link
+              {navLinks.map((link, index) => (
+                <motion.div
                   key={link.href}
-                  href={link.href}
-                  className="text-sm text-[#a1a1a1] hover:text-[#fafafa] transition-colors"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3 + index * 0.05, duration: 0.4 }}
                 >
-                  {link.label}
-                </Link>
+                  <Link
+                    href={link.href}
+                    className="text-sm text-[#a1a1a1] hover:text-[#fafafa] transition-colors"
+                  >
+                    {link.label}
+                  </Link>
+                </motion.div>
               ))}
             </nav>
           </div>
-          <div className="text-base leading-relaxed text-[#a1a1a1]">
+          <motion.div
+            className="text-base leading-relaxed text-[#a1a1a1]"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4, duration: 0.5 }}
+          >
             Building agents, AI software, and recommendation systems at{" "}
             <LinkPreview
               url="https://www.microsoft.com/"
@@ -257,85 +286,52 @@ export default function Page() {
               Zofiq
             </LinkPreview>
             , research @ <span className="text-[#fafafa]">UBC</span>.
-          </div>
+          </motion.div>
 
           {/* Social Links */}
-          <div className="flex items-center gap-3 pt-2">
-            {socialLinks.map((link) => {
+          <motion.div
+            className="flex items-center gap-3 pt-2"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5, duration: 0.5 }}
+          >
+            {socialLinks.map((link, index) => {
               const IconComponent = Icons[link.icon as keyof typeof Icons]
               return (
-                <Link
+                <motion.div
                   key={link.href}
-                  href={link.href}
-                  className="w-9 h-9 rounded-full border border-[#333] flex items-center justify-center text-[#888] hover:text-white hover:border-[#555] transition-all"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={link.label}
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.95 }}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.6 + index * 0.05, duration: 0.3 }}
                 >
-                  <IconComponent />
-                </Link>
+                  <Link
+                    href={link.href}
+                    className="w-9 h-9 rounded-full border border-[#333] flex items-center justify-center text-[#888] hover:text-white hover:border-[#555] transition-all"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={link.label}
+                  >
+                    <IconComponent />
+                  </Link>
+                </motion.div>
               )
             })}
-          </div>
-        </header>
+          </motion.div>
+        </motion.header>
 
         {/* Content */}
         <main className="px-6 pb-16">
           {/* Hero Section */}
           <section className="py-12"></section>
 
-          {/* Projects */}
-          <section className="space-y-6">
-            <p className="text-xs uppercase tracking-wider text-[#525252]">Selected Work</p>
-            <div className="space-y-8">
-              {projects.map((project, index) => (
-                <Link key={project.title} href={project.link} className="block group">
-                  <div className="relative aspect-video rounded-lg overflow-hidden bg-[#171717] mb-3">
-                    <Image
-                      src={project.image || "/placeholder.svg"}
-                      alt={project.title}
-                      fill
-                      loading="eager"
-                      priority={index === 0}
-                      sizes="calc(100vw - 3rem)"
-                      className="object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
-                    />
-                  </div>
-                  <h3 className="text-lg font-normal text-[#fafafa] group-hover:text-[#a1a1a1] transition-colors mb-1">
-                    {project.description}
-                  </h3>
-                  <p className="text-sm text-[#737373]">
-                    {project.tags.join(" · ")} · {project.year}
-                  </p>
-                </Link>
-              ))}
-            </div>
-          </section>
+          {/* Work */}
+          <WorkSection title="Selected Work" projects={projects} />
 
-          <section className="space-y-6">
-            <div className="grid grid-cols-1 gap-6">
-              {smallProjects.map((project) => (
-                <Link key={project.title} href={project.link} className="group block">
-                  <div className="relative aspect-4/3 rounded-lg overflow-hidden bg-[#171717] mb-3">
-                    <Image
-                      src={project.image || "/placeholder.svg"}
-                      alt={project.title}
-                      fill
-                      loading="eager"
-                      sizes="calc(100vw - 3rem)"
-                      className="object-cover opacity-85 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
-                    />
-                  </div>
-                  <div className="flex items-baseline justify-between">
-                    <h3 className="text-base font-medium group-hover:text-[#a1a1a1] transition-colors">
-                      {project.title}
-                    </h3>
-                    <span className="text-xs text-[#525252]">{project.year}</span>
-                  </div>
-                  <p className="text-sm text-[#737373] mt-1">{project.description}</p>
-                </Link>
-              ))}
-            </div>
+          {/* Small Projects */}
+          <section className="space-y-6 mt-16">
+            <ProjectGrid projects={smallProjects} columns={1} />
           </section>
 
           {/* Social Links */}
@@ -343,16 +339,21 @@ export default function Page() {
             {socialLinks.map((link) => {
               const IconComponent = Icons[link.icon as keyof typeof Icons]
               return (
-                <Link
+                <motion.div
                   key={link.href}
-                  href={link.href}
-                  className="w-10 h-10 rounded-full border border-[#333] flex items-center justify-center text-[#888] hover:text-white hover:border-[#555] transition-all"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={link.label}
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.95 }}
                 >
-                  <IconComponent />
-                </Link>
+                  <Link
+                    href={link.href}
+                    className="w-10 h-10 rounded-full border border-[#333] flex items-center justify-center text-[#888] hover:text-white hover:border-[#555] transition-all"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={link.label}
+                  >
+                    <IconComponent />
+                  </Link>
+                </motion.div>
               )
             })}
           </footer>
@@ -367,9 +368,25 @@ export default function Page() {
             <div className="p-12 xl:p-16 flex flex-col h-full justify-between">
               {/* Top Content */}
               <div className="space-y-8">
-                <div>
-                  <h1 className="font-bold text-[2.5rem] leading-tight text-[#fafafa] mb-4">Priyanshu Mahey</h1>
-                  <div className="text-base text-[#a1a1a1] leading-relaxed">
+                <motion.div
+                  initial={{ opacity: 0, y: -20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, ease: "easeOut" }}
+                >
+                  <motion.h1
+                    className="font-bold text-[2.5rem] leading-tight text-[#fafafa] mb-4"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.2, duration: 0.5 }}
+                  >
+                    Priyanshu Mahey
+                  </motion.h1>
+                  <motion.div
+                    className="text-base text-[#a1a1a1] leading-relaxed"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3, duration: 0.5 }}
+                  >
                     Building agents, AI software, and recommendation systems at{" "}
                     <LinkPreview
                       url="https://www.microsoft.com/"
@@ -392,8 +409,8 @@ export default function Page() {
                       Zofiq
                     </LinkPreview>
                     , research @ <span className="text-[#fafafa]">UBC</span>.
-                  </div>
-                </div>
+                  </motion.div>
+                </motion.div>
 
                 <nav
                   className="flex flex-col gap-2.5 transition-all duration-700 ease-out"
@@ -415,23 +432,36 @@ export default function Page() {
               </div>
 
               {/* Bottom - Social Links */}
-              <div className="flex items-center gap-3">
-                {socialLinks.map((link) => {
+              <motion.div
+                className="flex items-center gap-3"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5, duration: 0.5 }}
+              >
+                {socialLinks.map((link, index) => {
                   const IconComponent = Icons[link.icon as keyof typeof Icons]
                   return (
-                    <Link
+                    <motion.div
                       key={link.href}
-                      href={link.href}
-                      className="w-10 h-10 rounded-full border border-[#333] flex items-center justify-center text-[#888] hover:text-white hover:border-[#555] transition-all"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={link.label}
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.95 }}
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: 0.6 + index * 0.05, duration: 0.3 }}
                     >
-                      <IconComponent />
-                    </Link>
+                      <Link
+                        href={link.href}
+                        className="w-10 h-10 rounded-full border border-[#333] flex items-center justify-center text-[#888] hover:text-white hover:border-[#555] transition-all"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={link.label}
+                      >
+                        <IconComponent />
+                      </Link>
+                    </motion.div>
                   )
                 })}
-              </div>
+              </motion.div>
             </div>
           </div>
 
@@ -463,168 +493,56 @@ export default function Page() {
             {/* Projects Section */}
             <div className="px-12 xl:px-16 pb-24 space-y-16">
               {/* Selected Work */}
-              <section className="space-y-8">
-                <p className="text-xs uppercase tracking-wider text-[#525252]">Selected Work</p>
-                <div className="space-y-16">
-                  {projects.map((project, index) => (
-                    <Link key={project.title} href={project.link} className="block group">
-                      <div className="relative aspect-video rounded-xl overflow-hidden bg-[#0f0f0f] mb-4">
-                        <Image
-                          src={"/hero.jpg"}
-                          alt={project.title}
-                          fill
-                          loading="eager"
-                          priority={index === 0}
-                          sizes="(max-width: 1024px) 100vw, 65vw"
-                          className="object-cover opacity-90 group-hover:opacity-100 group-hover:scale-[1.02] transition-all duration-700"
-                        />
-                      </div>
-                      <h3 className="text-lg font-normal text-[#fafafa] group-hover:text-[#d4d4d4] transition-colors mb-2 leading-relaxed">
-                        {project.description}
-                      </h3>
-                      <p className="text-sm text-[#737373]">
-                        {project.title} · {project.tags.join(" · ")}
-                      </p>
-                    </Link>
-                  ))}
-                </div>
-              </section>
-
-              {/* All Projects */}
-              <section className="space-y-8">
-                <p className="text-xs uppercase tracking-wider text-[#525252]">All Projects</p>
-                <div className="grid grid-cols-2 gap-8">
-
-                </div>
-              </section>
+              <WorkSection title="Selected Work" projects={projects} />
             </div>
           </div>
         </div>
       </div>
 
       {/* Full Width Gallery Section */}
-      <div className="w-full bg-[#050505] border-t border-[#1a1a1a]">
-        <div className="max-w-[1400px] mx-auto px-6 lg:px-12 py-24">
-          <div className="flex flex-col lg:flex-row gap-8">
-            {/* Left Column */}
-            <div className="flex-1 flex flex-col gap-12">
-              {galleryProjects
-                .filter((_, index) => index % 2 === 0)
-                .slice(0, isMobile && !showAllGallery ? 3 : undefined)
-                .map((project, i) => {
-                  const originalIndex = i * 2
-                  const isFirst = i === 0
-                  return (
-                    <Link
-                      key={project.title}
-                      href={project.link}
-                      className="group block"
-                      onMouseEnter={() => setHoveredGallery(originalIndex)}
-                      onMouseLeave={() => setHoveredGallery(null)}
-                    >
-                      <div className={`relative rounded-xl overflow-hidden bg-[#0a0a0a] ${isFirst ? 'aspect-4/3 lg:aspect-2/1' : 'aspect-4/3'}`}>
-                        <Image
-                          src={"/hero.jpg"}
-                          alt={project.title}
-                          fill
-                          loading="eager"
-                          sizes="(max-width: 1024px) 100vw, 50vw"
-                          className="object-cover transition-all duration-700 group-hover:scale-105"
-                          style={{
-                            opacity: hoveredGallery === originalIndex ? 1 : 0.9,
-                          }}
-                        />
-                      </div>
-                      <div className="mt-4 flex items-baseline justify-between gap-4">
-                        <h3 className="text-base font-medium text-[#fafafa] group-hover:text-[#d4d4d4] transition-colors truncate">
-                          {project.description}
-                        </h3>
-                        <p className="text-xs text-[#737373] uppercase tracking-wider whitespace-nowrap shrink-0">
-                          {project.title} · {project.year}
-                        </p>
-                      </div>
-                    </Link>
-                  )
-                })}
-            </div>
-            {/* Right Column - Hidden on mobile/tablet, shown on desktop */}
-            <div className="hidden lg:flex flex-1 flex-col gap-12">
-              {galleryProjects
-                .filter((_, index) => index % 2 === 1)
-                .map((project, i) => {
-                  const originalIndex = i * 2 + 1
-                  return (
-                    <Link
-                      key={project.title}
-                      href={project.link}
-                      className="group block"
-                      onMouseEnter={() => setHoveredGallery(originalIndex)}
-                      onMouseLeave={() => setHoveredGallery(null)}
-                    >
-                      <div className="relative rounded-xl overflow-hidden bg-[#0a0a0a] aspect-4/3">
-                        <Image
-                          src={"/hero.jpg"}
-                          alt={project.title}
-                          fill
-                          loading="eager"
-                          sizes="(max-width: 1024px) 100vw, 50vw"
-                          className="object-cover transition-all duration-700 group-hover:scale-105"
-                          style={{
-                            opacity: hoveredGallery === originalIndex ? 1 : 0.9,
-                          }}
-                        />
-                      </div>
-                      <div className="mt-4 flex items-baseline justify-between gap-4">
-                        <h3 className="text-base font-medium text-[#fafafa] group-hover:text-[#d4d4d4] transition-colors truncate">
-                          {project.description}
-                        </h3>
-                        <p className="text-xs text-[#737373] uppercase tracking-wider whitespace-nowrap shrink-0">
-                          {project.title} · {project.year}
-                        </p>
-                      </div>
-                    </Link>
-                  )
-                })}
-            </div>
-          </div>
-          
-          {/* Show More Button - Only visible on mobile/tablet */}
-          {isMobile && !showAllGallery && galleryProjects.length > 6 && (
-            <div className="mt-12 flex justify-center">
-              <button
-                onClick={() => setShowAllGallery(true)}
-                className="px-6 py-3 text-sm text-[#a1a1a1] border border-[#333] rounded-full hover:text-[#fafafa] hover:border-[#555] transition-all"
-              >
-                Show more projects
-              </button>
-            </div>
-          )}
-        </div>
-      </div>
+      <GallerySection
+        projects={galleryProjects}
+        isMobile={isMobile}
+        showAll={showAllGallery}
+        onShowMore={() => setShowAllGallery(true)}
+      />
 
       {/* Footer */}
-      <footer className="w-full bg-[#050505] border-t border-[#1a1a1a] py-12">
+      <motion.footer
+        className="w-full bg-[#050505] border-t border-[#1a1a1a] py-12"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
+      >
         <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
             <p className="text-sm text-[#525252]">
               © {new Date().getFullYear()} Priyanshu Mahey
             </p>
             <div className="flex items-center gap-6">
-              {socialLinks.map((link) => (
-                <Link
+              {socialLinks.map((link, index) => (
+                <motion.div
                   key={link.href}
-                  href={link.href}
-                  className="text-xs text-[#737373] hover:text-[#fafafa] transition-colors uppercase tracking-wider"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.05, duration: 0.4 }}
                 >
-                  {link.label}
-                </Link>
+                  <Link
+                    href={link.href}
+                    className="text-xs text-[#737373] hover:text-[#fafafa] transition-colors uppercase tracking-wider"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {link.label}
+                  </Link>
+                </motion.div>
               ))}
             </div>
           </div>
         </div>
-      </footer>
+      </motion.footer>
     </div>
   )
 }
