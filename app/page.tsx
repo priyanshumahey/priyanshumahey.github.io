@@ -19,6 +19,14 @@ const projects: ProjectData[] = [
     isPrivate: true,
   },
   {
+    title: "Zofiq",
+    description: "AI-powered platform transforming how businesses interact with customers.",
+    year: "2024",
+    link: "https://zofiq.ai/",
+    image: "/work/zofiq1.png",
+    hoverImage: "/work/zofiq2.png",
+  },
+  {
     title: "Purple Lotus",
     description: "Built a healthcare technology platform enabling better patient outcomes through AI-driven diagnostics.",
     year: "2023",
