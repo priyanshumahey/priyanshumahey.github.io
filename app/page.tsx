@@ -166,7 +166,7 @@ const socialLinks = [
 
 const navLinks = [
   { href: "/work", label: "Work" },
-  { href: "/writing", label: "Writing" },
+  { href: "/blog", label: "Writing" },
   { href: "/fun", label: "Fun" },
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },

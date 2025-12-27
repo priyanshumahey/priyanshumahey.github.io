@@ -1,6 +1,6 @@
 [
   {
-    "slug": "notes/purple-lotus",
+    "slug": "blog/purple-lotus",
     "title": "Purple Lotus - Coming Soon",
     "authors": [
       "Priyanshu Mahey"
@@ -17,7 +17,7 @@
     "slugAsParams": "purple-lotus"
   },
   {
-    "slug": "notes/video-vector",
+    "slug": "blog/video-vector",
     "title": "Video Embedding",
     "authors": [
       "Priyanshu Mahey"
@@ -29,7 +29,7 @@
       "embeddings",
       "vectors"
     ],
-    "body": "const{jsx:e}=arguments[0];function _createMdxContent(n){const t={a:\"a\",h1:\"h1\",...n.components};return e(t.h1,{id:\"video-embedding\",children:e(t.a,{className:\"subheading-anchor\",\"aria-label\":\"Link to section\",href:\"#video-embedding\",children:\"Video Embedding\"})})}return{default:function(n={}){const{wrapper:t}=n.components||{};return t?e(t,{...n,children:e(_createMdxContent,{...n})}):_createMdxContent(n)}};",
+    "body": "const{jsx:e}=arguments[0];function _createMdxContent(n){const t={a:\"a\",h2:\"h2\",...n.components};return e(t.h2,{id:\"video-embedding\",children:e(t.a,{className:\"subheading-anchor\",\"aria-label\":\"Link to section\",href:\"#video-embedding\",children:\"Video Embedding\"})})}return{default:function(n={}){const{wrapper:t}=n.components||{};return t?e(t,{...n,children:e(_createMdxContent,{...n})}):_createMdxContent(n)}};",
     "image": "/hero.jpg",
     "slugAsParams": "video-vector"
   }

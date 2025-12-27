@@ -5,9 +5,7 @@ import { defineCollection, defineConfig, s } from "velite";
 
 const computedFields = (data: any) => ({
   ...data,
-  slug: data.slug.replace(/^blog\//, "notes/"),
   slugAsParams: data.slug
-    .replace(/^blog\//, "notes/")
     .split("/")
     .slice(1)
     .join("/"),

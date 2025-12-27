@@ -1,39 +1,79 @@
+@reference "tailwindcss";
+
+/* Code blocks */
 [data-rehype-pretty-code-figure] pre {
-    @apply px-0;
-  }
-  
-  [data-rehype-pretty-code-figure] code {
-    @apply text-sm !leading-loose md:text-base border-0 p-0;
-  }
-  
-  [data-rehype-pretty-code-figure] code[data-line-numbers] {
-    counter-reset: line;
-  }
-  
-  [data-rehype-pretty-code-figure] code[data-line-numbers] > [data-line]::before {
-    counter-increment: line;
-    content: counter(line);
-    @apply mr-4 inline-block w-4 text-right text-gray-500;
-  }
-  
-  [data-rehype-pretty-code-figure] [data-line] {
-    @apply border-l-2 border-l-transparent px-3;
-  }
-  
-  [data-rehype-pretty-code-figure] [data-highlighted-line] {
-    background: rgba(200, 200, 255, 0.1);
-    @apply border-l-blue-400;
-  }
-  
-  [data-rehype-pretty-code-figure] [data-highlighted-chars] {
-    @apply rounded bg-zinc-600/50;
-    box-shadow: 0 0 0 4px rgb(82 82 91 / 0.5);
-  }
-  
-  [data-rehype-pretty-code-figure] [data-chars-id] {
-    @apply border-b-2 p-1 shadow-none;
-  }
-  
-  .subheading-anchor {
-    @apply no-underline hover:underline;
-  }
+  @apply px-0 bg-[#0f0f0f] rounded-xl my-6;
+}
+
+[data-rehype-pretty-code-figure] code {
+  @apply text-sm !leading-loose md:text-base border-0 p-0;
+}
+
+[data-rehype-pretty-code-figure] code[data-line-numbers] {
+  counter-reset: line;
+}
+
+[data-rehype-pretty-code-figure] code[data-line-numbers] > [data-line]::before {
+  counter-increment: line;
+  content: counter(line);
+  @apply mr-4 inline-block w-4 text-right text-[#525252];
+}
+
+[data-rehype-pretty-code-figure] [data-line] {
+  @apply border-l-2 border-l-transparent px-4 py-0.5;
+}
+
+[data-rehype-pretty-code-figure] [data-highlighted-line] {
+  background: rgba(59, 130, 246, 0.1);
+  @apply border-l-blue-400;
+}
+
+[data-rehype-pretty-code-figure] [data-highlighted-chars] {
+  @apply rounded bg-blue-500/20;
+  box-shadow: 0 0 0 4px rgb(59 130 246 / 0.2);
+}
+
+[data-rehype-pretty-code-figure] [data-chars-id] {
+  @apply border-b-2 p-1 shadow-none;
+}
+
+.subheading-anchor {
+  @apply text-[#fafafa] no-underline hover:underline decoration-blue-400;
+}
+
+/* Prose overrides for dark theme */
+.prose h1, .prose h2, .prose h3, .prose h4 {
+  @apply text-[#fafafa] font-bold tracking-tight;
+}
+
+.prose p {
+  @apply text-[#a1a1a1] leading-relaxed;
+}
+
+.prose a {
+  @apply text-blue-400 decoration-blue-400 hover:text-blue-300;
+}
+
+.prose strong {
+  @apply text-[#fafafa];
+}
+
+.prose code {
+  @apply text-[#fafafa] bg-[#1a1a1a] px-1.5 py-0.5 rounded;
+}
+
+.prose ul, .prose ol {
+  @apply text-[#a1a1a1];
+}
+
+.prose li::marker {
+  @apply text-[#525252];
+}
+
+.prose blockquote {
+  @apply border-l-blue-400 text-[#737373] italic;
+}
+
+.prose hr {
+  @apply border-[#1a1a1a];
+}
