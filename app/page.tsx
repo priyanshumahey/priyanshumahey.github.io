@@ -35,6 +35,14 @@ const projects: ProjectData[] = [
 
   },
   {
+    title: "Input Retrieval",
+    description: "Advanced search and retrieval platform powered by cutting-edge AI technology.",
+    year: "2024",
+    link: "https://www.inputretrieval.com/",
+    image: "/work/ir.png",
+    hoverVideo: "/work/inputretrieval.mp4",
+  },
+  {
     title: "Index",
     description: "AI-powered knowledge management system for organizing and retrieving information intelligently.",
     year: "2024",

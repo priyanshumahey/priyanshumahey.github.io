@@ -4,7 +4,7 @@ import { motion } from "framer-motion"
 import { Lock } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
-import { useState } from "react"
+import { useState, useRef, useEffect } from "react"
 import { ProjectData } from "./ProjectCard"
 
 interface GallerySectionProps {
@@ -37,6 +37,20 @@ function GalleryItem({
   isFirst?: boolean
 }) {
   const [isHovered, setIsHovered] = useState(false)
+  const videoRef = useRef<HTMLVideoElement>(null)
+
+  useEffect(() => {
+    if (videoRef.current) {
+      if (isHovered) {
+        videoRef.current.play().catch(() => {
+          // Autoplay might be blocked, that's okay
+        })
+      } else {
+        videoRef.current.pause()
+        videoRef.current.currentTime = 0
+      }
+    }
+  }, [isHovered])
 
   return (
     <motion.div
@@ -61,7 +75,7 @@ function GalleryItem({
           <motion.div
             className="absolute inset-0"
             animate={{ 
-              opacity: isHovered && project.hoverImage ? 0 : 0.9,
+              opacity: isHovered && (project.hoverImage || project.hoverVideo) ? 0 : 0.9,
               scale: isHovered ? 1.05 : 1 
             }}
             transition={{ duration: 0.5, ease: "easeOut" }}
@@ -93,6 +107,27 @@ function GalleryItem({
                 loading="eager"
                 sizes="(max-width: 1024px) 100vw, 50vw"
                 className="object-cover"
+              />
+            </motion.div>
+          )}
+          
+          {/* Hover video */}
+          {project.hoverVideo && (
+            <motion.div
+              className="absolute inset-0"
+              animate={{ 
+                opacity: isHovered ? 1 : 0,
+                scale: isHovered ? 1.05 : 1 
+              }}
+              transition={{ duration: 0.5, ease: "easeOut" }}
+            >
+              <video
+                ref={videoRef}
+                src={project.hoverVideo}
+                loop
+                muted
+                playsInline
+                className="w-full h-full object-cover"
               />
             </motion.div>
           )}

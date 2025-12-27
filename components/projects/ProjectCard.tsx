@@ -4,7 +4,7 @@ import { motion } from "framer-motion"
 import { Lock } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
-import { useState } from "react"
+import { useState, useRef, useEffect } from "react"
 
 export interface ProjectData {
   title: string
@@ -13,6 +13,7 @@ export interface ProjectData {
   link: string
   image: string
   hoverImage?: string
+  hoverVideo?: string
   isPrivate?: boolean
 }
 
@@ -48,6 +49,20 @@ const imageVariants = {
 
 export function ProjectCard({ project, index, variant = "large" }: ProjectCardProps) {
   const [isHovered, setIsHovered] = useState(false)
+  const videoRef = useRef<HTMLVideoElement>(null)
+
+  useEffect(() => {
+    if (videoRef.current) {
+      if (isHovered) {
+        videoRef.current.play().catch(() => {
+          // Autoplay might be blocked, that's okay
+        })
+      } else {
+        videoRef.current.pause()
+        videoRef.current.currentTime = 0
+      }
+    }
+  }, [isHovered])
 
   const aspectClass = variant === "large" 
     ? "aspect-video" 
@@ -56,6 +71,7 @@ export function ProjectCard({ project, index, variant = "large" }: ProjectCardPr
       : "aspect-4/3"
 
   const currentImage = isHovered && project.hoverImage ? project.hoverImage : project.image
+  const hasHoverMedia = !!(project.hoverImage || project.hoverVideo)
 
   return (
     <motion.div
@@ -108,6 +124,24 @@ export function ProjectCard({ project, index, variant = "large" }: ProjectCardPr
                 loading="eager"
                 sizes={variant === "large" ? "(max-width: 1024px) 100vw, 65vw" : "(max-width: 1024px) 100vw, 50vw"}
                 className="object-cover"
+              />
+            </motion.div>
+          )}
+          
+          {/* Hover video (if exists) */}
+          {project.hoverVideo && (
+            <motion.div
+              className="absolute inset-0"
+              animate={{ opacity: isHovered ? 1 : 0 }}
+              transition={{ duration: 0.4, ease: "easeInOut" }}
+            >
+              <video
+                ref={videoRef}
+                src={project.hoverVideo}
+                loop
+                muted
+                playsInline
+                className="w-full h-full object-cover"
               />
             </motion.div>
           )}
