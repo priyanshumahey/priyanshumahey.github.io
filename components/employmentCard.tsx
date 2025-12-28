@@ -10,7 +10,7 @@ interface EmploymentCardProps {
 
 export default function EmploymentCard({ logo, department, company, link }: EmploymentCardProps) {
     const cardContent = (
-        <div className="flex items-center gap-3 rounded-lg bg-[#1a1a1a] hover:bg-[#222222] transition-colors px-4 py-3 w-full max-w-sm border border-[#2a2a2a]">
+        <div className="flex items-center gap-3 rounded-lg bg-[#1a1a1a] hover:bg-[#222222] transition-colors px-4 py-3 w-full border border-[#2a2a2a]">
             <div className="flex h-10 w-10 items-center justify-center rounded-md bg-[#252525] flex-shrink-0 overflow-hidden">
                 <Image
                     src={logo}

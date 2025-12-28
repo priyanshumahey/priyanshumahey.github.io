@@ -1,8 +1,12 @@
 @reference "tailwindcss";
 
+/* ===================================
+   MDX STYLING - SLEEK DARK MODE THEME
+   =================================== */
+
 /* Code blocks */
 [data-rehype-pretty-code-figure] pre {
-  @apply px-0 bg-[#0f0f0f] rounded-xl my-6;
+  @apply px-0 bg-[#0c0c0c] rounded-xl my-8 border border-[#1a1a1a];
 }
 
 [data-rehype-pretty-code-figure] code {
@@ -16,64 +20,229 @@
 [data-rehype-pretty-code-figure] code[data-line-numbers] > [data-line]::before {
   counter-increment: line;
   content: counter(line);
-  @apply mr-4 inline-block w-4 text-right text-[#525252];
+  @apply mr-4 inline-block w-4 text-right text-[#3a3a3a];
 }
 
 [data-rehype-pretty-code-figure] [data-line] {
-  @apply border-l-2 border-l-transparent px-4 py-0.5;
+  @apply border-l-2 border-l-transparent px-5 py-0.5;
 }
 
 [data-rehype-pretty-code-figure] [data-highlighted-line] {
-  background: rgba(59, 130, 246, 0.1);
-  @apply border-l-blue-400;
+  background: rgba(59, 130, 246, 0.08);
+  @apply border-l-blue-500;
 }
 
 [data-rehype-pretty-code-figure] [data-highlighted-chars] {
-  @apply rounded bg-blue-500/20;
-  box-shadow: 0 0 0 4px rgb(59 130 246 / 0.2);
+  @apply rounded bg-blue-500/15;
+  box-shadow: 0 0 0 4px rgb(59 130 246 / 0.15);
 }
 
 [data-rehype-pretty-code-figure] [data-chars-id] {
   @apply border-b-2 p-1 shadow-none;
 }
 
+/* Heading anchors */
 .subheading-anchor {
-  @apply text-[#fafafa] no-underline hover:underline decoration-blue-400;
+  @apply text-[#fafafa] no-underline hover:underline decoration-blue-500/50 underline-offset-4;
 }
 
-/* Prose overrides for dark theme */
-.prose h1, .prose h2, .prose h3, .prose h4 {
-  @apply text-[#fafafa] font-bold tracking-tight;
+/* ===================================
+   TYPOGRAPHY - HEADINGS
+   =================================== */
+
+.prose h1 {
+  @apply text-[#fafafa] font-bold tracking-tight text-3xl md:text-4xl mt-0 mb-6;
 }
+
+.prose h2 {
+  @apply text-[#fafafa] font-semibold tracking-tight text-xl md:text-2xl mt-14 mb-5 pb-3 border-b border-[#1a1a1a];
+}
+
+.prose h3 {
+  @apply text-[#e5e5e5] font-semibold tracking-tight text-lg md:text-xl mt-10 mb-4;
+}
+
+.prose h4 {
+  @apply text-[#d4d4d4] font-medium tracking-tight text-base md:text-lg mt-8 mb-3;
+}
+
+/* Heading links - keep them clean */
+.prose h1 a,
+.prose h2 a,
+.prose h3 a,
+.prose h4 a,
+.prose h5 a,
+.prose h6 a {
+  color: inherit;
+  text-decoration: none;
+  pointer-events: none;
+  cursor: default;
+}
+
+/* ===================================
+   TYPOGRAPHY - BODY TEXT
+   =================================== */
 
 .prose p {
-  @apply text-[#a1a1a1] leading-relaxed;
-}
-
-.prose a {
-  @apply text-blue-400 decoration-blue-400 hover:text-blue-300;
+  @apply text-[#a1a1a1] leading-[1.85] text-base md:text-[1.0625rem] mb-6;
 }
 
 .prose strong {
-  @apply text-[#fafafa];
+  @apply text-[#fafafa] font-semibold;
 }
 
-.prose code {
-  @apply text-[#fafafa] bg-[#1a1a1a] px-1.5 py-0.5 rounded;
+.prose em {
+  @apply text-[#b5b5b5] italic;
 }
 
-.prose ul, .prose ol {
-  @apply text-[#a1a1a1];
+.prose a {
+  @apply text-blue-400 decoration-blue-400/40 underline underline-offset-[3px] 
+         hover:text-blue-300 hover:decoration-blue-300/60 transition-colors duration-200;
 }
 
-.prose li::marker {
-  @apply text-[#525252];
+/* ===================================
+   LISTS - PROPER BULLET STYLING
+   =================================== */
+
+.prose ul {
+  @apply my-6 ml-0 space-y-3;
+  list-style: none;
+  padding-left: 0;
 }
+
+.prose ol {
+  @apply my-6 ml-0 space-y-3 pl-0;
+  list-style: none;
+  counter-reset: list-counter;
+}
+
+.prose ul > li {
+  @apply relative pl-6 text-[#a1a1a1] leading-relaxed text-base md:text-[1.0625rem];
+}
+
+.prose ul > li::before {
+  content: "";
+  @apply absolute left-0 top-[0.65rem] w-1.5 h-1.5 rounded-full bg-blue-500/70;
+}
+
+.prose ol > li {
+  @apply relative pl-8 text-[#a1a1a1] leading-relaxed text-base md:text-[1.0625rem];
+  counter-increment: list-counter;
+}
+
+.prose ol > li::before {
+  content: counter(list-counter) ".";
+  @apply absolute left-0 top-0 text-[#525252] font-medium tabular-nums;
+}
+
+/* Nested lists */
+.prose ul ul,
+.prose ol ul,
+.prose ul ol,
+.prose ol ol {
+  @apply mt-3 mb-0;
+}
+
+.prose li > p {
+  @apply mb-0;
+}
+
+.prose li strong {
+  @apply text-[#e5e5e5];
+}
+
+/* ===================================
+   BLOCKQUOTES
+   =================================== */
 
 .prose blockquote {
-  @apply border-l-blue-400 text-[#737373] italic;
+  @apply border-l-2 border-l-blue-500/60 pl-6 py-1 my-8 bg-blue-500/5 rounded-r-lg;
 }
 
+.prose blockquote p {
+  @apply text-[#9ca3af] italic text-base leading-relaxed;
+}
+
+/* ===================================
+   CODE (INLINE)
+   =================================== */
+
+.prose code {
+  @apply text-[#e5e5e5] bg-[#1a1a1a] px-1.5 py-0.5 rounded text-[0.9em] font-mono 
+         border border-[#262626];
+}
+
+.prose code::before,
+.prose code::after {
+  content: none;
+}
+
+/* ===================================
+   HORIZONTAL RULE
+   =================================== */
+
 .prose hr {
-  @apply border-[#1a1a1a];
+  @apply border-0 h-px bg-gradient-to-r from-transparent via-[#262626] to-transparent my-12;
+}
+
+/* ===================================
+   IMAGES & MEDIA
+   =================================== */
+
+.prose figure {
+  @apply my-8;
+}
+
+.prose figcaption {
+  @apply text-center text-sm text-[#525252] mt-3;
+}
+
+/* ===================================
+   TABLES
+   =================================== */
+
+.prose table {
+  @apply w-full my-8 text-sm;
+}
+
+.prose thead {
+  @apply border-b border-[#262626];
+}
+
+.prose th {
+  @apply text-left text-[#fafafa] font-semibold py-3 px-4;
+}
+
+.prose td {
+  @apply text-[#a1a1a1] py-3 px-4 border-b border-[#1a1a1a];
+}
+
+.prose tr:hover td {
+  @apply bg-[#0f0f0f];
+}
+
+/* ===================================
+   SPECIAL ELEMENTS
+   =================================== */
+
+/* First paragraph after heading - slightly larger */
+.prose h2 + p,
+.prose h3 + p {
+  @apply text-[#b5b5b5];
+}
+
+/* Lead paragraph styling */
+.prose .lead {
+  @apply text-lg md:text-xl text-[#b5b5b5] leading-relaxed;
+}
+
+/* Focus highlight for important content */
+.prose mark {
+  @apply bg-amber-500/20 text-amber-200 px-1 rounded;
+}
+
+/* Keyboard shortcuts */
+.prose kbd {
+  @apply bg-[#1a1a1a] border border-[#2a2a2a] rounded px-1.5 py-0.5 text-xs 
+         font-mono text-[#d4d4d4] shadow-sm;
 }

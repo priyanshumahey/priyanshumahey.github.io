@@ -5,6 +5,7 @@ import Chart from "./chart";
 import EmploymentCard, { EmploymentCardCompact } from "@/components/employmentCard";
 
 const useMDXComponent = (code: string) => {
+  if (!code) return () => null;
   const fn = new Function(code);
   return fn({ ...runtime }).default;
 };

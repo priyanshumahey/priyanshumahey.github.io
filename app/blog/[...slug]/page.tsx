@@ -109,7 +109,7 @@ export default async function PostPage({ params }: PostPageProps) {
             )}
 
             {/* Article Content */}
-            <div className="prose prose-invert prose-base max-w-none prose-headings:text-[#fafafa] prose-headings:font-semibold prose-p:text-[#a1a1a1] prose-p:leading-relaxed prose-a:text-blue-400 prose-a:decoration-blue-400/50 prose-a:underline-offset-2 hover:prose-a:decoration-blue-400 prose-strong:text-[#fafafa] prose-code:text-[#fafafa] prose-li:text-[#a1a1a1] prose-blockquote:border-l-blue-400 prose-blockquote:text-[#737373] prose-blockquote:not-italic prose-img:rounded-xl">
+            <div className="prose prose-invert prose-base max-w-none">
               <MDXContent code={post.body} />
             </div>
           </article>
@@ -213,7 +213,7 @@ export default async function PostPage({ params }: PostPageProps) {
             )}
 
             {/* Article Content */}
-            <div className="prose prose-invert prose-lg max-w-none prose-headings:text-[#fafafa] prose-headings:font-semibold prose-headings:tracking-tight prose-h2:text-2xl prose-h2:mt-12 prose-h2:mb-4 prose-h3:text-xl prose-h3:mt-8 prose-h3:mb-3 prose-p:text-[#a1a1a1] prose-p:leading-[1.8] prose-a:text-blue-400 prose-a:decoration-blue-400/50 prose-a:underline-offset-2 hover:prose-a:decoration-blue-400 prose-strong:text-[#fafafa] prose-code:text-[#fafafa] prose-code:bg-[#1a1a1a] prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:before:content-none prose-code:after:content-none prose-li:text-[#a1a1a1] prose-li:leading-relaxed prose-ul:my-6 prose-ol:my-6 prose-blockquote:border-l-2 prose-blockquote:border-l-blue-400 prose-blockquote:text-[#737373] prose-blockquote:not-italic prose-blockquote:pl-6 prose-img:rounded-xl prose-hr:border-[#1a1a1a]">
+            <div className="prose prose-invert prose-lg max-w-none">
               <MDXContent code={post.body} />
             </div>
           </article>
