@@ -7,16 +7,14 @@ const socialLinks = [
   { href: "https://www.linkedin.com/in/priyanshu-mahey/", label: "LinkedIn", icon: "linkedin" },
   { href: "https://x.com/PriyanshuMahey", label: "X", icon: "x" },
   { href: "https://github.com/priyanshumahey", label: "GitHub", icon: "github" },
-  { href: "https://substack.com/@priyanshumahey", label: "Substack", icon: "substack" },
   { href: "mailto:priyanshu.mahey02@gmail.com", label: "Email", icon: "email" },
 ];
 
 const navLinks = [
-  { href: "/work", label: "Work" },
   { href: "/blog", label: "Writing" },
   { href: "/fun", label: "Fun" },
   { href: "/about", label: "About" },
-  { href: "/contact", label: "Contact" },
+  { href: "/resume", label: "Resume" },
 ];
 
 const Icons = {
@@ -27,7 +25,6 @@ const Icons = {
     </svg>
   ),
   github: () => <Github className="w-5 h-5" />,
-  substack: () => <FileText className="w-5 h-5" />,
   email: () => <Mail className="w-5 h-5" />,
 };
 

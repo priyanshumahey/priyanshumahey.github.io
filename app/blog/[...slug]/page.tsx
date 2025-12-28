@@ -9,11 +9,10 @@ import Link from "next/link";
 import "@/styles/mdx.css";
 
 const navLinks = [
-  { href: "/work", label: "Work" },
   { href: "/blog", label: "Writing" },
   { href: "/fun", label: "Fun" },
   { href: "/about", label: "About" },
-  { href: "/contact", label: "Contact" },
+  { href: "/resume", label: "Resume" },
 ];
 
 interface PostPageProps {

@@ -13,7 +13,7 @@ const workExperiences: ProjectData[] = [
     title: "Microsoft",
     description: "Building agents, AI software, and recommendation systems.",
     year: "2025",
-    link: "/projects/microsoft",
+    link: "/work/microsoft",
     image: "/work/msft1.png",
     hoverImage: "/work/msft2.png",
     isPrivate: true,
@@ -41,22 +41,7 @@ const workExperiences: ProjectData[] = [
     link: "https://www.inputretrieval.com/",
     image: "/work/ir.png",
     hoverVideo: "/work/inputretrieval.mp4",
-  },
-  {
-    title: "Index",
-    description: "AI-powered knowledge management system for organizing and retrieving information intelligently.",
-    year: "2024",
-    link: "/projects/index",
-    image: "/hero.jpg",
-    isPrivate: true,
-  },
-  {
-    title: "EEG Research",
-    description: "Neural signal processing research at UBC exploring brain-computer interfaces.",
-    year: "2022",
-    link: "/projects/eeg",
-    image: "/hero.jpg",
-  },
+  }
 ]
 
 // Additional full-width gallery projects
@@ -75,57 +60,7 @@ const galleryProjects: ProjectData[] = [
     link: "https://github.com/priyanshumahey/vibration",
     image: "/projects/vibration1.png",
     hoverImage: "/projects/vibration2.png",
-  },
-  {
-    title: "Analytics Dashboard",
-    description: "Business intelligence tools",
-    year: "2024",
-    image: "/hero.jpg",
-    link: "/projects/analytics",
-    isPrivate: true,
-  },
-  {
-    title: "Fitness Tracker",
-    description: "Health and workout logging",
-    year: "2023",
-    image: "/hero.jpg",
-    link: "/projects/fitness",
-  },
-  {
-    title: "Recipe App",
-    description: "Culinary discovery platform",
-    year: "2022",
-    image: "/hero.jpg",
-    link: "/projects/recipes",
-  },
-  {
-    title: "Music Player",
-    description: "Audio streaming service",
-    year: "2024",
-    image: "/hero.jpg",
-    link: "/projects/music",
-  },
-  {
-    title: "Travel Planner",
-    description: "Trip organization system",
-    year: "2023",
-    image: "/hero.jpg",
-    link: "/projects/travel",
-  },
-  {
-    title: "Note Taking",
-    description: "Knowledge management tool",
-    year: "2024",
-    image: "/hero.jpg",
-    link: "/projects/notes",
-  },
-  {
-    title: "Video Editor",
-    description: "Browser-based video tools",
-    year: "2022",
-    image: "/hero.jpg",
-    link: "/projects/video",
-  },
+  }
 ]
 
 // Social/nav links
@@ -133,16 +68,14 @@ const socialLinks = [
   { href: "https://www.linkedin.com/in/priyanshu-mahey/", label: "LinkedIn", icon: "linkedin" },
   { href: "https://x.com/PriyanshuMahey", label: "X", icon: "x" },
   { href: "https://github.com/priyanshumahey", label: "GitHub", icon: "github" },
-  { href: "https://substack.com/@priyanshumahey", label: "Substack", icon: "substack" },
   { href: "mailto:priyanshu.mahey02@gmail.com", label: "Email", icon: "email" },
 ]
 
 const navLinks = [
-  { href: "/work", label: "Work" },
   { href: "/blog", label: "Writing" },
   { href: "/fun", label: "Fun" },
   { href: "/about", label: "About" },
-  { href: "/contact", label: "Contact" },
+  { href: "/resume", label: "Resume" },
 ]
 
 const Icons = {
@@ -153,7 +86,6 @@ const Icons = {
     </svg>
   ),
   github: () => <Github className="w-5 h-5" />,
-  substack: () => <FileText className="w-5 h-5" />,
   email: () => <Mail className="w-5 h-5" />,
 }
 
@@ -294,30 +226,6 @@ export default function Page() {
 
           {/* Work */}
           <WorkSection title="Selected Work" projects={workExperiences} />
-
-          {/* Social Links */}
-          <footer className="flex items-center gap-3 pt-12 pb-6">
-            {socialLinks.map((link) => {
-              const IconComponent = Icons[link.icon as keyof typeof Icons]
-              return (
-                <motion.div
-                  key={link.href}
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <Link
-                    href={link.href}
-                    className="w-10 h-10 rounded-full border border-[#333] flex items-center justify-center text-[#888] hover:text-white hover:border-[#555] transition-all"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={link.label}
-                  >
-                    <IconComponent />
-                  </Link>
-                </motion.div>
-              )
-            })}
-          </footer>
         </main>
       </div>
 
@@ -369,7 +277,7 @@ export default function Page() {
                     >
                       Zofiq
                     </LinkPreview>
-                    , research @ <span className="text-[#fafafa]">UBC</span>.
+                    , research @<span className="text-[#fafafa]">UBC</span>.
                   </motion.div>
                 </motion.div>
 
