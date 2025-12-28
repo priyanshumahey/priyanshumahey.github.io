@@ -1,0 +1,36 @@
+[
+  {
+    "slug": "projects/genwiki",
+    "title": "GenWiki",
+    "description": "AI-generated wiki that builds and maintains knowledge bases automatically.",
+    "date": "2025-01-01T00:00:00.000Z",
+    "published": true,
+    "tags": [
+      "ai",
+      "wiki",
+      "knowledge-base"
+    ],
+    "body": "const{Fragment:e,jsx:n,jsxs:i}=arguments[0];function _createMdxContent(a){const r={a:\"a\",h2:\"h2\",li:\"li\",p:\"p\",strong:\"strong\",ul:\"ul\",...a.components};return i(e,{children:[n(r.h2,{id:\"overview\",children:n(r.a,{className:\"subheading-anchor\",\"aria-label\":\"Link to section\",href:\"#overview\",children:\"Overview\"})}),\"\\n\",n(r.p,{children:\"GenWiki is an AI-powered wiki generator that automatically builds and maintains knowledge bases. It uses advanced language models to create, organize, and update documentation.\"}),\"\\n\",n(r.h2,{id:\"features\",children:n(r.a,{className:\"subheading-anchor\",\"aria-label\":\"Link to section\",href:\"#features\",children:\"Features\"})}),\"\\n\",i(r.ul,{children:[\"\\n\",i(r.li,{children:[n(r.strong,{children:\"Automatic Content Generation\"}),\": Generates wiki pages from source material\"]}),\"\\n\",i(r.li,{children:[n(r.strong,{children:\"Knowledge Graph\"}),\": Builds interconnected knowledge structures\"]}),\"\\n\",i(r.li,{children:[n(r.strong,{children:\"Auto-Updates\"}),\": Keeps content fresh with automatic updates\"]}),\"\\n\",i(r.li,{children:[n(r.strong,{children:\"Search & Navigation\"}),\": Intelligent search across the knowledge base\"]}),\"\\n\"]}),\"\\n\",n(r.h2,{id:\"technologies\",children:n(r.a,{className:\"subheading-anchor\",\"aria-label\":\"Link to section\",href:\"#technologies\",children:\"Technologies\"})}),\"\\n\",i(r.ul,{children:[\"\\n\",n(r.li,{children:\"Next.js\"}),\"\\n\",n(r.li,{children:\"TypeScript\"}),\"\\n\",n(r.li,{children:\"Large Language Models\"}),\"\\n\",n(r.li,{children:\"Vector Databases\"}),\"\\n\"]}),\"\\n\",n(r.h2,{id:\"demo\",children:n(r.a,{className:\"subheading-anchor\",\"aria-label\":\"Link to section\",href:\"#demo\",children:\"Demo\"})}),\"\\n\",n(r.p,{children:\"Coming soon!\"})]})}return{default:function(e={}){const{wrapper:i}=e.components||{};return i?n(i,{...e,children:n(_createMdxContent,{...e})}):_createMdxContent(e)}};",
+    "image": "/projects/genwiki.png",
+    "featured": true,
+    "slugAsParams": "genwiki"
+  },
+  {
+    "slug": "projects/vibration",
+    "title": "Vibration",
+    "description": "AI music composition tool",
+    "date": "2025-01-15T00:00:00.000Z",
+    "published": true,
+    "tags": [
+      "ai",
+      "music",
+      "creative"
+    ],
+    "body": "const{Fragment:e,jsx:n,jsxs:i}=arguments[0];function _createMdxContent(r){const t={a:\"a\",h2:\"h2\",li:\"li\",p:\"p\",strong:\"strong\",ul:\"ul\",...r.components};return i(e,{children:[n(t.h2,{id:\"overview\",children:n(t.a,{className:\"subheading-anchor\",\"aria-label\":\"Link to section\",href:\"#overview\",children:\"Overview\"})}),\"\\n\",n(t.p,{children:\"Vibration is an AI-powered music composition tool that helps creators generate unique musical pieces using machine learning.\"}),\"\\n\",n(t.h2,{id:\"features\",children:n(t.a,{className:\"subheading-anchor\",\"aria-label\":\"Link to section\",href:\"#features\",children:\"Features\"})}),\"\\n\",i(t.ul,{children:[\"\\n\",i(t.li,{children:[n(t.strong,{children:\"AI-Powered Composition\"}),\": Generate melodies, harmonies, and rhythms\"]}),\"\\n\",i(t.li,{children:[n(t.strong,{children:\"Style Transfer\"}),\": Apply different musical styles to compositions\"]}),\"\\n\",i(t.li,{children:[n(t.strong,{children:\"Real-time Preview\"}),\": Listen to generated music instantly\"]}),\"\\n\",i(t.li,{children:[n(t.strong,{children:\"Export Options\"}),\": Download in various audio formats\"]}),\"\\n\"]}),\"\\n\",n(t.h2,{id:\"technologies\",children:n(t.a,{className:\"subheading-anchor\",\"aria-label\":\"Link to section\",href:\"#technologies\",children:\"Technologies\"})}),\"\\n\",i(t.ul,{children:[\"\\n\",n(t.li,{children:\"Python\"}),\"\\n\",n(t.li,{children:\"TensorFlow/PyTorch\"}),\"\\n\",n(t.li,{children:\"Audio Processing Libraries\"}),\"\\n\",n(t.li,{children:\"Web Audio API\"}),\"\\n\"]}),\"\\n\",n(t.h2,{id:\"try-it-out\",children:n(t.a,{className:\"subheading-anchor\",\"aria-label\":\"Link to section\",href:\"#try-it-out\",children:\"Try It Out\"})}),\"\\n\",i(t.p,{children:[\"Check out the \",n(t.a,{href:\"https://github.com/priyanshumahey/vibration\",children:\"GitHub repository\"}),\" to learn more and try it yourself.\"]})]})}return{default:function(e={}){const{wrapper:i}=e.components||{};return i?n(i,{...e,children:n(_createMdxContent,{...e})}):_createMdxContent(e)}};",
+    "image": "/projects/vibration1.png",
+    "hoverImage": "/projects/vibration2.png",
+    "github": "https://github.com/priyanshumahey/vibration",
+    "featured": true,
+    "slugAsParams": "vibration"
+  }
+]

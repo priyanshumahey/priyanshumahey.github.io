@@ -163,17 +163,31 @@ export function GallerySection({
   const leftColumnProjects = projects.filter((_, index) => index % 2 === 0)
   const rightColumnProjects = projects.filter((_, index) => index % 2 === 1)
   
-  const displayedLeftProjects = isMobile && !showAll 
-    ? leftColumnProjects.slice(0, 3) 
-    : leftColumnProjects
+  // On mobile, show all projects in a single column (limited if showAll is false)
+  const displayedMobileProjects = !showAll 
+    ? projects.slice(0, 6) 
+    : projects
 
   return (
     <div className="w-full bg-[#050505] border-t border-[#1a1a1a]">
       <div className="max-w-[1400px] mx-auto px-6 lg:px-12 py-24">
-        <div className="flex flex-col lg:flex-row gap-8">
+        {/* Mobile: Single column with all projects */}
+        <div className="flex flex-col gap-12 lg:hidden">
+          {displayedMobileProjects.map((project, i) => (
+            <GalleryItem
+              key={project.title}
+              project={project}
+              index={i}
+              isFirst={i === 0}
+            />
+          ))}
+        </div>
+
+        {/* Desktop: Two columns */}
+        <div className="hidden lg:flex flex-row gap-8">
           {/* Left Column */}
           <div className="flex-1 flex flex-col gap-12">
-            {displayedLeftProjects.map((project, i) => (
+            {leftColumnProjects.map((project, i) => (
               <GalleryItem
                 key={project.title}
                 project={project}
@@ -183,8 +197,8 @@ export function GallerySection({
             ))}
           </div>
           
-          {/* Right Column - Hidden on mobile/tablet */}
-          <div className="hidden lg:flex flex-1 flex-col gap-12">
+          {/* Right Column */}
+          <div className="flex-1 flex flex-col gap-12">
             {rightColumnProjects.map((project, i) => (
               <GalleryItem
                 key={project.title}

@@ -1,9 +1,10 @@
 "use client"
 
+import EmploymentCard from "@/components/employmentCard"
 import { GallerySection, WorkSection, type ProjectData } from "@/components/projects"
 import { LinkPreview } from "@/components/ui/link-preview"
 import { motion } from "framer-motion"
-import { FileText, Github, Linkedin, Mail } from "lucide-react"
+import { Github, Linkedin, Mail } from "lucide-react"
 import Link from "next/link"
 import { useEffect, useState } from "react"
 
@@ -22,7 +23,7 @@ const workExperiences: ProjectData[] = [
     title: "Zofiq",
     description: "AI-powered platform transforming how businesses interact with customers.",
     year: "2024",
-    link: "https://zofiq.ai/",
+    link: "/work/zofiq",
     image: "/work/zofiq1.png",
     hoverImage: "/work/zofiq2.png",
   },
@@ -30,7 +31,7 @@ const workExperiences: ProjectData[] = [
     title: "Purple Lotus",
     description: "Built a healthcare technology platform enabling better patient outcomes through AI-driven diagnostics.",
     year: "2023",
-    link: "https://purplelotusmh.com",
+    link: "/work/purple-lotus",
     image: "/work/purplelotus1.png"
 
   },
@@ -38,7 +39,7 @@ const workExperiences: ProjectData[] = [
     title: "Input Retrieval",
     description: "Advanced search and retrieval platform powered by cutting-edge AI technology.",
     year: "2024",
-    link: "https://www.inputretrieval.com/",
+    link: "/work/input-retrieval",
     image: "/work/ir.png",
     hoverVideo: "/work/inputretrieval.mp4",
   }
@@ -57,7 +58,7 @@ const galleryProjects: ProjectData[] = [
     title: "Vibration",
     description: "AI music composition tool",
     year: "2025",
-    link: "https://github.com/priyanshumahey/vibration",
+    link: "/projects/vibration",
     image: "/projects/vibration1.png",
     hoverImage: "/projects/vibration2.png",
   }

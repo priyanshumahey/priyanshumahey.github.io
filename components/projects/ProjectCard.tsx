@@ -4,7 +4,7 @@ import { motion } from "framer-motion"
 import { Lock } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
-import { useState, useRef, useEffect } from "react"
+import { useState, useRef, useEffect, useCallback } from "react"
 
 export interface ProjectData {
   title: string
@@ -47,13 +47,33 @@ const imageVariants = {
   },
 }
 
+// Hook to detect if we're on mobile
+function useIsMobile() {
+  const [isMobile, setIsMobile] = useState(false)
+  
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 1024)
+    checkMobile()
+    window.addEventListener("resize", checkMobile)
+    return () => window.removeEventListener("resize", checkMobile)
+  }, [])
+  
+  return isMobile
+}
+
 export function ProjectCard({ project, index, variant = "large" }: ProjectCardProps) {
   const [isHovered, setIsHovered] = useState(false)
+  const [mobileAutoPlay, setMobileAutoPlay] = useState(false)
   const videoRef = useRef<HTMLVideoElement>(null)
+  const cardRef = useRef<HTMLDivElement>(null)
+  const viewTimerRef = useRef<NodeJS.Timeout | null>(null)
+  const isMobile = useIsMobile()
 
+  // Handle video play/pause for hover and mobile auto-play
   useEffect(() => {
     if (videoRef.current) {
-      if (isHovered) {
+      const shouldPlay = isHovered || mobileAutoPlay
+      if (shouldPlay) {
         videoRef.current.play().catch(() => {
           // Autoplay might be blocked, that's okay
         })
@@ -62,7 +82,48 @@ export function ProjectCard({ project, index, variant = "large" }: ProjectCardPr
         videoRef.current.currentTime = 0
       }
     }
-  }, [isHovered])
+  }, [isHovered, mobileAutoPlay])
+
+  // Mobile: Intersection Observer to trigger auto-play after 3 seconds of viewing
+  useEffect(() => {
+    if (!isMobile || !cardRef.current) return
+    
+    const hasHoverContent = project.hoverImage || project.hoverVideo
+    if (!hasHoverContent) return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && entry.intersectionRatio >= 0.5) {
+            // Start 3-second timer when card is 50% visible
+            viewTimerRef.current = setTimeout(() => {
+              setMobileAutoPlay(true)
+            }, 1000)
+          } else {
+            // Clear timer and reset when card leaves view
+            if (viewTimerRef.current) {
+              clearTimeout(viewTimerRef.current)
+              viewTimerRef.current = null
+            }
+            setMobileAutoPlay(false)
+          }
+        })
+      },
+      {
+        threshold: 0.5, // Trigger when 50% of the card is visible
+        rootMargin: "0px",
+      }
+    )
+
+    observer.observe(cardRef.current)
+
+    return () => {
+      observer.disconnect()
+      if (viewTimerRef.current) {
+        clearTimeout(viewTimerRef.current)
+      }
+    }
+  }, [isMobile, project.hoverImage, project.hoverVideo])
 
   const aspectClass = variant === "large" 
     ? "aspect-video" 
@@ -72,9 +133,13 @@ export function ProjectCard({ project, index, variant = "large" }: ProjectCardPr
 
   const currentImage = isHovered && project.hoverImage ? project.hoverImage : project.image
   const hasHoverMedia = !!(project.hoverImage || project.hoverVideo)
+  
+  // Combined state: show hover content on desktop hover OR mobile auto-play
+  const showHoverContent = isHovered || mobileAutoPlay
 
   return (
     <motion.div
+      ref={cardRef}
       custom={index}
       initial="hidden"
       whileInView="visible"
@@ -96,7 +161,7 @@ export function ProjectCard({ project, index, variant = "large" }: ProjectCardPr
           {/* Base image */}
           <motion.div
             className="absolute inset-0"
-            animate={{ opacity: isHovered && project.hoverImage ? 0 : 1 }}
+            animate={{ opacity: showHoverContent && project.hoverImage ? 0 : 1 }}
             transition={{ duration: 0.4, ease: "easeInOut" }}
           >
             <Image
@@ -114,7 +179,7 @@ export function ProjectCard({ project, index, variant = "large" }: ProjectCardPr
           {project.hoverImage && (
             <motion.div
               className="absolute inset-0"
-              animate={{ opacity: isHovered ? 1 : 0 }}
+              animate={{ opacity: showHoverContent ? 1 : 0 }}
               transition={{ duration: 0.4, ease: "easeInOut" }}
             >
               <Image
@@ -132,7 +197,7 @@ export function ProjectCard({ project, index, variant = "large" }: ProjectCardPr
           {project.hoverVideo && (
             <motion.div
               className="absolute inset-0"
-              animate={{ opacity: isHovered ? 1 : 0 }}
+              animate={{ opacity: showHoverContent ? 1 : 0 }}
               transition={{ duration: 0.4, ease: "easeInOut" }}
             >
               <video

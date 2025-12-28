@@ -6,3 +6,9 @@ type Collections = typeof __vc.collections
 
 export type Post = Collections['posts']['schema']['_output']
 export declare const posts: Post[]
+
+export type Work = Collections['works']['schema']['_output']
+export declare const works: Work[]
+
+export type Project = Collections['projects']['schema']['_output']
+export declare const projects: Project[]

@@ -2,6 +2,7 @@ import Image from "next/image";
 import * as runtime from "react/jsx-runtime";
 import { Callout } from "./callout";
 import Chart from "./chart";
+import EmploymentCard, { EmploymentCardCompact } from "@/components/employmentCard";
 
 const useMDXComponent = (code: string) => {
   const fn = new Function(code);
@@ -12,6 +13,8 @@ const components = {
   Image,
   Callout,
   Chart,
+  EmploymentCard,
+  EmploymentCardCompact,
 };
 
 interface MdxProps {

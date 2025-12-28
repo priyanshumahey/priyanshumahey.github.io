@@ -1,0 +1,83 @@
+[
+  {
+    "slug": "work/input-retrieval",
+    "title": "Input Retrieval",
+    "company": "Input Retrieval",
+    "role": "Software Engineer",
+    "description": "Advanced search and retrieval platform powered by cutting-edge AI technology.",
+    "startDate": "2024-03-01T00:00:00.000Z",
+    "endDate": "2024-12-31T00:00:00.000Z",
+    "published": true,
+    "tags": [
+      "ai",
+      "search",
+      "retrieval"
+    ],
+    "body": "const{Fragment:e,jsx:n,jsxs:r}=arguments[0];function _createMdxContent(i){const a={a:\"a\",h2:\"h2\",li:\"li\",p:\"p\",ul:\"ul\",...i.components};return r(e,{children:[n(a.h2,{id:\"overview\",children:n(a.a,{className:\"subheading-anchor\",\"aria-label\":\"Link to section\",href:\"#overview\",children:\"Overview\"})}),\"\\n\",n(a.p,{children:\"Input Retrieval is an advanced search and retrieval platform that leverages cutting-edge AI technology to deliver precise and relevant results.\"}),\"\\n\",n(a.h2,{id:\"my-role\",children:n(a.a,{className:\"subheading-anchor\",\"aria-label\":\"Link to section\",href:\"#my-role\",children:\"My Role\"})}),\"\\n\",n(a.p,{children:\"Developed AI-powered search and retrieval features for the platform.\"}),\"\\n\",n(a.h2,{id:\"key-contributions\",children:n(a.a,{className:\"subheading-anchor\",\"aria-label\":\"Link to section\",href:\"#key-contributions\",children:\"Key Contributions\"})}),\"\\n\",r(a.ul,{children:[\"\\n\",n(a.li,{children:\"Built vector search capabilities\"}),\"\\n\",n(a.li,{children:\"Implemented RAG (Retrieval Augmented Generation) pipelines\"}),\"\\n\",n(a.li,{children:\"Optimized search performance and relevance\"}),\"\\n\"]}),\"\\n\",n(a.h2,{id:\"technologies\",children:n(a.a,{className:\"subheading-anchor\",\"aria-label\":\"Link to section\",href:\"#technologies\",children:\"Technologies\"})}),\"\\n\",r(a.ul,{children:[\"\\n\",n(a.li,{children:\"Python\"}),\"\\n\",n(a.li,{children:\"Vector Databases\"}),\"\\n\",n(a.li,{children:\"Large Language Models\"}),\"\\n\",n(a.li,{children:\"Search Infrastructure\"}),\"\\n\"]})]})}return{default:function(e={}){const{wrapper:r}=e.components||{};return r?n(r,{...e,children:n(_createMdxContent,{...e})}):_createMdxContent(e)}};",
+    "image": "/work/ir.png",
+    "hoverVideo": "/work/inputretrieval.mp4",
+    "link": "https://www.inputretrieval.com/",
+    "isPrivate": false,
+    "slugAsParams": "input-retrieval"
+  },
+  {
+    "slug": "work/microsoft",
+    "title": "Microsoft",
+    "company": "Microsoft",
+    "role": "Software Engineer",
+    "description": "Building agents, AI software, and recommendation systems.",
+    "startDate": "2025-01-06T00:00:00.000Z",
+    "published": true,
+    "tags": [
+      "ai",
+      "agents",
+      "recommendations"
+    ],
+    "body": "const{jsx:o}=arguments[0];function _createMdxContent(t){const{EmploymentCard:n}=t.components||{};return n||function(o,t){throw new Error(\"Expected \"+(t?\"component\":\"object\")+\" `\"+o+\"` to be defined: you likely forgot to import, pass, or provide it.\")}(\"EmploymentCard\",!0),o(n,{logo:\"/microsoft-logo.png\",company:\"Microsoft\",department:\"Engineering\"})}return{default:function(t={}){const{wrapper:n}=t.components||{};return n?o(n,{...t,children:o(_createMdxContent,{...t})}):_createMdxContent(t)}};",
+    "image": "/work/msft1.png",
+    "hoverImage": "/work/msft2.png",
+    "isPrivate": true,
+    "slugAsParams": "microsoft"
+  },
+  {
+    "slug": "work/purple-lotus",
+    "title": "Purple Lotus",
+    "company": "Purple Lotus",
+    "role": "Co-founder & Developer",
+    "description": "Built a healthcare technology platform enabling better patient outcomes through AI-driven diagnostics.",
+    "startDate": "2023-01-01T00:00:00.000Z",
+    "endDate": "2024-06-30T00:00:00.000Z",
+    "published": true,
+    "tags": [
+      "healthcare",
+      "ai",
+      "startup"
+    ],
+    "body": "const{Fragment:e,jsx:n,jsxs:i}=arguments[0];function _createMdxContent(t){const r={a:\"a\",h2:\"h2\",li:\"li\",p:\"p\",ul:\"ul\",...t.components};return i(e,{children:[n(r.h2,{id:\"overview\",children:n(r.a,{className:\"subheading-anchor\",\"aria-label\":\"Link to section\",href:\"#overview\",children:\"Overview\"})}),\"\\n\",n(r.p,{children:\"Purple Lotus is a healthcare technology platform that connects clients with therapists, enabling better patient outcomes through technology-driven solutions.\"}),\"\\n\",n(r.h2,{id:\"my-role\",children:n(r.a,{className:\"subheading-anchor\",\"aria-label\":\"Link to section\",href:\"#my-role\",children:\"My Role\"})}),\"\\n\",n(r.p,{children:\"As Co-founder and Developer, I was responsible for building the core platform from the ground up.\"}),\"\\n\",n(r.h2,{id:\"key-achievements\",children:n(r.a,{className:\"subheading-anchor\",\"aria-label\":\"Link to section\",href:\"#key-achievements\",children:\"Key Achievements\"})}),\"\\n\",i(r.ul,{children:[\"\\n\",n(r.li,{children:\"Built the full-stack web application from scratch\"}),\"\\n\",n(r.li,{children:\"Developed the matching algorithm for client-therapist connections\"}),\"\\n\",n(r.li,{children:\"Implemented secure, HIPAA-compliant data handling\"}),\"\\n\",n(r.li,{children:\"Led the technical architecture and development strategy\"}),\"\\n\"]}),\"\\n\",n(r.h2,{id:\"technologies\",children:n(r.a,{className:\"subheading-anchor\",\"aria-label\":\"Link to section\",href:\"#technologies\",children:\"Technologies\"})}),\"\\n\",i(r.ul,{children:[\"\\n\",n(r.li,{children:\"Next.js\"}),\"\\n\",n(r.li,{children:\"TypeScript\"}),\"\\n\",n(r.li,{children:\"PostgreSQL\"}),\"\\n\",n(r.li,{children:\"Authentication & Security\"}),\"\\n\",n(r.li,{children:\"Cloud Infrastructure\"}),\"\\n\"]})]})}return{default:function(e={}){const{wrapper:i}=e.components||{};return i?n(i,{...e,children:n(_createMdxContent,{...e})}):_createMdxContent(e)}};",
+    "image": "/work/purplelotus1.png",
+    "link": "https://purplelotusmh.com",
+    "isPrivate": false,
+    "slugAsParams": "purple-lotus"
+  },
+  {
+    "slug": "work/zofiq",
+    "title": "Zofiq",
+    "company": "Zofiq",
+    "role": "Software Engineer",
+    "description": "AI-powered platform transforming how businesses interact with customers.",
+    "startDate": "2024-01-01T00:00:00.000Z",
+    "endDate": "2024-12-31T00:00:00.000Z",
+    "published": true,
+    "tags": [
+      "ai",
+      "saas",
+      "customer-experience"
+    ],
+    "body": "const{Fragment:e,jsx:n,jsxs:i}=arguments[0];function _createMdxContent(r){const t={a:\"a\",h2:\"h2\",li:\"li\",p:\"p\",ul:\"ul\",...r.components};return i(e,{children:[n(t.h2,{id:\"overview\",children:n(t.a,{className:\"subheading-anchor\",\"aria-label\":\"Link to section\",href:\"#overview\",children:\"Overview\"})}),\"\\n\",n(t.p,{children:\"Zofiq is an AI-powered platform transforming how businesses interact with customers through intelligent automation and personalized experiences.\"}),\"\\n\",n(t.h2,{id:\"my-role\",children:n(t.a,{className:\"subheading-anchor\",\"aria-label\":\"Link to section\",href:\"#my-role\",children:\"My Role\"})}),\"\\n\",n(t.p,{children:\"As a Software Engineer at Zofiq, I contributed to building the core AI infrastructure that powers customer interactions.\"}),\"\\n\",n(t.h2,{id:\"key-contributions\",children:n(t.a,{className:\"subheading-anchor\",\"aria-label\":\"Link to section\",href:\"#key-contributions\",children:\"Key Contributions\"})}),\"\\n\",i(t.ul,{children:[\"\\n\",n(t.li,{children:\"Developed AI-driven customer engagement features\"}),\"\\n\",n(t.li,{children:\"Built scalable backend services\"}),\"\\n\",n(t.li,{children:\"Implemented machine learning pipelines for customer insights\"}),\"\\n\"]}),\"\\n\",n(t.h2,{id:\"technologies-used\",children:n(t.a,{className:\"subheading-anchor\",\"aria-label\":\"Link to section\",href:\"#technologies-used\",children:\"Technologies Used\"})}),\"\\n\",i(t.ul,{children:[\"\\n\",n(t.li,{children:\"TypeScript/JavaScript\"}),\"\\n\",n(t.li,{children:\"Python\"}),\"\\n\",n(t.li,{children:\"Machine Learning\"}),\"\\n\",n(t.li,{children:\"Cloud Infrastructure\"}),\"\\n\"]})]})}return{default:function(e={}){const{wrapper:i}=e.components||{};return i?n(i,{...e,children:n(_createMdxContent,{...e})}):_createMdxContent(e)}};",
+    "image": "/work/zofiq1.png",
+    "hoverImage": "/work/zofiq2.png",
+    "link": "https://zofiq.ai/",
+    "isPrivate": false,
+    "slugAsParams": "zofiq"
+  }
+]
