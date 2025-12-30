@@ -3,6 +3,7 @@ import * as runtime from "react/jsx-runtime";
 import { Callout } from "./callout";
 import Chart from "./chart";
 import EmploymentCard, { EmploymentCardCompact } from "@/components/employmentCard";
+import { IvDemo } from "@/components/projects/Demos";
 
 const useMDXComponent = (code: string) => {
   if (!code) return () => null;
@@ -16,6 +17,7 @@ const components = {
   Chart,
   EmploymentCard,
   EmploymentCardCompact,
+  IvDemo,
 };
 
 interface MdxProps {

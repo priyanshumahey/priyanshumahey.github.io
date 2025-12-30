@@ -1,7 +1,6 @@
 "use client"
 
-import EmploymentCard from "@/components/employmentCard"
-import { GallerySection, WorkSection, type ProjectData } from "@/components/projects"
+import { GallerySection, IvDemo, WorkSection, type ProjectData } from "@/components/projects"
 import { LinkPreview } from "@/components/ui/link-preview"
 import { motion } from "framer-motion"
 import { Github, Linkedin, Mail } from "lucide-react"
@@ -61,7 +60,22 @@ const galleryProjects: ProjectData[] = [
     link: "/projects/vibration",
     image: "/projects/vibration1.png",
     hoverImage: "/projects/vibration2.png",
-  }
+  },
+  {
+    title: "MS-PAL",
+    description: "AI native workflow assistant in a notebook.",
+    year: "2025",
+    link: "/projects/ms-pal",
+    image: "/projects/mspal1.png",
+  },
+    {
+    title: "iv",
+    description: "Voice to text with real-time audio visualization.",
+    year: "2025",
+    image: "/projects/iv.png",
+    link: "/projects/iv",
+    hoverComponent: <IvDemo />,
+  },
 ]
 
 // Social/nav links
