@@ -4,7 +4,7 @@ import { motion } from "framer-motion"
 import { Lock } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
-import { useState, useRef, useEffect, useCallback } from "react"
+import { useEffect, useRef, useState } from "react"
 
 export interface ProjectData {
   title: string
@@ -15,6 +15,10 @@ export interface ProjectData {
   hoverImage?: string
   hoverVideo?: string
   isPrivate?: boolean
+  /** Optional React component to render as base state overlay */
+  baseComponent?: React.ReactNode
+  /** Optional React component to render on hover state */
+  hoverComponent?: React.ReactNode
 }
 
 interface ProjectCardProps {
@@ -41,7 +45,7 @@ const cardVariants = {
 
 const imageVariants = {
   rest: { scale: 1 },
-  hover: { 
+  hover: {
     scale: 1.02,
     transition: { duration: 0.7, ease: "easeOut" as const }
   },
@@ -50,14 +54,14 @@ const imageVariants = {
 // Hook to detect if we're on mobile
 function useIsMobile() {
   const [isMobile, setIsMobile] = useState(false)
-  
+
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 1024)
     checkMobile()
     window.addEventListener("resize", checkMobile)
     return () => window.removeEventListener("resize", checkMobile)
   }, [])
-  
+
   return isMobile
 }
 
@@ -87,8 +91,8 @@ export function ProjectCard({ project, index, variant = "large" }: ProjectCardPr
   // Mobile: Intersection Observer to trigger auto-play after 3 seconds of viewing
   useEffect(() => {
     if (!isMobile || !cardRef.current) return
-    
-    const hasHoverContent = project.hoverImage || project.hoverVideo
+
+    const hasHoverContent = project.hoverImage || project.hoverVideo || project.hoverComponent
     if (!hasHoverContent) return
 
     const observer = new IntersectionObserver(
@@ -123,17 +127,17 @@ export function ProjectCard({ project, index, variant = "large" }: ProjectCardPr
         clearTimeout(viewTimerRef.current)
       }
     }
-  }, [isMobile, project.hoverImage, project.hoverVideo])
+  }, [isMobile, project.hoverImage, project.hoverVideo, project.hoverComponent])
 
-  const aspectClass = variant === "large" 
-    ? "aspect-video" 
-    : variant === "gallery" 
-      ? "aspect-4/3" 
+  const aspectClass = variant === "large"
+    ? "aspect-video"
+    : variant === "gallery"
+      ? "aspect-4/3"
       : "aspect-4/3"
 
   const currentImage = isHovered && project.hoverImage ? project.hoverImage : project.image
-  const hasHoverMedia = !!(project.hoverImage || project.hoverVideo)
-  
+  const hasHoverMedia = !!(project.hoverImage || project.hoverVideo || project.hoverComponent)
+
   // Combined state: show hover content on desktop hover OR mobile auto-play
   const showHoverContent = isHovered || mobileAutoPlay
 
@@ -161,7 +165,7 @@ export function ProjectCard({ project, index, variant = "large" }: ProjectCardPr
           {/* Base image */}
           <motion.div
             className="absolute inset-0"
-            animate={{ opacity: showHoverContent && project.hoverImage ? 0 : 1 }}
+            animate={{ opacity: showHoverContent && (project.hoverImage || project.hoverComponent) ? 0 : 1 }}
             transition={{ duration: 0.4, ease: "easeInOut" }}
           >
             <Image
@@ -174,7 +178,18 @@ export function ProjectCard({ project, index, variant = "large" }: ProjectCardPr
               className="object-cover opacity-90 group-hover:opacity-100 transition-opacity duration-500"
             />
           </motion.div>
-          
+
+          {/* Base component overlay (if exists) - always visible when not hovering */}
+          {project.baseComponent && (
+            <motion.div
+              className="absolute inset-0 select-none pointer-events-none"
+              animate={{ opacity: showHoverContent && project.hoverComponent ? 0 : 1 }}
+              transition={{ duration: 0.4, ease: "easeInOut" }}
+            >
+              {project.baseComponent}
+            </motion.div>
+          )}
+
           {/* Hover image (if exists) */}
           {project.hoverImage && (
             <motion.div
@@ -192,7 +207,7 @@ export function ProjectCard({ project, index, variant = "large" }: ProjectCardPr
               />
             </motion.div>
           )}
-          
+
           {/* Hover video (if exists) */}
           {project.hoverVideo && (
             <motion.div
@@ -210,7 +225,18 @@ export function ProjectCard({ project, index, variant = "large" }: ProjectCardPr
               />
             </motion.div>
           )}
-          
+
+          {/* Hover component (if exists) */}
+          {project.hoverComponent && (
+            <motion.div
+              className="absolute inset-0 select-none pointer-events-none z-10"
+              animate={{ opacity: showHoverContent ? 1 : 0 }}
+              transition={{ duration: 0.4, ease: "easeInOut" }}
+            >
+              {project.hoverComponent}
+            </motion.div>
+          )}
+
           {/* Zoom effect container */}
           <motion.div
             className="absolute inset-0"
@@ -230,7 +256,7 @@ export function ProjectCard({ project, index, variant = "large" }: ProjectCardPr
           </div>
           <span className="text-sm text-[#737373] flex-shrink-0">{project.year}</span>
         </div>
-        
+
         <p className="text-sm text-[#737373] mt-1 line-clamp-2">
           {project.description}
         </p>

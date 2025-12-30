@@ -75,7 +75,7 @@ function GalleryItem({
           <motion.div
             className="absolute inset-0"
             animate={{ 
-              opacity: isHovered && (project.hoverImage || project.hoverVideo) ? 0 : 0.9,
+              opacity: isHovered && (project.hoverImage || project.hoverVideo || project.hoverComponent) ? 0 : 0.9,
               scale: isHovered ? 1.05 : 1 
             }}
             transition={{ duration: 0.5, ease: "easeOut" }}
@@ -89,6 +89,20 @@ function GalleryItem({
               className="object-cover"
             />
           </motion.div>
+
+          {/* Base component overlay (if exists) */}
+          {project.baseComponent && (
+            <motion.div
+              className="absolute inset-0 select-none pointer-events-none"
+              animate={{ 
+                opacity: isHovered && project.hoverComponent ? 0 : 1,
+                scale: isHovered ? 1.05 : 1 
+              }}
+              transition={{ duration: 0.5, ease: "easeOut" }}
+            >
+              {project.baseComponent}
+            </motion.div>
+          )}
           
           {/* Hover image */}
           {project.hoverImage && (
@@ -129,6 +143,20 @@ function GalleryItem({
                 playsInline
                 className="w-full h-full object-cover"
               />
+            </motion.div>
+          )}
+
+          {/* Hover component (if exists) */}
+          {project.hoverComponent && (
+            <motion.div
+              className="absolute inset-0 select-none pointer-events-none z-10"
+              animate={{ 
+                opacity: isHovered ? 1 : 0,
+                scale: isHovered ? 1.05 : 1 
+              }}
+              transition={{ duration: 0.5, ease: "easeOut" }}
+            >
+              {project.hoverComponent}
             </motion.div>
           )}
         </motion.div>
