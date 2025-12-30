@@ -95,11 +95,6 @@
   @apply text-[#b5b5b5] italic;
 }
 
-.prose a {
-  @apply text-blue-400 decoration-blue-400/40 underline underline-offset-[3px] 
-         hover:text-blue-300 hover:decoration-blue-300/60 transition-colors duration-200;
-}
-
 /* ===================================
    LISTS - PROPER BULLET STYLING
    =================================== */

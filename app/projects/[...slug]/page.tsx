@@ -2,9 +2,8 @@ import { projects } from "#site/content";
 import { MDXContent } from "@/components/blog/mdx-components";
 import { notFound } from "next/navigation";
 
-import { formatDate } from "@/lib/utils";
 import "@/styles/mdx.css";
-import { ArrowLeft, Calendar, ExternalLink, Github } from "lucide-react";
+import { ArrowLeft, ExternalLink, Github } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -27,17 +26,6 @@ async function getProjectFromParams(params: { slug: string[] }) {
     return project;
 }
 
-function getAdjacentProjects(currentSlug: string) {
-    const sortedProjects = projects.filter((p) => p.published).sort((a, b) =>
-        new Date(b.date).getTime() - new Date(a.date).getTime()
-    );
-    const currentIndex = sortedProjects.findIndex((p) => p.slugAsParams === currentSlug);
-    return {
-        prev: currentIndex < sortedProjects.length - 1 ? sortedProjects[currentIndex + 1] : null,
-        next: currentIndex > 0 ? sortedProjects[currentIndex - 1] : null,
-    };
-}
-
 export async function generateStaticParams(): Promise<{ slug: string[] }[]> {
     return projects.map((project) => ({ slug: project.slugAsParams.split("/") }));
 }
@@ -50,11 +38,10 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
         notFound();
     }
 
-    const { prev, next } = getAdjacentProjects(project.slugAsParams);
-
     return (
         <div className="min-h-screen bg-[#0a0a0a] text-[#fafafa]">
             {/* Mobile Layout */}
+
             <div className="lg:hidden">
                 <header className="px-6 pt-6 pb-4 border-b border-[#1a1a1a]">
                     <Link
@@ -70,12 +57,6 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                     <article className="py-8">
                         {/* Article Header */}
                         <header className="mb-8">
-                            <div className="flex items-center gap-3 text-sm text-[#525252] mb-4">
-                                <div className="flex items-center gap-1.5">
-                                    <Calendar className="w-3.5 h-3.5" />
-                                    <time dateTime={project.date}>{formatDate(project.date)}</time>
-                                </div>
-                            </div>
                             <h1 className="text-3xl font-medium tracking-tight mb-4 leading-tight">
                                 {project.title}
                             </h1>
@@ -109,18 +90,6 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                                     </Link>
                                 )}
                             </div>
-                            {project.tags && project.tags.length > 0 && (
-                                <div className="flex flex-wrap gap-2 mt-4">
-                                    {project.tags.map((tag: string) => (
-                                        <span
-                                            key={tag}
-                                            className="px-2.5 py-1 text-xs text-[#a1a1a1] bg-[#1a1a1a] rounded-full"
-                                        >
-                                            {tag}
-                                        </span>
-                                    ))}
-                                </div>
-                            )}
                         </header>
 
                         {/* Featured Image */}
@@ -141,36 +110,6 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                             <MDXContent code={project.body} />
                         </div>
                     </article>
-
-                    {/* Project Navigation */}
-                    <nav className="border-t border-[#1a1a1a] pt-8 space-y-4">
-                        {prev && (
-                            <Link
-                                href={`/${prev.slug}`}
-                                className="block p-4 rounded-xl border border-[#1a1a1a] hover:border-[#333] hover:bg-[#0f0f0f] transition-all group"
-                            >
-                                <span className="text-xs text-[#525252] uppercase tracking-wider">
-                                    Previous
-                                </span>
-                                <p className="text-base font-medium text-[#fafafa] group-hover:text-blue-400 transition-colors mt-1">
-                                    {prev.title}
-                                </p>
-                            </Link>
-                        )}
-                        {next && (
-                            <Link
-                                href={`/${next.slug}`}
-                                className="block p-4 rounded-xl border border-[#1a1a1a] hover:border-[#333] hover:bg-[#0f0f0f] transition-all group"
-                            >
-                                <span className="text-xs text-[#525252] uppercase tracking-wider">
-                                    Next
-                                </span>
-                                <p className="text-base font-medium text-[#fafafa] group-hover:text-blue-400 transition-colors mt-1">
-                                    {next.title}
-                                </p>
-                            </Link>
-                        )}
-                    </nav>
                 </main>
             </div>
 
@@ -202,18 +141,6 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                     <article>
                         {/* Article Header */}
                         <header className="mb-12">
-                            <div className="flex items-center gap-4 text-sm text-[#525252] mb-6">
-                                <div className="flex items-center gap-1.5">
-                                    <Calendar className="w-3.5 h-3.5" />
-                                    <time dateTime={project.date}>{formatDate(project.date)}</time>
-                                </div>
-                                {project.featured && (
-                                    <>
-                                        <span>·</span>
-                                        <span className="text-blue-400">Featured</span>
-                                    </>
-                                )}
-                            </div>
                             <h1 className="text-[2.5rem] lg:text-[3rem] font-bold leading-tight tracking-tight mb-6">
                                 {project.title}
                             </h1>
@@ -247,18 +174,6 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                                     </Link>
                                 )}
                             </div>
-                            {project.tags && project.tags.length > 0 && (
-                                <div className="flex flex-wrap gap-2 mt-6">
-                                    {project.tags.map((tag: string) => (
-                                        <span
-                                            key={tag}
-                                            className="px-3 py-1.5 text-sm text-[#a1a1a1] bg-[#1a1a1a] rounded-full"
-                                        >
-                                            {tag}
-                                        </span>
-                                    ))}
-                                </div>
-                            )}
                         </header>
 
                         {/* Featured Image */}
@@ -279,7 +194,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                             <MDXContent code={project.body} />
                         </div>
                     </article>
-                    
+
                     {/* Footer */}
                     <footer className="mt-16 pt-8 border-t border-[#1a1a1a]">
                         <div className="flex items-center justify-between">

@@ -1,9 +1,11 @@
+import EmploymentCard, { EmploymentCardCompact } from "@/components/employmentCard";
+import { LanguageBar } from "@/components/language-bar";
+import { IvDemo } from "@/components/projects/Demos";
 import Image from "next/image";
 import * as runtime from "react/jsx-runtime";
+import GitHubLinkCard from "../githubCard";
 import { Callout } from "./callout";
 import Chart from "./chart";
-import EmploymentCard, { EmploymentCardCompact } from "@/components/employmentCard";
-import { IvDemo } from "@/components/projects/Demos";
 
 const useMDXComponent = (code: string) => {
   if (!code) return () => null;
@@ -18,6 +20,8 @@ const components = {
   EmploymentCard,
   EmploymentCardCompact,
   IvDemo,
+  LanguageBar,
+  GitHubLinkCard
 };
 
 interface MdxProps {
