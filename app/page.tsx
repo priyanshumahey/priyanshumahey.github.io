@@ -83,6 +83,7 @@ const socialLinks = [
   { href: "https://www.linkedin.com/in/priyanshu-mahey/", label: "LinkedIn", icon: "linkedin" },
   { href: "https://x.com/PriyanshuMahey", label: "X", icon: "x" },
   { href: "https://github.com/priyanshumahey", label: "GitHub", icon: "github" },
+  { href: "https://scholar.google.com/citations?user=xqj7WxUAAAAJ&hl=en", label: "Google Scholar", icon: "scholar" },
   { href: "mailto:priyanshu.mahey02@gmail.com", label: "Email", icon: "email" },
 ]
 
@@ -101,6 +102,11 @@ const Icons = {
     </svg>
   ),
   github: () => <Github className="w-5 h-5" />,
+  scholar: () => (
+    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+      <path d="M12 24a7 7 0 110-14 7 7 0 010 14zm0-24L0 9.5l4.838 3.94A8 8 0 0112 9a8 8 0 017.162 4.44L24 9.5z" />
+    </svg>
+  ),
   email: () => <Mail className="w-5 h-5" />,
 }
 
