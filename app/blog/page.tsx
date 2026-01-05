@@ -1,6 +1,6 @@
 import { posts } from "#site/content";
 import { formatDate, sortPosts } from "@/lib/utils";
-import { ArrowRight, FileText, Github, Linkedin, Mail } from "lucide-react";
+import { ArrowRight, Github, Linkedin, Mail } from "lucide-react";
 import Link from "next/link";
 
 const socialLinks = [
@@ -137,8 +137,8 @@ export default async function BlogPage() {
                   key={link.href}
                   href={link.href}
                   className={`text-sm transition-colors ${link.href === "/blog"
-                      ? "text-[#fafafa]"
-                      : "text-[#737373] hover:text-[#fafafa]"
+                    ? "text-[#fafafa]"
+                    : "text-[#737373] hover:text-[#fafafa]"
                     }`}
                 >
                   {link.label}

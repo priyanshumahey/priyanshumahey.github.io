@@ -1,0 +1,83 @@
+---
+title: Gitflow
+description: A client-side git implementation with real-time visualization of git trees and changes.
+date: 2025-12-31
+published: true
+tags: ["git", "wasm", "rust", "visualization"]
+featured: true
+---
+
+## Gitflow - Git Visualization Tool
+
+Understanding git is fundamental for every developer, but the mental model of branches, commits, merges, and rebases can be difficult to internalize without seeing it in action.
+**Gitflow** solves this by providing a real-time visualization of your git operations, helping you understand exactly what happens under the hood.
+
+This project started as an exploration into compiling Rust to WebAssembly and running complex operations entirely client-side. 
+The result is a fully functional git implementation that runs in your browser with zero backend requirements.
+
+**[Try it out live →](https://gitflow-liart.vercel.app/)**
+
+<div className="my-8 rounded-xl overflow-hidden aspect-video border border-[#1a1a1a]">
+  <GitflowDemo />
+</div>
+
+#### How It Works
+
+1. Create repositories, branches, and commits directly in the browser
+2. Watch the git tree update in real-time as you make changes
+3. Perform merges, rebases, and cherry-picks with visual feedback
+4. See exactly how your git history evolves with each operation
+
+
+### Build Overview
+
+Gitflow is built with Rust compiled to WebAssembly for the git engine, and TypeScript/React for the frontend visualization.
+The git implementation handles the full object model: blobs, trees, commits, and refs.
+Everything runs client-side - your data never leaves your browser.
+
+<GitHubLinkCard url="https://github.com/priyanshumahey/gitflow" />
+
+
+<LanguageBar languages={[
+  { name: "TypeScript", percentage: 57.4 },
+  { name: "Rust", percentage: 37.5 },
+  { name: "JavaScript", percentage: 3.2 },
+  { name: "CSS", percentage: 1.9 },
+]} />
+
+
+### Features
+
+- **Real-time Visualization**: Watch your git graph update live as you make changes
+- **Full Git Implementation**: Branches, commits, merges, rebases, cherry-picks, and more
+- **Client-Side Execution**: Rust compiled to WASM means zero server dependencies
+- **Interactive Graph**: Explore commits, view diffs, and understand relationships
+- **Branch Management**: Create, switch, and merge branches with visual feedback
+
+-----
+
+### Technical Deep Dive
+
+#### Architecture Overview
+
+The project is structured into three main layers:
+
+**1. Git Engine (Rust/WASM)**
+The core git implementation is written in Rust and compiled to WebAssembly. This includes:
+- Object database: blobs, trees, commits
+- Reference management: branches, HEAD, tags
+- Core operations: commit, merge, rebase, cherry-pick
+- Diff and patch generation
+
+**2. Visualization Layer (TypeScript/React)**
+The frontend renders the git graph using SVG with:
+- Dynamic layout algorithm for branch positioning
+- Animated transitions for state changes
+- Interactive nodes with commit details
+- Branch-colored paths with merge indicators
+
+**3. Integration Bridge**
+The WASM bindings expose a clean API for:
+- Repository operations
+- State queries
+- Event subscriptions for real-time updates

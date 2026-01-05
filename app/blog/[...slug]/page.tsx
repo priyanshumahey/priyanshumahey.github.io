@@ -3,10 +3,10 @@ import { MDXContent } from "@/components/blog/mdx-components";
 import { notFound } from "next/navigation";
 
 import { formatDate, sortPosts } from "@/lib/utils";
-import { ArrowLeft, ArrowRight, FileText } from "lucide-react";
+import "@/styles/mdx.css";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import "@/styles/mdx.css";
 
 const navLinks = [
   { href: "/blog", label: "Writing" },
@@ -163,11 +163,10 @@ export default async function PostPage({ params }: PostPageProps) {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`text-sm transition-colors ${
-                    link.href === "/blog"
+                  className={`text-sm transition-colors ${link.href === "/blog"
                       ? "text-[#fafafa]"
                       : "text-[#737373] hover:text-[#fafafa]"
-                  }`}
+                    }`}
                 >
                   {link.label}
                 </Link>
@@ -178,17 +177,6 @@ export default async function PostPage({ params }: PostPageProps) {
           <article>
             {/* Article Header */}
             <header className="mb-12">
-              <div className="flex items-center gap-3 text-sm text-[#525252] mb-6">
-                <time dateTime={post.date}>{formatDate(post.date)}</time>
-                <span>·</span>
-                <span>{readTime} min read</span>
-                {post.authors && (
-                  <>
-                    <span>·</span>
-                    <span>{post.authors.join(", ")}</span>
-                  </>
-                )}
-              </div>
               <h1 className="text-[2.5rem] lg:text-[3rem] font-bold leading-tight tracking-tight mb-6">
                 {post.title}
               </h1>

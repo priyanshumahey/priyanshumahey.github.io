@@ -1,6 +1,6 @@
 "use client"
 
-import { GallerySection, IvDemo, WorkSection, type ProjectData } from "@/components/projects"
+import { GallerySection, GitflowDemo, IvDemo, WorkSection, type ProjectData } from "@/components/projects"
 import { LinkPreview } from "@/components/ui/link-preview"
 import { motion } from "framer-motion"
 import { Github, Linkedin, Mail } from "lucide-react"
@@ -68,13 +68,21 @@ const galleryProjects: ProjectData[] = [
     link: "/projects/ms-pal",
     image: "/projects/mspal1.png",
   },
-    {
+  {
     title: "iv",
     description: "Voice to text with real-time audio visualization.",
     year: "2025",
     image: "/projects/iv.png",
     link: "/projects/iv",
     hoverComponent: <IvDemo />,
+  },
+  {
+    title: "Gitflow",
+    description: "Client-side git implementation with real-time tree visualization.",
+    year: "2025",
+    image: "/projects/gitflow.png",
+    link: "/projects/gitflow",
+    hoverComponent: <GitflowDemo />,
   },
 ]
 
