@@ -11,7 +11,7 @@ export interface ProjectData {
   description: string
   year: string
   link: string
-  image: string
+  image?: string
   hoverImage?: string
   hoverVideo?: string
   isPrivate?: boolean
@@ -162,24 +162,26 @@ export function ProjectCard({ project, index, variant = "large" }: ProjectCardPr
           whileHover="hover"
           animate="rest"
         >
-          {/* Base image */}
-          <motion.div
-            className="absolute inset-0"
-            animate={{ opacity: showHoverContent && (project.hoverImage || project.hoverComponent) ? 0 : 1 }}
-            transition={{ duration: 0.4, ease: "easeInOut" }}
-          >
-            <Image
-              src={project.image}
-              alt={project.title}
-              fill
-              loading="eager"
-              priority={index === 0}
-              sizes={variant === "large" ? "(max-width: 1024px) 100vw, 65vw" : "(max-width: 1024px) 100vw, 50vw"}
-              className="object-cover opacity-90 group-hover:opacity-100 transition-opacity duration-500"
-            />
-          </motion.div>
+          {/* Base image (if exists) */}
+          {project.image && (
+            <motion.div
+              className="absolute inset-0"
+              animate={{ opacity: showHoverContent && (project.hoverImage || project.hoverComponent) ? 0 : 1 }}
+              transition={{ duration: 0.4, ease: "easeInOut" }}
+            >
+              <Image
+                src={project.image}
+                alt={project.title}
+                fill
+                loading="eager"
+                priority={index === 0}
+                sizes={variant === "large" ? "(max-width: 1024px) 100vw, 65vw" : "(max-width: 1024px) 100vw, 50vw"}
+                className="object-cover opacity-90 group-hover:opacity-100 transition-opacity duration-500"
+              />
+            </motion.div>
+          )}
 
-          {/* Base component overlay (if exists) - always visible when not hovering */}
+          {/* Base component overlay - shown when image exists OR as base layer when no image */}
           {project.baseComponent && (
             <motion.div
               className="absolute inset-0 select-none pointer-events-none"

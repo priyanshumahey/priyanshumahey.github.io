@@ -1,6 +1,7 @@
 "use client"
 
 import { GallerySection, GitflowDemo, IvDemo, WorkSection, type ProjectData } from "@/components/projects"
+import { GitHeroCard } from "@/components/projects/ProjectCards/GitflowHero"
 import { LinkPreview } from "@/components/ui/link-preview"
 import { motion } from "framer-motion"
 import { Github, Linkedin, Mail } from "lucide-react"
@@ -80,7 +81,7 @@ const galleryProjects: ProjectData[] = [
     title: "Gitflow",
     description: "Client-side git implementation with real-time tree visualization.",
     year: "2025",
-    image: "/projects/gitflow.png",
+    baseComponent: <GitHeroCard />,
     link: "/projects/gitflow",
     hoverComponent: <GitflowDemo />,
   },

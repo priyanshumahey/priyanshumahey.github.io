@@ -71,26 +71,28 @@ function GalleryItem({
           whileHover={{ scale: 1.01 }}
           transition={{ duration: 0.4 }}
         >
-          {/* Base image */}
-          <motion.div
-            className="absolute inset-0"
-            animate={{ 
-              opacity: isHovered && (project.hoverImage || project.hoverVideo || project.hoverComponent) ? 0 : 0.9,
-              scale: isHovered ? 1.05 : 1 
-            }}
-            transition={{ duration: 0.5, ease: "easeOut" }}
-          >
-            <Image
-              src={project.image}
-              alt={project.title}
-              fill
-              loading="eager"
-              sizes="(max-width: 1024px) 100vw, 50vw"
-              className="object-cover"
-            />
-          </motion.div>
+          {/* Base image (if exists) */}
+          {project.image && (
+            <motion.div
+              className="absolute inset-0"
+              animate={{ 
+                opacity: isHovered && (project.hoverImage || project.hoverVideo || project.hoverComponent) ? 0 : 0.9,
+                scale: isHovered ? 1.05 : 1 
+              }}
+              transition={{ duration: 0.5, ease: "easeOut" }}
+            >
+              <Image
+                src={project.image}
+                alt={project.title}
+                fill
+                loading="eager"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                className="object-cover"
+              />
+            </motion.div>
+          )}
 
-          {/* Base component overlay (if exists) */}
+          {/* Base component overlay - shown when image exists OR as base layer when no image */}
           {project.baseComponent && (
             <motion.div
               className="absolute inset-0 select-none pointer-events-none"
