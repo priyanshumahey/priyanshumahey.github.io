@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useState } from "react";
 
 // Branch colors with glow variants
 const branchColors: Record<string, { main: string; glow: string }> = {
@@ -228,82 +228,75 @@ export function GitHeroCard() {
     }, [])
 
     return (
-        <div className="w-full max-w-5xl mx-auto">
-            <div
-                className="relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950"
-                style={{ aspectRatio: "16/10" }}
-            >
-                {/* Background pattern - subtle dots */}
-                <div className="absolute inset-0 opacity-[0.03]">
-                    <svg width="100%" height="100%">
-                        <defs>
-                            <pattern id="dots" width="24" height="24" patternUnits="userSpaceOnUse">
-                                <circle cx="12" cy="12" r="1" fill="white" />
-                            </pattern>
-                        </defs>
-                        <rect width="100%" height="100%" fill="url(#dots)" />
-                    </svg>
-                </div>
-
-                {/* Gradient orbs for depth */}
-                <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl" />
-                <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-violet-500/10 rounded-full blur-3xl" />
-
-                <div className="relative z-10 flex h-full">
-                    {/* Left side - Typography only */}
-                    <div className="flex-1 flex flex-col justify-center px-16 py-12">
-                        <div
-                            className={`transition-all duration-700 ${mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
-                        >
-                            <h1 className="text-8xl font-bold tracking-tighter text-white">
-                                git<span className="text-emerald-400">flow</span>
-                            </h1>
-                        </div>
-                    </div>
-
-                    {/* Right side - Larger Graph Preview */}
-                    <div className="flex-1 flex items-center justify-center relative pr-8">
-                        {/* Decorative gradient */}
-                        <div className="absolute inset-0 bg-gradient-to-l from-emerald-500/5 via-transparent to-transparent" />
-
-                        <div
-                            className={`relative bg-black/40 backdrop-blur-xl rounded-2xl border border-white/10 p-6 shadow-2xl transition-all duration-700 ${mounted ? "opacity-100 scale-100" : "opacity-0 scale-95"}`}
-                            style={{ transitionDelay: "200ms" }}
-                        >
-                            {/* Window controls */}
-                            <div className="flex items-center gap-2 mb-4 pb-4 border-b border-white/5">
-                                <div className="w-3 h-3 rounded-full bg-red-500" />
-                                <div className="w-3 h-3 rounded-full bg-yellow-500" />
-                                <div className="w-3 h-3 rounded-full bg-green-500" />
-                                <span className="text-xs text-zinc-500 ml-3 font-mono">repository</span>
-                            </div>
-
-                            <MiniGitGraph />
-
-                            {/* Branch labels */}
-                            <div className="flex gap-4 mt-4 pt-4 border-t border-white/5">
-                                {Object.entries(branchColors)
-                                    .slice(0, 3)
-                                    .map(([name, colors]) => (
-                                        <div key={name} className="flex items-center gap-2">
-                                            <div
-                                                className="w-2.5 h-2.5 rounded-full"
-                                                style={{
-                                                    backgroundColor: colors.main,
-                                                    boxShadow: `0 0 8px ${colors.glow}`,
-                                                }}
-                                            />
-                                            <span className="text-xs text-zinc-400 font-mono">{name}</span>
-                                        </div>
-                                    ))}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                {/* Bottom gradient accent */}
-                <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-emerald-500/50 to-transparent" />
+        <div className="absolute inset-0 w-full h-full overflow-hidden rounded-xl bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950">
+            {/* Background pattern - subtle dots */}
+            <div className="absolute inset-0 opacity-[0.03]">
+                <svg width="100%" height="100%">
+                    <defs>
+                        <pattern id="dots-hero" width="24" height="24" patternUnits="userSpaceOnUse">
+                            <circle cx="12" cy="12" r="1" fill="white" />
+                        </pattern>
+                    </defs>
+                    <rect width="100%" height="100%" fill="url(#dots-hero)" />
+                </svg>
             </div>
+
+            {/* Gradient orbs for depth */}
+            <div className="absolute top-1/4 left-1/4 w-64 h-64 lg:w-96 lg:h-96 bg-emerald-500/10 rounded-full blur-3xl" />
+            <div className="absolute bottom-1/4 right-1/4 w-64 h-64 lg:w-96 lg:h-96 bg-violet-500/10 rounded-full blur-3xl" />
+
+            <div className="relative z-10 flex h-full">
+                {/* Left side - Typography only */}
+                <div className="flex-1 flex flex-col justify-center px-6 sm:px-10 lg:px-16 py-8">
+                    <div
+                        className={`transition-all duration-700 ${mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
+                    >
+                        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold tracking-tighter text-white">
+                            git<span className="text-emerald-400">flow</span>
+                        </h1>
+                    </div>
+                </div>
+
+                {/* Right side - Graph Preview */}
+                <div className="flex-1 flex items-center justify-center relative pr-4 sm:pr-6 lg:pr-8">
+                    {/* Decorative gradient */}
+                    <div className="absolute inset-0 bg-gradient-to-l from-emerald-500/5 via-transparent to-transparent" />
+
+                    <div
+                        className={`relative bg-black/40 backdrop-blur-xl rounded-xl lg:rounded-2xl border border-white/10 p-3 sm:p-4 lg:p-6 shadow-2xl transition-all duration-700 ${mounted ? "opacity-100 scale-100" : "opacity-0 scale-95"}`}
+                        style={{ transitionDelay: "200ms" }}
+                    >
+                        {/* Window controls */}
+                        <div className="flex items-center gap-1.5 lg:gap-2 mb-2 lg:mb-4 pb-2 lg:pb-4 border-b border-white/5">
+                            <div className="w-2 h-2 lg:w-3 lg:h-3 rounded-full bg-red-500" />
+                            <div className="w-2 h-2 lg:w-3 lg:h-3 rounded-full bg-yellow-500" />
+                            <div className="w-2 h-2 lg:w-3 lg:h-3 rounded-full bg-green-500" />
+                            <span className="text-[10px] lg:text-xs text-zinc-500 ml-2 lg:ml-3 font-mono hidden sm:inline">repository</span>
+                        </div>
+
+                        <MiniGitGraph />
+
+                        {/* Branch labels */}
+                        <div className="flex gap-2 lg:gap-4 mt-2 lg:mt-4 pt-2 lg:pt-4 border-t border-white/5">
+                            {Object.entries(branchColors)
+                                .slice(0, 3)
+                                .map(([name, colors]) => (
+                                    <div key={name} className="flex items-center gap-1 lg:gap-2">
+                                        <div
+                                            className="w-1.5 h-1.5 lg:w-2.5 lg:h-2.5 rounded-full"
+                                            style={{
+                                                backgroundColor: colors.main,
+                                                boxShadow: `0 0 8px ${colors.glow}`,
+                                            }}
+                                        />
+                                        <span className="text-[10px] lg:text-xs text-zinc-400 font-mono">{name}</span>
+                                    </div>
+                                ))}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-emerald-500/50 to-transparent" />
         </div>
     )
 }
