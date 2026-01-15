@@ -1,20 +1,50 @@
 ---
-title: iv
-description: A speech-to-text tool that transforms voice into text with real-time audio visualization.
-date: 2025-01-01
+title: IV
+description: A speech-to-text tool that transforms voice into typing.
+date: 2025-12-31
 published: true
 tags: ["ai", "speech-to-text", "audio", "tauri"]
 image: "/projects/iv.png"
 featured: true
 ---
 
-## iv - Voice to Text
+## IV - Voice to Text
 
-iv is a speech-to-text application that provides real-time audio visualization while transcribing spoken words into text. Built with Tauri for native desktop performance.
+Voice is a very important medium in modern apps. Not only for accessibility purposes, but also for improving experiences overall. 
+For full honesty, I find myself not using voice modes often.
+My goal for this project was not only to build a voice to text system but also to understand why people opt for voice based systems.
+This project taught me a lot about how voice based sytems work, introduced me to on device audio models and helped me understand why tools like this exist.
+
+**IV** is simple voice to text application. Speaking into it, you get live waveform visualizations and then whereever your mouse is currently active, the text you speak will be pasted.
 
 <div className="my-8 rounded-xl overflow-hidden aspect-video border border-[#1a1a1a]">
   <IvDemo />
 </div>
+
+#### How It Works
+
+1. Press and hold to start recording
+2. The waveform shows your audio input in real-time
+3. Release to begin transcription
+4. Text is automatically copied to your clipboard
+
+
+### Build Overview
+
+IV is built with Rust and TypeScript. The primary frameworks used are Tauri (for building desktop applications) and Vite/React (frontend).
+The application enables users to choose which voice model they want. Currently, I've added support for Parakeet v3 and OpenAI's Whisper API.
+Parakeet runs locally and requires only a good CPU. To get a deeper dive, the github repo is provided below:
+
+<GitHubLinkCard url="https://github.com/priyanshumahey/iv" />
+
+
+<LanguageBar languages={[
+  { name: "Rust", percentage: 51.4 },
+  { name: "TypeScript", percentage: 42.0 },
+  { name: "CSS", percentage: 5.9 },
+  { name: "HTML", percentage: 0.7 },
+]} />
+
 
 ### Features
 
@@ -23,9 +53,13 @@ iv is a speech-to-text application that provides real-time audio visualization w
 - **Desktop Native**: Built with Tauri for optimal performance and minimal resource usage
 - **Visual Feedback**: Distinct visual states for recording, processing, and idle modes
 
-### How It Works
+-----
 
-1. Press and hold to start recording
-2. The waveform shows your audio input in real-time
-3. Release to begin transcription
-4. Text is automatically copied to your clipboard
+### Technical Deep Dive
+
+Start off with system design first
+
+Phase 1
+Phase 2
+Phase 3
+Phase 4
