@@ -1,7 +1,7 @@
 import EmploymentCard, { EmploymentCardCompact } from "@/components/employmentCard";
 import { LanguageBar } from "@/components/language-bar";
 import { GitflowDemo } from "@/components/projects/Demos/GitflowDemo";
-import { IvDemo } from "@/components/projects/Demos";
+import { IvDemo, FleurDemo, SemanticSearchDemo, TreeSitterDemo, ASTVisualizerDemo } from "@/components/projects/Demos";
 import Image from "next/image";
 import * as runtime from "react/jsx-runtime";
 import GitHubLinkCard from "../githubCard";
@@ -22,6 +22,10 @@ const components = {
   EmploymentCardCompact,
   IvDemo,
   GitflowDemo,
+  FleurDemo,
+  SemanticSearchDemo,
+  TreeSitterDemo,
+  ASTVisualizerDemo,
   LanguageBar,
   GitHubLinkCard
 };

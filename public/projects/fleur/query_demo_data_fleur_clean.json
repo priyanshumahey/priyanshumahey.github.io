@@ -1,0 +1,2012 @@
+{
+  "metadata": {
+    "workspace": "fleur_clean",
+    "embedding_model": "jina-code-embeddings-1.5b (Q8_0 quantized)",
+    "embedding_dim": 1536,
+    "total_chunks": 411,
+    "reduction_method": "UMAP",
+    "reduction_dim": 3
+  },
+  "queries": [
+    {
+      "text": "function that handles file indexing",
+      "embedding_2d": [
+        11.903778769519636,
+        1.1692181227383638,
+        5.291116734909548
+      ],
+      "results": [
+        {
+          "rank": 1,
+          "id": "src-tauri/src/commands/file_indexer/mod.rs:1:7",
+          "score": 0.5538986954006663,
+          "file_path": "src-tauri/src/commands/file_indexer/mod.rs",
+          "file_name": "mod.rs",
+          "start_line": 1,
+          "end_line": 7,
+          "chunk_type": "file",
+          "language": "rust",
+          "name": "(unnamed)",
+          "signature": "",
+          "snippet": "mod commands;\nmod types;\nmod utils;\n\npub use commands::*;\npub use types::FileIndexerState;\n",
+          "position_2d": [
+            11.030638694763184,
+            3.277510166168213,
+            4.56328010559082
+          ]
+        },
+        {
+          "rank": 2,
+          "id": "src/hooks/use-file-indexer.ts:82:354",
+          "score": 0.5522074067473675,
+          "file_path": "src/hooks/use-file-indexer.ts",
+          "file_name": "use-file-indexer.ts",
+          "start_line": 82,
+          "end_line": 354,
+          "chunk_type": "function",
+          "language": "typescript",
+          "name": "useFileIndexer",
+          "signature": "function useFileIndexer()",
+          "snippet": "function useFileIndexer(): UseFileIndexerReturn {\n    const [status, setStatus] = useState<IndexingStatus | null>(null);\n    const [indexerState, setIndexerState] = useState<IndexerState | null>(null)...",
+          "position_2d": [
+            12.032769203186035,
+            1.425635576248169,
+            5.49843692779541
+          ]
+        },
+        {
+          "rank": 3,
+          "id": "backend/code-indexer-py/code_indexer/services/file_indexer_service.py:11:424",
+          "score": 0.5467764486737615,
+          "file_path": "backend/code-indexer-py/code_indexer/services/file_indexer_service.py",
+          "file_name": "file_indexer_service.py",
+          "start_line": 11,
+          "end_line": 424,
+          "chunk_type": "class",
+          "language": "python",
+          "name": "FileIndexerServicer",
+          "signature": "class FileIndexerServicer(file_indexer_pb2_grpc.FileIndexerServiceServicer)",
+          "snippet": "class FileIndexerServicer(file_indexer_pb2_grpc.FileIndexerServiceServicer):\n    def __init__(self):\n        self._logic = IndexerLogic()\n        logger.info(\"FileIndexerService initialized\")\n    \n   ...",
+          "position_2d": [
+            11.927465438842773,
+            0.5786944031715393,
+            5.489349365234375
+          ]
+        },
+        {
+          "rank": 4,
+          "id": "backend/code-indexer-py/code_indexer/services/indexer_logic.py:127:238",
+          "score": 0.5322438556793581,
+          "file_path": "backend/code-indexer-py/code_indexer/services/indexer_logic.py",
+          "file_name": "indexer_logic.py",
+          "start_line": 127,
+          "end_line": 238,
+          "chunk_type": "method",
+          "language": "python",
+          "name": "index_file",
+          "signature": "def index_file(\n        self,\n        workspace: WorkspaceState,\n        file_path: str,\n        content: str,\n        content_hash: str,\n        language: str,\n        file_size: int,\n        last_modified: int,\n    ) -> IndexResult",
+          "snippet": "async def index_file(\n        self,\n        workspace: WorkspaceState,\n        file_path: str,\n        content: str,\n        content_hash: str,\n        language: str,\n        file_size: int,\n        l...",
+          "position_2d": [
+            12.493355751037598,
+            -0.13310843706130981,
+            4.851443767547607
+          ]
+        },
+        {
+          "rank": 5,
+          "id": "proto/file_indexer.proto:101:148",
+          "score": 0.5321070908827704,
+          "file_path": "proto/file_indexer.proto",
+          "file_name": "file_indexer.proto",
+          "start_line": 101,
+          "end_line": 148,
+          "chunk_type": "other",
+          "language": "protobuf",
+          "name": "(unnamed)",
+          "signature": "",
+          "snippet": "message CleanupResponse {\n    string workspace_id = 1;\n    repeated string deleted_files = 2;\n    int32 chunks_removed = 3;\n    string error = 4;\n}\n\nmessage DeleteByPrefixRequest {\n    string workspac...",
+          "position_2d": [
+            12.058356285095215,
+            0.7673664689064026,
+            5.630439281463623
+          ]
+        },
+        {
+          "rank": 6,
+          "id": "backend/code-indexer-py/code_indexer/services/file_indexer_service.py:12:14",
+          "score": 0.5219919835278306,
+          "file_path": "backend/code-indexer-py/code_indexer/services/file_indexer_service.py",
+          "file_name": "file_indexer_service.py",
+          "start_line": 12,
+          "end_line": 14,
+          "chunk_type": "method",
+          "language": "python",
+          "name": "__init__",
+          "signature": "def __init__(self)",
+          "snippet": "def __init__(self):\n        self._logic = IndexerLogic()\n        logger.info(\"FileIndexerService initialized\")",
+          "position_2d": [
+            11.636004447937012,
+            -0.02705410309135914,
+            4.742049694061279
+          ]
+        },
+        {
+          "rank": 7,
+          "id": "backend/code-indexer-py/code_indexer/services/file_indexer_service.py:37:101",
+          "score": 0.5095844644754528,
+          "file_path": "backend/code-indexer-py/code_indexer/services/file_indexer_service.py",
+          "file_name": "file_indexer_service.py",
+          "start_line": 37,
+          "end_line": 101,
+          "chunk_type": "method",
+          "language": "python",
+          "name": "_process_file_event",
+          "signature": "def _process_file_event(\n        self,\n        event: file_indexer_pb2.FileEvent,\n        workspace: WorkspaceState,\n    ) -> file_indexer_pb2.IndexingStatus",
+          "snippet": "async def _process_file_event(\n        self,\n        event: file_indexer_pb2.FileEvent,\n        workspace: WorkspaceState,\n    ) -> file_indexer_pb2.IndexingStatus:\n        \"\"\"Process a file event and...",
+          "position_2d": [
+            11.890841484069824,
+            1.0221188068389893,
+            5.74409294128418
+          ]
+        },
+        {
+          "rank": 8,
+          "id": "src-tauri/src/commands/file_indexer/types.rs:1:34",
+          "score": 0.502973464443439,
+          "file_path": "src-tauri/src/commands/file_indexer/types.rs",
+          "file_name": "types.rs",
+          "start_line": 1,
+          "end_line": 34,
+          "chunk_type": "file",
+          "language": "rust",
+          "name": "(unnamed)",
+          "signature": "",
+          "snippet": "use std::collections::HashMap;\nuse std::path::PathBuf;\nuse std::sync::Arc;\nuse tokio::sync::{mpsc, oneshot, RwLock};\n\nuse crate::grpc::file_indexer::proto::FileEvent;\nuse crate::grpc::file_watcher::Fi...",
+          "position_2d": [
+            11.914993286132812,
+            1.7972410917282104,
+            5.3244476318359375
+          ]
+        },
+        {
+          "rank": 9,
+          "id": "src-tauri/src/grpc/file_indexer/client.rs:98:196",
+          "score": 0.4997943684288297,
+          "file_path": "src-tauri/src/grpc/file_indexer/client.rs",
+          "file_name": "client.rs",
+          "start_line": 98,
+          "end_line": 196,
+          "chunk_type": "other",
+          "language": "rust",
+          "name": "(unnamed)",
+          "signature": "",
+          "snippet": "    let total_files = file_events.len();\n    tokio::spawn(async move {\n        for event in file_events {\n            if tx.send(event).await.is_err() {\n                break;\n            }\n        }\n...",
+          "position_2d": [
+            12.033108711242676,
+            1.4918491840362549,
+            5.64323091506958
+          ]
+        },
+        {
+          "rank": 10,
+          "id": "src/components/editor/file-indexer-status.tsx:17:191",
+          "score": 0.4970285958766608,
+          "file_path": "src/components/editor/file-indexer-status.tsx",
+          "file_name": "file-indexer-status.tsx",
+          "start_line": 17,
+          "end_line": 191,
+          "chunk_type": "function",
+          "language": "typescript",
+          "name": "FileIndexerStatus",
+          "signature": "function FileIndexerStatus()",
+          "snippet": "function FileIndexerStatus({ autoStart = false }: FileIndexerStatusProps) {\n    const { folderPath } = useWorkspace();\n    const { isConnected } = useBackend();\n    const {\n        status,\n        ind...",
+          "position_2d": [
+            12.063708305358887,
+            1.4564611911773682,
+            5.485797882080078
+          ]
+        }
+      ]
+    },
+    {
+      "text": "gRPC service definition",
+      "embedding_2d": [
+        12.138880253764551,
+        1.5831833965447522,
+        6.432966193152701
+      ],
+      "results": [
+        {
+          "rank": 1,
+          "id": "backend/code-indexer-py/code_indexer/grpc_gen/health_pb2_grpc.py:65:81",
+          "score": 0.6295461808716302,
+          "file_path": "backend/code-indexer-py/code_indexer/grpc_gen/health_pb2_grpc.py",
+          "file_name": "health_pb2_grpc.py",
+          "start_line": 65,
+          "end_line": 81,
+          "chunk_type": "function",
+          "language": "python",
+          "name": "add_HealthServiceServicer_to_server",
+          "signature": "def add_HealthServiceServicer_to_server(servicer, server)",
+          "snippet": "def add_HealthServiceServicer_to_server(servicer, server):\n    rpc_method_handlers = {\n            'Check': grpc.unary_unary_rpc_method_handler(\n                    servicer.Check,\n                   ...",
+          "position_2d": [
+            12.863645553588867,
+            2.4695816040039062,
+            7.821849346160889
+          ]
+        },
+        {
+          "rank": 2,
+          "id": "backend/code-indexer-py/code_indexer/services/__init__.py:1:28",
+          "score": 0.6107411132414067,
+          "file_path": "backend/code-indexer-py/code_indexer/services/__init__.py",
+          "file_name": "__init__.py",
+          "start_line": 1,
+          "end_line": 28,
+          "chunk_type": "file",
+          "language": "python",
+          "name": "(unnamed)",
+          "signature": "",
+          "snippet": "\"\"\"gRPC service implementations.\"\"\"\n\nfrom .health_service import HealthServicer\nfrom .file_indexer_service import FileIndexerServicer\nfrom .semantic_search_service import SemanticSearchServicer\nfrom ....",
+          "position_2d": [
+            11.572175025939941,
+            0.22495137155056,
+            5.563308238983154
+          ]
+        },
+        {
+          "rank": 3,
+          "id": "backend/code-indexer-py/code_indexer/grpc_gen/health_pb2_grpc.py:49:62",
+          "score": 0.6002426888914933,
+          "file_path": "backend/code-indexer-py/code_indexer/grpc_gen/health_pb2_grpc.py",
+          "file_name": "health_pb2_grpc.py",
+          "start_line": 49,
+          "end_line": 62,
+          "chunk_type": "class",
+          "language": "python",
+          "name": "HealthServiceServicer",
+          "signature": "class HealthServiceServicer(object)",
+          "snippet": "class HealthServiceServicer(object):\n    \"\"\"Missing associated documentation comment in .proto file.\"\"\"\n\n    def Check(self, request, context):\n        \"\"\"Missing associated documentation comment in ....",
+          "position_2d": [
+            12.7396821975708,
+            2.565150260925293,
+            7.8671555519104
+          ]
+        },
+        {
+          "rank": 4,
+          "id": "backend/code-indexer-py/code_indexer/grpc_gen/health_pb2_grpc.py:85:140",
+          "score": 0.5914531413959199,
+          "file_path": "backend/code-indexer-py/code_indexer/grpc_gen/health_pb2_grpc.py",
+          "file_name": "health_pb2_grpc.py",
+          "start_line": 85,
+          "end_line": 140,
+          "chunk_type": "class",
+          "language": "python",
+          "name": "HealthService",
+          "signature": "class HealthService(object)",
+          "snippet": "class HealthService(object):\n    \"\"\"Missing associated documentation comment in .proto file.\"\"\"\n\n    @staticmethod\n    def Check(request,\n            target,\n            options=(),\n            channe...",
+          "position_2d": [
+            12.752595901489258,
+            2.676547050476074,
+            7.773025989532471
+          ]
+        },
+        {
+          "rank": 5,
+          "id": "backend/code-indexer-py/code_indexer/grpc_gen/file_indexer_pb2_grpc.py:134:175",
+          "score": 0.589056083958502,
+          "file_path": "backend/code-indexer-py/code_indexer/grpc_gen/file_indexer_pb2_grpc.py",
+          "file_name": "file_indexer_pb2_grpc.py",
+          "start_line": 134,
+          "end_line": 175,
+          "chunk_type": "function",
+          "language": "python",
+          "name": "add_FileIndexerServiceServicer_to_server",
+          "signature": "def add_FileIndexerServiceServicer_to_server(servicer, server)",
+          "snippet": "def add_FileIndexerServiceServicer_to_server(servicer, server):\n    rpc_method_handlers = {\n            'IndexWorkspace': grpc.stream_stream_rpc_method_handler(\n                    servicer.IndexWorks...",
+          "position_2d": [
+            11.833609580993652,
+            0.2992927134037018,
+            5.649855613708496
+          ]
+        },
+        {
+          "rank": 6,
+          "id": "src-tauri/src/grpc/mod.rs:1:17",
+          "score": 0.5823718182389555,
+          "file_path": "src-tauri/src/grpc/mod.rs",
+          "file_name": "mod.rs",
+          "start_line": 1,
+          "end_line": 17,
+          "chunk_type": "file",
+          "language": "rust",
+          "name": "(unnamed)",
+          "signature": "",
+          "snippet": "pub mod file_indexer;\npub mod file_watcher;\npub mod health;\npub mod next_edit;\npub mod semantic_search;\n\npub const DEFAULT_GRPC_ADDRESS: &str = \"http://127.0.0.1:50051\";\n\n#[inline]\npub fn grpc_endpoin...",
+          "position_2d": [
+            11.530941009521484,
+            1.365843415260315,
+            4.8073625564575195
+          ]
+        },
+        {
+          "rank": 7,
+          "id": "backend/code-indexer-py/code_indexer/grpc_gen/health_pb2_grpc.py:28:46",
+          "score": 0.5743985689784552,
+          "file_path": "backend/code-indexer-py/code_indexer/grpc_gen/health_pb2_grpc.py",
+          "file_name": "health_pb2_grpc.py",
+          "start_line": 28,
+          "end_line": 46,
+          "chunk_type": "class",
+          "language": "python",
+          "name": "HealthServiceStub",
+          "signature": "class HealthServiceStub(object)",
+          "snippet": "class HealthServiceStub(object):\n    \"\"\"Missing associated documentation comment in .proto file.\"\"\"\n\n    def __init__(self, channel):\n        \"\"\"Constructor.\n\n        Args:\n            channel: A grpc...",
+          "position_2d": [
+            12.645519256591797,
+            2.554835557937622,
+            7.732418537139893
+          ]
+        },
+        {
+          "rank": 8,
+          "id": "backend/code-indexer-py/code_indexer/grpc_gen/semantic_search_pb2_grpc.py:57:68",
+          "score": 0.5733125884381978,
+          "file_path": "backend/code-indexer-py/code_indexer/grpc_gen/semantic_search_pb2_grpc.py",
+          "file_name": "semantic_search_pb2_grpc.py",
+          "start_line": 57,
+          "end_line": 68,
+          "chunk_type": "function",
+          "language": "python",
+          "name": "add_SemanticSearchServiceServicer_to_server",
+          "signature": "def add_SemanticSearchServiceServicer_to_server(servicer, server)",
+          "snippet": "def add_SemanticSearchServiceServicer_to_server(servicer, server):\n    rpc_method_handlers = {\n            'SearchCode': grpc.unary_stream_rpc_method_handler(\n                    servicer.SearchCode,\n...",
+          "position_2d": [
+            11.180267333984375,
+            0.78676837682724,
+            3.626283645629883
+          ]
+        },
+        {
+          "rank": 9,
+          "id": "backend/code-indexer-py/code_indexer/grpc_gen/__init__.py:1:2",
+          "score": 0.5645533287306279,
+          "file_path": "backend/code-indexer-py/code_indexer/grpc_gen/__init__.py",
+          "file_name": "__init__.py",
+          "start_line": 1,
+          "end_line": 2,
+          "chunk_type": "file",
+          "language": "python",
+          "name": "(unnamed)",
+          "signature": "",
+          "snippet": "\"\"\"Generated gRPC protobuf code.\"\"\"\n",
+          "position_2d": [
+            11.498587608337402,
+            0.2521449327468872,
+            5.62846040725708
+          ]
+        },
+        {
+          "rank": 10,
+          "id": "backend/code-indexer-py/code_indexer/grpc_gen/health_pb2.py:1:43",
+          "score": 0.5443472422318256,
+          "file_path": "backend/code-indexer-py/code_indexer/grpc_gen/health_pb2.py",
+          "file_name": "health_pb2.py",
+          "start_line": 1,
+          "end_line": 43,
+          "chunk_type": "file",
+          "language": "python",
+          "name": "(unnamed)",
+          "signature": "",
+          "snippet": "# -*- coding: utf-8 -*-\n# Generated by the protocol buffer compiler.  DO NOT EDIT!\n# NO CHECKED-IN PROTOBUF GENCODE\n# source: health.proto\n# Protobuf Python Version: 6.31.1\n\"\"\"Generated protocol buffe...",
+          "position_2d": [
+            12.727007865905762,
+            2.6269755363464355,
+            7.770745754241943
+          ]
+        }
+      ]
+    },
+    {
+      "text": "error handling and logging",
+      "embedding_2d": [
+        11.749540321579554,
+        1.6399904654719686,
+        5.505980326479391
+      ],
+      "results": [
+        {
+          "rank": 1,
+          "id": "backend/code-indexer-py/code_indexer/services/file_indexer_service.py:26:35",
+          "score": 0.36011811048517445,
+          "file_path": "backend/code-indexer-py/code_indexer/services/file_indexer_service.py",
+          "file_name": "file_indexer_service.py",
+          "start_line": 26,
+          "end_line": 35,
+          "chunk_type": "method",
+          "language": "python",
+          "name": "_log_incoming_event",
+          "signature": "def _log_incoming_event(self, event: file_indexer_pb2.FileEvent) -> None",
+          "snippet": "def _log_incoming_event(self, event: file_indexer_pb2.FileEvent) -> None:\n        \"\"\"Log an incoming file event.\"\"\"\n        logger.info(\n            f\"[gRPC] Incoming event: \"\n            f\"type={self...",
+          "position_2d": [
+            11.854652404785156,
+            0.9614893198013306,
+            5.746687889099121
+          ]
+        },
+        {
+          "rank": 2,
+          "id": "backend/code-indexer-py/code_indexer/services/file_indexer_service.py:12:14",
+          "score": 0.2689264950692293,
+          "file_path": "backend/code-indexer-py/code_indexer/services/file_indexer_service.py",
+          "file_name": "file_indexer_service.py",
+          "start_line": 12,
+          "end_line": 14,
+          "chunk_type": "method",
+          "language": "python",
+          "name": "__init__",
+          "signature": "def __init__(self)",
+          "snippet": "def __init__(self):\n        self._logic = IndexerLogic()\n        logger.info(\"FileIndexerService initialized\")",
+          "position_2d": [
+            11.636004447937012,
+            -0.02705410309135914,
+            4.742049694061279
+          ]
+        },
+        {
+          "rank": 3,
+          "id": "src-tauri/src/commands/python.rs:562:645",
+          "score": 0.23971640688821944,
+          "file_path": "src-tauri/src/commands/python.rs",
+          "file_name": "python.rs",
+          "start_line": 562,
+          "end_line": 645,
+          "chunk_type": "other",
+          "language": "rust",
+          "name": "(unnamed)",
+          "signature": "",
+          "snippet": "        return Some(PythonDiagnostic {\n            line: line_num,\n            column,\n            end_line: None,\n            end_column: None,\n            message: message.to_string(),\n            s...",
+          "position_2d": [
+            11.117228507995605,
+            4.962889671325684,
+            4.616625785827637
+          ]
+        },
+        {
+          "rank": 4,
+          "id": "src-tauri/src/grpc/health.rs:1:80",
+          "score": 0.23562515909812726,
+          "file_path": "src-tauri/src/grpc/health.rs",
+          "file_name": "health.rs",
+          "start_line": 1,
+          "end_line": 80,
+          "chunk_type": "other",
+          "language": "rust",
+          "name": "(unnamed)",
+          "signature": "",
+          "snippet": "use serde::Serialize;\nuse tauri::{AppHandle, Emitter};\nuse tokio_stream::StreamExt;\n\npub mod proto {\n    tonic::include_proto!(\"health\");\n}\n\nuse proto::health_service_client::HealthServiceClient;\n\n#[d...",
+          "position_2d": [
+            12.46898078918457,
+            2.8679583072662354,
+            7.546319484710693
+          ]
+        },
+        {
+          "rank": 5,
+          "id": "src-tauri/src/grpc/file_indexer/client.rs:98:196",
+          "score": 0.2353655771478065,
+          "file_path": "src-tauri/src/grpc/file_indexer/client.rs",
+          "file_name": "client.rs",
+          "start_line": 98,
+          "end_line": 196,
+          "chunk_type": "other",
+          "language": "rust",
+          "name": "(unnamed)",
+          "signature": "",
+          "snippet": "    let total_files = file_events.len();\n    tokio::spawn(async move {\n        for event in file_events {\n            if tx.send(event).await.is_err() {\n                break;\n            }\n        }\n...",
+          "position_2d": [
+            12.033108711242676,
+            1.4918491840362549,
+            5.64323091506958
+          ]
+        },
+        {
+          "rank": 6,
+          "id": "backend/code-indexer-py/code_indexer/services/file_indexer_service.py:11:424",
+          "score": 0.23064661722226731,
+          "file_path": "backend/code-indexer-py/code_indexer/services/file_indexer_service.py",
+          "file_name": "file_indexer_service.py",
+          "start_line": 11,
+          "end_line": 424,
+          "chunk_type": "class",
+          "language": "python",
+          "name": "FileIndexerServicer",
+          "signature": "class FileIndexerServicer(file_indexer_pb2_grpc.FileIndexerServiceServicer)",
+          "snippet": "class FileIndexerServicer(file_indexer_pb2_grpc.FileIndexerServiceServicer):\n    def __init__(self):\n        self._logic = IndexerLogic()\n        logger.info(\"FileIndexerService initialized\")\n    \n   ...",
+          "position_2d": [
+            11.927465438842773,
+            0.5786944031715393,
+            5.489349365234375
+          ]
+        },
+        {
+          "rank": 7,
+          "id": "backend/code-indexer-py/code_indexer/services/file_indexer_service.py:37:101",
+          "score": 0.2240720466388822,
+          "file_path": "backend/code-indexer-py/code_indexer/services/file_indexer_service.py",
+          "file_name": "file_indexer_service.py",
+          "start_line": 37,
+          "end_line": 101,
+          "chunk_type": "method",
+          "language": "python",
+          "name": "_process_file_event",
+          "signature": "def _process_file_event(\n        self,\n        event: file_indexer_pb2.FileEvent,\n        workspace: WorkspaceState,\n    ) -> file_indexer_pb2.IndexingStatus",
+          "snippet": "async def _process_file_event(\n        self,\n        event: file_indexer_pb2.FileEvent,\n        workspace: WorkspaceState,\n    ) -> file_indexer_pb2.IndexingStatus:\n        \"\"\"Process a file event and...",
+          "position_2d": [
+            11.890841484069824,
+            1.0221188068389893,
+            5.74409294128418
+          ]
+        },
+        {
+          "rank": 8,
+          "id": "backend/code-indexer-py/code_indexer/services/next_edit_service.py:21:22",
+          "score": 0.2234064220217271,
+          "file_path": "backend/code-indexer-py/code_indexer/services/next_edit_service.py",
+          "file_name": "next_edit_service.py",
+          "start_line": 21,
+          "end_line": 22,
+          "chunk_type": "method",
+          "language": "python",
+          "name": "__init__",
+          "signature": "def __init__(self)",
+          "snippet": "def __init__(self):\n        logger.info(\"NextEditServicer initialized\")",
+          "position_2d": [
+            10.871316909790039,
+            -2.445159435272217,
+            3.129686117172241
+          ]
+        },
+        {
+          "rank": 9,
+          "id": "src-tauri/src/commands/filesystem.rs:1054:1141",
+          "score": 0.22295700942765923,
+          "file_path": "src-tauri/src/commands/filesystem.rs",
+          "file_name": "filesystem.rs",
+          "start_line": 1054,
+          "end_line": 1141,
+          "chunk_type": "other",
+          "language": "rust",
+          "name": "(unnamed)",
+          "signature": "",
+          "snippet": "    if !node_modules.exists() {\n        // Check for types package\n        let types_package = workspace.join(\"node_modules\").join(format!(\"@types/{}\", package_name));\n        if !types_package.exists...",
+          "position_2d": [
+            11.212307929992676,
+            4.672138690948486,
+            4.758445739746094
+          ]
+        },
+        {
+          "rank": 10,
+          "id": "src-tauri/src/grpc/health.rs:81:110",
+          "score": 0.22219544270098618,
+          "file_path": "src-tauri/src/grpc/health.rs",
+          "file_name": "health.rs",
+          "start_line": 81,
+          "end_line": 110,
+          "chunk_type": "other",
+          "language": "rust",
+          "name": "(unnamed)",
+          "signature": "",
+          "snippet": "    while let Some(result) = stream.next().await {\n        match result {\n            Ok(response) => {\n                let status = HealthStatus {\n                    status: status_to_string(respons...",
+          "position_2d": [
+            12.430364608764648,
+            2.816742420196533,
+            7.6073760986328125
+          ]
+        }
+      ]
+    },
+    {
+      "text": "how to parse code into chunks",
+      "embedding_2d": [
+        11.802829345187114,
+        -0.28511515015044825,
+        3.4111786281304046
+      ],
+      "results": [
+        {
+          "rank": 1,
+          "id": "backend/code-indexer-py/code_indexer/embedding/chunker.py:294:324",
+          "score": 0.6383687903342609,
+          "file_path": "backend/code-indexer-py/code_indexer/embedding/chunker.py",
+          "file_name": "chunker.py",
+          "start_line": 294,
+          "end_line": 324,
+          "chunk_type": "function",
+          "language": "python",
+          "name": "chunk_code",
+          "signature": "def chunk_code(\n    content: str,\n    file_path: str,\n    language: str,\n    max_chunk_lines: int = 100,\n) -> List[CodeChunk]",
+          "snippet": "def chunk_code(\n    content: str,\n    file_path: str,\n    language: str,\n    max_chunk_lines: int = 100,\n) -> List[CodeChunk]:\n    parser = _get_parser(language)\n    \n    if parser is None:\n        re...",
+          "position_2d": [
+            12.139199256896973,
+            -0.7795494198799133,
+            3.3098483085632324
+          ]
+        },
+        {
+          "rank": 2,
+          "id": "backend/code-indexer-py/code_indexer/embedding/chunker.py:91:190",
+          "score": 0.6201955618396879,
+          "file_path": "backend/code-indexer-py/code_indexer/embedding/chunker.py",
+          "file_name": "chunker.py",
+          "start_line": 91,
+          "end_line": 190,
+          "chunk_type": "function",
+          "language": "python",
+          "name": "_extract_python_chunks",
+          "signature": "def _extract_python_chunks(\n    root: Node,\n    source_bytes: bytes,\n    file_path: str,\n) -> List[CodeChunk]",
+          "snippet": "def _extract_python_chunks(\n    root: Node,\n    source_bytes: bytes,\n    file_path: str,\n) -> List[CodeChunk]:\n    chunks = []\n    module_docstring = \"\"\n    \n    def visit(node: Node, parent_class: st...",
+          "position_2d": [
+            12.143305778503418,
+            -0.7837830185890198,
+            3.3095486164093018
+          ]
+        },
+        {
+          "rank": 3,
+          "id": "backend/code-indexer-py/code_indexer/embedding/chunker.py:327:382",
+          "score": 0.6087605750366106,
+          "file_path": "backend/code-indexer-py/code_indexer/embedding/chunker.py",
+          "file_name": "chunker.py",
+          "start_line": 327,
+          "end_line": 382,
+          "chunk_type": "function",
+          "language": "python",
+          "name": "_simple_chunk",
+          "signature": "def _simple_chunk(\n    content: str,\n    file_path: str,\n    language: str,\n    max_chunk_lines: int = 100,\n) -> List[CodeChunk]",
+          "snippet": "def _simple_chunk(\n    content: str,\n    file_path: str,\n    language: str,\n    max_chunk_lines: int = 100,\n) -> List[CodeChunk]:\n    \"\"\"\n    Simple line-based chunking for unsupported languages or fa...",
+          "position_2d": [
+            12.094420433044434,
+            -0.9065485000610352,
+            3.387993812561035
+          ]
+        },
+        {
+          "rank": 4,
+          "id": "backend/code-indexer-py/code_indexer/embedding/chunker.py:193:291",
+          "score": 0.5666198911461309,
+          "file_path": "backend/code-indexer-py/code_indexer/embedding/chunker.py",
+          "file_name": "chunker.py",
+          "start_line": 193,
+          "end_line": 291,
+          "chunk_type": "function",
+          "language": "python",
+          "name": "_extract_ts_chunks",
+          "signature": "def _extract_ts_chunks(\n    root: Node,\n    source_bytes: bytes,\n    file_path: str,\n    language: str = \"typescript\",\n) -> List[CodeChunk]",
+          "snippet": "def _extract_ts_chunks(\n    root: Node,\n    source_bytes: bytes,\n    file_path: str,\n    language: str = \"typescript\",\n) -> List[CodeChunk]:\n    chunks = []\n    \n    def visit(node: Node, parent_class...",
+          "position_2d": [
+            12.063928604125977,
+            -0.6497483849525452,
+            3.374340057373047
+          ]
+        },
+        {
+          "rank": 5,
+          "id": "backend/code-indexer-py/code_indexer/parse.py:1:17",
+          "score": 0.4898704636611113,
+          "file_path": "backend/code-indexer-py/code_indexer/parse.py",
+          "file_name": "parse.py",
+          "start_line": 1,
+          "end_line": 17,
+          "chunk_type": "file",
+          "language": "python",
+          "name": "(unnamed)",
+          "signature": "",
+          "snippet": "import tree_sitter_python as tspython\nfrom tree_sitter import Language, Parser\n\nPY_LANGUAGE = Language(tspython.language())\n\nparser = Parser(PY_LANGUAGE)\n\ntree = parser.parse(\n    bytes(\n        \"\"\"\nd...",
+          "position_2d": [
+            12.004833221435547,
+            -0.6534512639045715,
+            3.4922711849212646
+          ]
+        },
+        {
+          "rank": 6,
+          "id": "backend/code-indexer-py/code_indexer/embedding/chunker.py:88:89",
+          "score": 0.44381701638509147,
+          "file_path": "backend/code-indexer-py/code_indexer/embedding/chunker.py",
+          "file_name": "chunker.py",
+          "start_line": 88,
+          "end_line": 89,
+          "chunk_type": "function",
+          "language": "python",
+          "name": "_get_node_text",
+          "signature": "def _get_node_text(node: Node, source_bytes: bytes) -> str",
+          "snippet": "def _get_node_text(node: Node, source_bytes: bytes) -> str:\n    return source_bytes[node.start_byte:node.end_byte].decode(\"utf-8\")",
+          "position_2d": [
+            12.011746406555176,
+            -0.8747115731239319,
+            3.2109477519989014
+          ]
+        },
+        {
+          "rank": 7,
+          "id": "src/lib/ansi-parser.ts:148:204",
+          "score": 0.39691579391854925,
+          "file_path": "src/lib/ansi-parser.ts",
+          "file_name": "ansi-parser.ts",
+          "start_line": 148,
+          "end_line": 204,
+          "chunk_type": "function",
+          "language": "typescript",
+          "name": "parseAnsi",
+          "signature": "function parseAnsi()",
+          "snippet": "function parseAnsi(text: string): AnsiSpan[] {\n    const spans: AnsiSpan[] = [];\n    let state = createInitialState();\n    let currentText = '';\n    \n    // Regex to match ANSI escape sequences\n    //...",
+          "position_2d": [
+            8.880846977233887,
+            6.021188259124756,
+            3.5691046714782715
+          ]
+        },
+        {
+          "rank": 8,
+          "id": "backend/code-indexer-py/code_indexer/embedding/chunker.py:10:15",
+          "score": 0.3886511547404625,
+          "file_path": "backend/code-indexer-py/code_indexer/embedding/chunker.py",
+          "file_name": "chunker.py",
+          "start_line": 10,
+          "end_line": 15,
+          "chunk_type": "class",
+          "language": "python",
+          "name": "ChunkType",
+          "signature": "class ChunkType(Enum)",
+          "snippet": "class ChunkType(Enum):\n    FILE = \"file\"\n    CLASS = \"class\"\n    FUNCTION = \"function\"\n    METHOD = \"method\"\n    OTHER = \"other\"",
+          "position_2d": [
+            12.130396842956543,
+            -0.7301450371742249,
+            3.3055691719055176
+          ]
+        },
+        {
+          "rank": 9,
+          "id": "backend/code-indexer-py/code_indexer/embedding/__init__.py:1:25",
+          "score": 0.3427006943368074,
+          "file_path": "backend/code-indexer-py/code_indexer/embedding/__init__.py",
+          "file_name": "__init__.py",
+          "start_line": 1,
+          "end_line": 25,
+          "chunk_type": "file",
+          "language": "python",
+          "name": "(unnamed)",
+          "signature": "",
+          "snippet": "from .embeder import (\n    get_embedding_model,\n    preload_model,\n    generate_embedding,\n    generate_embedding_batch,\n    generate_query_embedding,\n)\n\nfrom .chunker import (\n    ChunkType,\n    Code...",
+          "position_2d": [
+            11.869902610778809,
+            -1.226320505142212,
+            3.673365354537964
+          ]
+        },
+        {
+          "rank": 10,
+          "id": "backend/code-indexer-py/code_indexer/embedding/embeder.py:64:67",
+          "score": 0.3357452618941279,
+          "file_path": "backend/code-indexer-py/code_indexer/embedding/embeder.py",
+          "file_name": "embeder.py",
+          "start_line": 64,
+          "end_line": 67,
+          "chunk_type": "function",
+          "language": "python",
+          "name": "generate_query_embedding",
+          "signature": "def generate_query_embedding(query: str) -> List[float]",
+          "snippet": "def generate_query_embedding(query: str) -> List[float]:\n\n    formatted_query = f\"Find code that implements: {query}\"\n    return generate_embedding(formatted_query)",
+          "position_2d": [
+            12.00079345703125,
+            -1.3443492650985718,
+            3.7100820541381836
+          ]
+        }
+      ]
+    },
+    {
+      "text": "database connection setup",
+      "embedding_2d": [
+        11.992609712330484,
+        -0.2086084723777405,
+        4.718823337636353
+      ],
+      "results": [
+        {
+          "rank": 1,
+          "id": "backend/code-indexer-py/code_indexer/db/__init__.py:1:20",
+          "score": 0.39876074708284215,
+          "file_path": "backend/code-indexer-py/code_indexer/db/__init__.py",
+          "file_name": "__init__.py",
+          "start_line": 1,
+          "end_line": 20,
+          "chunk_type": "file",
+          "language": "python",
+          "name": "(unnamed)",
+          "signature": "",
+          "snippet": "from .vector_store import (\n    get_collection,\n    upsert_chunks,\n    delete_by_file,\n    search,\n    get_stats,\n    delete_workspace,\n    SearchResult,\n)\n\n__all__ = [\n    \"get_collection\",\n    \"upse...",
+          "position_2d": [
+            12.41440486907959,
+            -0.8297168612480164,
+            4.464683532714844
+          ]
+        },
+        {
+          "rank": 2,
+          "id": "backend/code-indexer-py/code_indexer/clients/__init__.py:1:7",
+          "score": 0.30698358977653295,
+          "file_path": "backend/code-indexer-py/code_indexer/clients/__init__.py",
+          "file_name": "__init__.py",
+          "start_line": 1,
+          "end_line": 7,
+          "chunk_type": "file",
+          "language": "python",
+          "name": "(unnamed)",
+          "signature": "",
+          "snippet": "\"\"\"External service clients.\"\"\"\n\nfrom code_indexer.clients.chroma import global_chroma_client\nfrom code_indexer.clients.redis import global_redis_client\n\n__all__ = [\"global_chroma_client\", \"global_red...",
+          "position_2d": [
+            11.940908432006836,
+            -0.32658132910728455,
+            4.703516960144043
+          ]
+        },
+        {
+          "rank": 3,
+          "id": "backend/code-indexer-py/code_indexer/clients/redis.py:11:22",
+          "score": 0.2816269606873157,
+          "file_path": "backend/code-indexer-py/code_indexer/clients/redis.py",
+          "file_name": "redis.py",
+          "start_line": 11,
+          "end_line": 22,
+          "chunk_type": "function",
+          "language": "python",
+          "name": "global_redis_client",
+          "signature": "def global_redis_client() -> Redis",
+          "snippet": "def global_redis_client() -> Redis:\n    global _REDIS_CLIENT\n\n    if _REDIS_CLIENT is None:\n        with _LOCK:\n            if _REDIS_CLIENT is None:\n                _REDIS_CLIENT = redis.Redis(\n     ...",
+          "position_2d": [
+            12.257238388061523,
+            -0.0919945240020752,
+            4.7097978591918945
+          ]
+        },
+        {
+          "rank": 4,
+          "id": "backend/code-indexer-py/code_indexer/clients/chroma.py:11:21",
+          "score": 0.2802382266795141,
+          "file_path": "backend/code-indexer-py/code_indexer/clients/chroma.py",
+          "file_name": "chroma.py",
+          "start_line": 11,
+          "end_line": 21,
+          "chunk_type": "function",
+          "language": "python",
+          "name": "global_chroma_client",
+          "signature": "def global_chroma_client() -> ClientAPI",
+          "snippet": "def global_chroma_client() -> ClientAPI:\n    global _CHROMA_CLIENT\n\n    if _CHROMA_CLIENT is None:\n        with _LOCK:\n            if _CHROMA_CLIENT is None:\n                _CHROMA_CLIENT = chromadb....",
+          "position_2d": [
+            11.983926773071289,
+            -0.3507515490055084,
+            4.5686421394348145
+          ]
+        },
+        {
+          "rank": 5,
+          "id": "backend/code-indexer-py/code_indexer/services/semantic_search_service.py:14:15",
+          "score": 0.2706003182394114,
+          "file_path": "backend/code-indexer-py/code_indexer/services/semantic_search_service.py",
+          "file_name": "semantic_search_service.py",
+          "start_line": 14,
+          "end_line": 15,
+          "chunk_type": "method",
+          "language": "python",
+          "name": "__init__",
+          "signature": "def __init__(self)",
+          "snippet": "def __init__(self):\n        logger.info(\"SemanticSearchService initialized\")",
+          "position_2d": [
+            11.542043685913086,
+            0.04181846231222153,
+            4.310409069061279
+          ]
+        },
+        {
+          "rank": 6,
+          "id": "backend/code-indexer-py/code_indexer/db/vector_store.py:21:31",
+          "score": 0.26364925258249394,
+          "file_path": "backend/code-indexer-py/code_indexer/db/vector_store.py",
+          "file_name": "vector_store.py",
+          "start_line": 21,
+          "end_line": 31,
+          "chunk_type": "function",
+          "language": "python",
+          "name": "get_collection",
+          "signature": "def get_collection(workspace: str) -> chromadb.Collection",
+          "snippet": "def get_collection(workspace: str) -> chromadb.Collection:\n    client = global_chroma_client()\n    collection_name = _workspace_collection_name(workspace)\n\n    return client.get_or_create_collection(\n...",
+          "position_2d": [
+            12.622944831848145,
+            -0.6621466875076294,
+            4.634377479553223
+          ]
+        },
+        {
+          "rank": 7,
+          "id": "src/context/backend-context.tsx:35:228",
+          "score": 0.25757961022862474,
+          "file_path": "src/context/backend-context.tsx",
+          "file_name": "backend-context.tsx",
+          "start_line": 35,
+          "end_line": 228,
+          "chunk_type": "function",
+          "language": "typescript",
+          "name": "BackendProvider",
+          "signature": "function BackendProvider()",
+          "snippet": "function BackendProvider({ children }: { children: ReactNode }) {\n    const [state, setState] = useState<BackendState>({\n        isConnected: false,\n        isConnecting: false,\n        isWatching: fa...",
+          "position_2d": [
+            12.322789192199707,
+            3.033823013305664,
+            7.366963863372803
+          ]
+        },
+        {
+          "rank": 8,
+          "id": "backend/code-indexer-py/code_indexer/services/file_indexer_service.py:12:14",
+          "score": 0.24474179135793694,
+          "file_path": "backend/code-indexer-py/code_indexer/services/file_indexer_service.py",
+          "file_name": "file_indexer_service.py",
+          "start_line": 12,
+          "end_line": 14,
+          "chunk_type": "method",
+          "language": "python",
+          "name": "__init__",
+          "signature": "def __init__(self)",
+          "snippet": "def __init__(self):\n        self._logic = IndexerLogic()\n        logger.info(\"FileIndexerService initialized\")",
+          "position_2d": [
+            11.636004447937012,
+            -0.02705410309135914,
+            4.742049694061279
+          ]
+        },
+        {
+          "rank": 9,
+          "id": "backend/docker-compose.yaml:1:28",
+          "score": 0.2428631448070892,
+          "file_path": "backend/docker-compose.yaml",
+          "file_name": "docker-compose.yaml",
+          "start_line": 1,
+          "end_line": 28,
+          "chunk_type": "file",
+          "language": "yaml",
+          "name": "(unnamed)",
+          "signature": "",
+          "snippet": "networks:\n  net:\n    driver: bridge\nservices:\n  chromadb:\n    image: chromadb/chroma:1.0.0\n    volumes:\n      - ./chromadb:/chroma/chroma\n    environment:\n      - IS_PERSISTENT=TRUE\n      - PERSIST_DI...",
+          "position_2d": [
+            11.979822158813477,
+            -0.2565801739692688,
+            4.590696334838867
+          ]
+        },
+        {
+          "rank": 10,
+          "id": "backend/code-indexer-py/code_indexer/services/next_edit_service.py:21:22",
+          "score": 0.23486008543486056,
+          "file_path": "backend/code-indexer-py/code_indexer/services/next_edit_service.py",
+          "file_name": "next_edit_service.py",
+          "start_line": 21,
+          "end_line": 22,
+          "chunk_type": "method",
+          "language": "python",
+          "name": "__init__",
+          "signature": "def __init__(self)",
+          "snippet": "def __init__(self):\n        logger.info(\"NextEditServicer initialized\")",
+          "position_2d": [
+            10.871316909790039,
+            -2.445159435272217,
+            3.129686117172241
+          ]
+        }
+      ]
+    },
+    {
+      "text": "embedding model initialization",
+      "embedding_2d": [
+        11.761485371544614,
+        -1.4077633241220886,
+        3.5867736226575335
+      ],
+      "results": [
+        {
+          "rank": 1,
+          "id": "backend/code-indexer-py/code_indexer/embedding/embeder.py:45:50",
+          "score": 0.6387680740435787,
+          "file_path": "backend/code-indexer-py/code_indexer/embedding/embeder.py",
+          "file_name": "embeder.py",
+          "start_line": 45,
+          "end_line": 50,
+          "chunk_type": "function",
+          "language": "python",
+          "name": "preload_model",
+          "signature": "def preload_model()",
+          "snippet": "def preload_model():\n    try:\n        get_embedding_model()\n        logger.info(\"Embedding model preloaded\")\n    except Exception as e:\n        logger.warning(f\"Failed to preload embedding model: {e}\"...",
+          "position_2d": [
+            11.717510223388672,
+            -1.5092414617538452,
+            3.5184478759765625
+          ]
+        },
+        {
+          "rank": 2,
+          "id": "backend/code-indexer-py/code_indexer/embedding/embeder.py:21:43",
+          "score": 0.5631171116873742,
+          "file_path": "backend/code-indexer-py/code_indexer/embedding/embeder.py",
+          "file_name": "embeder.py",
+          "start_line": 21,
+          "end_line": 43,
+          "chunk_type": "function",
+          "language": "python",
+          "name": "get_embedding_model",
+          "signature": "def get_embedding_model() -> Llama",
+          "snippet": "def get_embedding_model() -> Llama:\n    global _EMBEDDING_MODEL\n    \n    if _EMBEDDING_MODEL is None:\n        with _MODEL_LOCK:\n            if _EMBEDDING_MODEL is None:\n                if not MODEL_PA...",
+          "position_2d": [
+            11.718504905700684,
+            -1.5197762250900269,
+            3.5051753520965576
+          ]
+        },
+        {
+          "rank": 3,
+          "id": "backend/code-indexer-py/code_indexer/embedding/__init__.py:1:25",
+          "score": 0.5342912609929633,
+          "file_path": "backend/code-indexer-py/code_indexer/embedding/__init__.py",
+          "file_name": "__init__.py",
+          "start_line": 1,
+          "end_line": 25,
+          "chunk_type": "file",
+          "language": "python",
+          "name": "(unnamed)",
+          "signature": "",
+          "snippet": "from .embeder import (\n    get_embedding_model,\n    preload_model,\n    generate_embedding,\n    generate_embedding_batch,\n    generate_query_embedding,\n)\n\nfrom .chunker import (\n    ChunkType,\n    Code...",
+          "position_2d": [
+            11.869902610778809,
+            -1.226320505142212,
+            3.673365354537964
+          ]
+        },
+        {
+          "rank": 4,
+          "id": "backend/code-indexer-py/code_indexer/ai/next_edit.py:102:107",
+          "score": 0.44282025340376796,
+          "file_path": "backend/code-indexer-py/code_indexer/ai/next_edit.py",
+          "file_name": "next_edit.py",
+          "start_line": 102,
+          "end_line": 107,
+          "chunk_type": "function",
+          "language": "python",
+          "name": "preload_model",
+          "signature": "def preload_model()",
+          "snippet": "def preload_model():\n    try:\n        get_next_edit_model()\n        logger.info(\"Next-edit model preloaded\")\n    except Exception as e:\n        logger.warning(f\"Failed to preload next-edit model: {e}\"...",
+          "position_2d": [
+            11.498104095458984,
+            -1.9621996879577637,
+            3.1575379371643066
+          ]
+        },
+        {
+          "rank": 5,
+          "id": "backend/code-indexer-py/code_indexer/embedding/embeder.py:52:56",
+          "score": 0.44187294742779415,
+          "file_path": "backend/code-indexer-py/code_indexer/embedding/embeder.py",
+          "file_name": "embeder.py",
+          "start_line": 52,
+          "end_line": 56,
+          "chunk_type": "function",
+          "language": "python",
+          "name": "generate_embedding",
+          "signature": "def generate_embedding(text: str) -> List[float]",
+          "snippet": "def generate_embedding(text: str) -> List[float]:\n    model = get_embedding_model()\n    with _INFERENCE_LOCK:\n        embedding = model.embed(text)\n    return embedding",
+          "position_2d": [
+            11.90963077545166,
+            -1.4361531734466553,
+            3.5719728469848633
+          ]
+        },
+        {
+          "rank": 6,
+          "id": "backend/code-indexer/src/embed.cpp:1:77",
+          "score": 0.41960998468172994,
+          "file_path": "backend/code-indexer/src/embed.cpp",
+          "file_name": "embed.cpp",
+          "start_line": 1,
+          "end_line": 77,
+          "chunk_type": "file",
+          "language": "cpp",
+          "name": "(unnamed)",
+          "signature": "",
+          "snippet": "#include <iostream>\n#include <vector>\n#include <cstring>\n\n#include \"llama.h\"\n\nint main()\n{\n    llama_backend_init();\n\n    llama_model_params model_params = llama_model_default_params();\n    model_para...",
+          "position_2d": [
+            11.876839637756348,
+            -1.3526890277862549,
+            3.6335198879241943
+          ]
+        },
+        {
+          "rank": 7,
+          "id": "backend/code-indexer-py/code_indexer/ai/next_edit.py:57:71",
+          "score": 0.40826984945139067,
+          "file_path": "backend/code-indexer-py/code_indexer/ai/next_edit.py",
+          "file_name": "next_edit.py",
+          "start_line": 57,
+          "end_line": 71,
+          "chunk_type": "function",
+          "language": "python",
+          "name": "get_next_edit_model",
+          "signature": "def get_next_edit_model() -> Llama",
+          "snippet": "def get_next_edit_model() -> Llama:\n    global _NEXT_EDIT_MODEL\n\n    if _NEXT_EDIT_MODEL is None:\n        with _MODEL_LOCK:\n            if _NEXT_EDIT_MODEL is None:\n                logger.info(f\"Loadi...",
+          "position_2d": [
+            11.529702186584473,
+            -1.9707037210464478,
+            3.147487163543701
+          ]
+        },
+        {
+          "rank": 8,
+          "id": "backend/code-indexer/README.md:1:37",
+          "score": 0.3850677471325129,
+          "file_path": "backend/code-indexer/README.md",
+          "file_name": "README.md",
+          "start_line": 1,
+          "end_line": 37,
+          "chunk_type": "file",
+          "language": "markdown",
+          "name": "(unnamed)",
+          "signature": "",
+          "snippet": "# Code Indexer\n\n## Setup\n\nDownload the model:\n\n```bash\nmkdir -p models\ncd models\ncurl -L -o jina-code-embeddings-1.5b-Q8_0.gguf \\\n\"https://huggingface.co/jinaai/jina-code-embeddings-1.5b-GGUF/resolve/...",
+          "position_2d": [
+            11.816768646240234,
+            -1.246567964553833,
+            3.7474870681762695
+          ]
+        },
+        {
+          "rank": 9,
+          "id": "backend/code-indexer-py/code_indexer/services/indexer_logic.py:67:83",
+          "score": 0.384577059290296,
+          "file_path": "backend/code-indexer-py/code_indexer/services/indexer_logic.py",
+          "file_name": "indexer_logic.py",
+          "start_line": 67,
+          "end_line": 83,
+          "chunk_type": "method",
+          "language": "python",
+          "name": "__init__",
+          "signature": "def __init__(self, executor: Optional[ThreadPoolExecutor] = None)",
+          "snippet": "def __init__(self, executor: Optional[ThreadPoolExecutor] = None):\n        self._workspaces: Dict[str, WorkspaceState] = {}\n        self._lock = asyncio.Lock()\n        self._executor = executor or Thr...",
+          "position_2d": [
+            11.77432918548584,
+            -0.23789632320404053,
+            4.491785049438477
+          ]
+        },
+        {
+          "rank": 10,
+          "id": "backend/code-indexer-py/code_indexer/embedding/embeder.py:58:62",
+          "score": 0.3546986290287486,
+          "file_path": "backend/code-indexer-py/code_indexer/embedding/embeder.py",
+          "file_name": "embeder.py",
+          "start_line": 58,
+          "end_line": 62,
+          "chunk_type": "function",
+          "language": "python",
+          "name": "generate_embedding_batch",
+          "signature": "def generate_embedding_batch(texts: List[str]) -> List[List[float]]",
+          "snippet": "def generate_embedding_batch(texts: List[str]) -> List[List[float]]:\n    embeddings = []\n    for text in texts:\n        embeddings.append(generate_embedding(text))    \n    return embeddings",
+          "position_2d": [
+            11.946247100830078,
+            -1.4535454511642456,
+            3.5578556060791016
+          ]
+        }
+      ]
+    },
+    {
+      "text": "search for similar code chunks",
+      "embedding_2d": [
+        11.470992948025465,
+        0.7337365427046711,
+        3.5888024542295174
+      ],
+      "results": [
+        {
+          "rank": 1,
+          "id": "backend/code-indexer-py/code_indexer/db/vector_store.py:145:195",
+          "score": 0.4595530236697304,
+          "file_path": "backend/code-indexer-py/code_indexer/db/vector_store.py",
+          "file_name": "vector_store.py",
+          "start_line": 145,
+          "end_line": 195,
+          "chunk_type": "function",
+          "language": "python",
+          "name": "search",
+          "signature": "def search(\n    workspace: str,\n    query_embedding: List[float],\n    limit: int = 10,\n    language_filter: Optional[str] = None,\n    path_filter: Optional[str] = None,\n) -> List[SearchResult]",
+          "snippet": "def search(\n    workspace: str,\n    query_embedding: List[float],\n    limit: int = 10,\n    language_filter: Optional[str] = None,\n    path_filter: Optional[str] = None,\n) -> List[SearchResult]:\n    co...",
+          "position_2d": [
+            12.434317588806152,
+            -0.9211466908454895,
+            4.287545204162598
+          ]
+        },
+        {
+          "rank": 2,
+          "id": "backend/code-indexer-py/code_indexer/services/semantic_search_service.py:17:69",
+          "score": 0.43387399154019574,
+          "file_path": "backend/code-indexer-py/code_indexer/services/semantic_search_service.py",
+          "file_name": "semantic_search_service.py",
+          "start_line": 17,
+          "end_line": 69,
+          "chunk_type": "method",
+          "language": "python",
+          "name": "SearchCode",
+          "signature": "def SearchCode(\n        self,\n        request: semantic_search_pb2.SearchRequest,\n        context: grpc.aio.ServicerContext,\n    ) -> AsyncIterator[semantic_search_pb2.SearchResponse]",
+          "snippet": "async def SearchCode(\n        self,\n        request: semantic_search_pb2.SearchRequest,\n        context: grpc.aio.ServicerContext,\n    ) -> AsyncIterator[semantic_search_pb2.SearchResponse]:\n        \"...",
+          "position_2d": [
+            11.218270301818848,
+            0.9887392520904541,
+            3.6131858825683594
+          ]
+        },
+        {
+          "rank": 3,
+          "id": "src-tauri/src/grpc/semantic_search/search.rs:1:69",
+          "score": 0.42562002285296807,
+          "file_path": "src-tauri/src/grpc/semantic_search/search.rs",
+          "file_name": "search.rs",
+          "start_line": 1,
+          "end_line": 69,
+          "chunk_type": "file",
+          "language": "rust",
+          "name": "(unnamed)",
+          "signature": "",
+          "snippet": "use tokio_stream::StreamExt;\n\nuse super::proto::semantic_search_service_client::SemanticSearchServiceClient;\nuse super::proto::SearchRequest;\nuse super::types::{CodeSearchResponse, CodeSearchResult};\n...",
+          "position_2d": [
+            11.34449577331543,
+            1.250697135925293,
+            3.731532096862793
+          ]
+        },
+        {
+          "rank": 4,
+          "id": "backend/code-indexer-py/code_indexer/embedding/chunker.py:327:382",
+          "score": 0.4204692361530716,
+          "file_path": "backend/code-indexer-py/code_indexer/embedding/chunker.py",
+          "file_name": "chunker.py",
+          "start_line": 327,
+          "end_line": 382,
+          "chunk_type": "function",
+          "language": "python",
+          "name": "_simple_chunk",
+          "signature": "def _simple_chunk(\n    content: str,\n    file_path: str,\n    language: str,\n    max_chunk_lines: int = 100,\n) -> List[CodeChunk]",
+          "snippet": "def _simple_chunk(\n    content: str,\n    file_path: str,\n    language: str,\n    max_chunk_lines: int = 100,\n) -> List[CodeChunk]:\n    \"\"\"\n    Simple line-based chunking for unsupported languages or fa...",
+          "position_2d": [
+            12.094420433044434,
+            -0.9065485000610352,
+            3.387993812561035
+          ]
+        },
+        {
+          "rank": 5,
+          "id": "src-tauri/src/grpc/semantic_search/types.rs:1:24",
+          "score": 0.41904167451542873,
+          "file_path": "src-tauri/src/grpc/semantic_search/types.rs",
+          "file_name": "types.rs",
+          "start_line": 1,
+          "end_line": 24,
+          "chunk_type": "file",
+          "language": "rust",
+          "name": "(unnamed)",
+          "signature": "",
+          "snippet": "use serde::Serialize;\n\n#[derive(Debug, Clone, Serialize)]\n#[serde(rename_all = \"camelCase\")]\npub struct CodeSearchResult {\n    pub file_path: String,\n    pub code_snippet: String,\n    pub score: f32,\n...",
+          "position_2d": [
+            11.280159950256348,
+            1.1986488103866577,
+            3.756457567214966
+          ]
+        },
+        {
+          "rank": 6,
+          "id": "backend/code-indexer-py/code_indexer/embedding/chunker.py:91:190",
+          "score": 0.41892640062525194,
+          "file_path": "backend/code-indexer-py/code_indexer/embedding/chunker.py",
+          "file_name": "chunker.py",
+          "start_line": 91,
+          "end_line": 190,
+          "chunk_type": "function",
+          "language": "python",
+          "name": "_extract_python_chunks",
+          "signature": "def _extract_python_chunks(\n    root: Node,\n    source_bytes: bytes,\n    file_path: str,\n) -> List[CodeChunk]",
+          "snippet": "def _extract_python_chunks(\n    root: Node,\n    source_bytes: bytes,\n    file_path: str,\n) -> List[CodeChunk]:\n    chunks = []\n    module_docstring = \"\"\n    \n    def visit(node: Node, parent_class: st...",
+          "position_2d": [
+            12.143305778503418,
+            -0.7837830185890198,
+            3.3095486164093018
+          ]
+        },
+        {
+          "rank": 7,
+          "id": "src/hooks/use-code-search.ts:46:204",
+          "score": 0.41326259291423784,
+          "file_path": "src/hooks/use-code-search.ts",
+          "file_name": "use-code-search.ts",
+          "start_line": 46,
+          "end_line": 204,
+          "chunk_type": "function",
+          "language": "typescript",
+          "name": "useCodeSearch",
+          "signature": "function useCodeSearch()",
+          "snippet": "function useCodeSearch(\n    workspacePath: string | null,\n    options: UseCodeSearchOptions = {}\n): UseCodeSearchReturn {\n    const {\n        debounceMs = 300,\n        limit = 10,\n        languageFilt...",
+          "position_2d": [
+            11.435503005981445,
+            1.3276817798614502,
+            3.61543869972229
+          ]
+        },
+        {
+          "rank": 8,
+          "id": "backend/code-indexer-py/code_indexer/embedding/chunker.py:193:291",
+          "score": 0.4113395199365119,
+          "file_path": "backend/code-indexer-py/code_indexer/embedding/chunker.py",
+          "file_name": "chunker.py",
+          "start_line": 193,
+          "end_line": 291,
+          "chunk_type": "function",
+          "language": "python",
+          "name": "_extract_ts_chunks",
+          "signature": "def _extract_ts_chunks(\n    root: Node,\n    source_bytes: bytes,\n    file_path: str,\n    language: str = \"typescript\",\n) -> List[CodeChunk]",
+          "snippet": "def _extract_ts_chunks(\n    root: Node,\n    source_bytes: bytes,\n    file_path: str,\n    language: str = \"typescript\",\n) -> List[CodeChunk]:\n    chunks = []\n    \n    def visit(node: Node, parent_class...",
+          "position_2d": [
+            12.063928604125977,
+            -0.6497483849525452,
+            3.374340057373047
+          ]
+        },
+        {
+          "rank": 9,
+          "id": "backend/code-indexer-py/code_indexer/embedding/chunker.py:294:324",
+          "score": 0.40972233108677264,
+          "file_path": "backend/code-indexer-py/code_indexer/embedding/chunker.py",
+          "file_name": "chunker.py",
+          "start_line": 294,
+          "end_line": 324,
+          "chunk_type": "function",
+          "language": "python",
+          "name": "chunk_code",
+          "signature": "def chunk_code(\n    content: str,\n    file_path: str,\n    language: str,\n    max_chunk_lines: int = 100,\n) -> List[CodeChunk]",
+          "snippet": "def chunk_code(\n    content: str,\n    file_path: str,\n    language: str,\n    max_chunk_lines: int = 100,\n) -> List[CodeChunk]:\n    parser = _get_parser(language)\n    \n    if parser is None:\n        re...",
+          "position_2d": [
+            12.139199256896973,
+            -0.7795494198799133,
+            3.3098483085632324
+          ]
+        },
+        {
+          "rank": 10,
+          "id": "src/components/editor/left-sidebar.tsx:912:962",
+          "score": 0.3903167691600857,
+          "file_path": "src/components/editor/left-sidebar.tsx",
+          "file_name": "left-sidebar.tsx",
+          "start_line": 912,
+          "end_line": 962,
+          "chunk_type": "function",
+          "language": "typescript",
+          "name": "SearchResultItem",
+          "signature": "function SearchResultItem()",
+          "snippet": "function SearchResultItem({ result, query, onClick }: SearchResultItemProps) {\n    // Get filename from path\n    const fileName = result.filePath.split(\"/\").pop() || result.filePath;\n    const dirPath...",
+          "position_2d": [
+            8.278626441955566,
+            7.149277687072754,
+            3.4100546836853027
+          ]
+        }
+      ]
+    },
+    {
+      "text": "protocol buffer message types",
+      "embedding_2d": [
+        11.876130930706239,
+        1.1344421085305272,
+        5.627546047241929
+      ],
+      "results": [
+        {
+          "rank": 1,
+          "id": "backend/code-indexer-py/code_indexer/grpc_gen/file_indexer_pb2.py:1:67",
+          "score": 0.44473678331431843,
+          "file_path": "backend/code-indexer-py/code_indexer/grpc_gen/file_indexer_pb2.py",
+          "file_name": "file_indexer_pb2.py",
+          "start_line": 1,
+          "end_line": 67,
+          "chunk_type": "file",
+          "language": "python",
+          "name": "(unnamed)",
+          "signature": "",
+          "snippet": "# -*- coding: utf-8 -*-\n# Generated by the protocol buffer compiler.  DO NOT EDIT!\n# NO CHECKED-IN PROTOBUF GENCODE\n# source: file_indexer.proto\n# Protobuf Python Version: 6.31.1\n\"\"\"Generated protocol...",
+          "position_2d": [
+            11.647832870483398,
+            0.470051109790802,
+            5.754074573516846
+          ]
+        },
+        {
+          "rank": 2,
+          "id": "proto/health.proto:1:26",
+          "score": 0.42919100879040584,
+          "file_path": "proto/health.proto",
+          "file_name": "health.proto",
+          "start_line": 1,
+          "end_line": 26,
+          "chunk_type": "file",
+          "language": "protobuf",
+          "name": "(unnamed)",
+          "signature": "",
+          "snippet": "syntax = \"proto3\";\n\npackage health;\n\nservice HealthService {\n    rpc Check(HealthCheckRequest) returns (HealthCheckResponse);\n    rpc Watch(HealthCheckRequest) returns (stream HealthCheckResponse);\n}\n...",
+          "position_2d": [
+            12.832347869873047,
+            2.694593667984009,
+            7.7475481033325195
+          ]
+        },
+        {
+          "rank": 3,
+          "id": "src-tauri/src/grpc/next_edit/mod.rs:1:10",
+          "score": 0.4081243044859474,
+          "file_path": "src-tauri/src/grpc/next_edit/mod.rs",
+          "file_name": "mod.rs",
+          "start_line": 1,
+          "end_line": 10,
+          "chunk_type": "file",
+          "language": "rust",
+          "name": "(unnamed)",
+          "signature": "",
+          "snippet": "pub mod proto {\n    tonic::include_proto!(\"next_edit\");\n}\n\nmod client;\nmod types;\n\npub use client::*;\npub use types::*;\n",
+          "position_2d": [
+            10.97123908996582,
+            -2.459223747253418,
+            2.6931281089782715
+          ]
+        },
+        {
+          "rank": 4,
+          "id": "backend/code-indexer-py/code_indexer/grpc_gen/semantic_search_pb2.py:1:41",
+          "score": 0.4072127139875529,
+          "file_path": "backend/code-indexer-py/code_indexer/grpc_gen/semantic_search_pb2.py",
+          "file_name": "semantic_search_pb2.py",
+          "start_line": 1,
+          "end_line": 41,
+          "chunk_type": "file",
+          "language": "python",
+          "name": "(unnamed)",
+          "signature": "",
+          "snippet": "# -*- coding: utf-8 -*-\n# Generated by the protocol buffer compiler.  DO NOT EDIT!\n# NO CHECKED-IN PROTOBUF GENCODE\n# source: semantic_search.proto\n# Protobuf Python Version: 6.31.1\n\"\"\"Generated proto...",
+          "position_2d": [
+            11.129738807678223,
+            0.9289339184761047,
+            3.6607189178466797
+          ]
+        },
+        {
+          "rank": 5,
+          "id": "src-tauri/src/grpc/semantic_search/mod.rs:1:10",
+          "score": 0.40334829584116305,
+          "file_path": "src-tauri/src/grpc/semantic_search/mod.rs",
+          "file_name": "mod.rs",
+          "start_line": 1,
+          "end_line": 10,
+          "chunk_type": "file",
+          "language": "rust",
+          "name": "(unnamed)",
+          "signature": "",
+          "snippet": "pub mod proto {\n    tonic::include_proto!(\"semantic_search\");\n}\n\nmod search;\nmod types;\n\npub use search::*;\npub use types::*;\n",
+          "position_2d": [
+            11.252700805664062,
+            1.2229567766189575,
+            3.8915507793426514
+          ]
+        },
+        {
+          "rank": 6,
+          "id": "backend/code-indexer-py/code_indexer/grpc_gen/health_pb2.py:1:43",
+          "score": 0.3956949105439639,
+          "file_path": "backend/code-indexer-py/code_indexer/grpc_gen/health_pb2.py",
+          "file_name": "health_pb2.py",
+          "start_line": 1,
+          "end_line": 43,
+          "chunk_type": "file",
+          "language": "python",
+          "name": "(unnamed)",
+          "signature": "",
+          "snippet": "# -*- coding: utf-8 -*-\n# Generated by the protocol buffer compiler.  DO NOT EDIT!\n# NO CHECKED-IN PROTOBUF GENCODE\n# source: health.proto\n# Protobuf Python Version: 6.31.1\n\"\"\"Generated protocol buffe...",
+          "position_2d": [
+            12.727007865905762,
+            2.6269755363464355,
+            7.770745754241943
+          ]
+        },
+        {
+          "rank": 7,
+          "id": "backend/code-indexer-py/code_indexer/grpc_gen/__init__.py:1:2",
+          "score": 0.37962138766862796,
+          "file_path": "backend/code-indexer-py/code_indexer/grpc_gen/__init__.py",
+          "file_name": "__init__.py",
+          "start_line": 1,
+          "end_line": 2,
+          "chunk_type": "file",
+          "language": "python",
+          "name": "(unnamed)",
+          "signature": "",
+          "snippet": "\"\"\"Generated gRPC protobuf code.\"\"\"\n",
+          "position_2d": [
+            11.498587608337402,
+            0.2521449327468872,
+            5.62846040725708
+          ]
+        },
+        {
+          "rank": 8,
+          "id": "backend/code-indexer-py/code_indexer/grpc_gen/health_pb2_grpc.py:65:81",
+          "score": 0.37789267600705767,
+          "file_path": "backend/code-indexer-py/code_indexer/grpc_gen/health_pb2_grpc.py",
+          "file_name": "health_pb2_grpc.py",
+          "start_line": 65,
+          "end_line": 81,
+          "chunk_type": "function",
+          "language": "python",
+          "name": "add_HealthServiceServicer_to_server",
+          "signature": "def add_HealthServiceServicer_to_server(servicer, server)",
+          "snippet": "def add_HealthServiceServicer_to_server(servicer, server):\n    rpc_method_handlers = {\n            'Check': grpc.unary_unary_rpc_method_handler(\n                    servicer.Check,\n                   ...",
+          "position_2d": [
+            12.863645553588867,
+            2.4695816040039062,
+            7.821849346160889
+          ]
+        },
+        {
+          "rank": 9,
+          "id": "backend/code-indexer-py/code_indexer/grpc_gen/semantic_search_pb2_grpc.py:57:68",
+          "score": 0.37089588682411645,
+          "file_path": "backend/code-indexer-py/code_indexer/grpc_gen/semantic_search_pb2_grpc.py",
+          "file_name": "semantic_search_pb2_grpc.py",
+          "start_line": 57,
+          "end_line": 68,
+          "chunk_type": "function",
+          "language": "python",
+          "name": "add_SemanticSearchServiceServicer_to_server",
+          "signature": "def add_SemanticSearchServiceServicer_to_server(servicer, server)",
+          "snippet": "def add_SemanticSearchServiceServicer_to_server(servicer, server):\n    rpc_method_handlers = {\n            'SearchCode': grpc.unary_stream_rpc_method_handler(\n                    servicer.SearchCode,\n...",
+          "position_2d": [
+            11.180267333984375,
+            0.78676837682724,
+            3.626283645629883
+          ]
+        },
+        {
+          "rank": 10,
+          "id": "backend/code-indexer-py/code_indexer/grpc_gen/health_pb2_grpc.py:49:62",
+          "score": 0.3559664461401901,
+          "file_path": "backend/code-indexer-py/code_indexer/grpc_gen/health_pb2_grpc.py",
+          "file_name": "health_pb2_grpc.py",
+          "start_line": 49,
+          "end_line": 62,
+          "chunk_type": "class",
+          "language": "python",
+          "name": "HealthServiceServicer",
+          "signature": "class HealthServiceServicer(object)",
+          "snippet": "class HealthServiceServicer(object):\n    \"\"\"Missing associated documentation comment in .proto file.\"\"\"\n\n    def Check(self, request, context):\n        \"\"\"Missing associated documentation comment in ....",
+          "position_2d": [
+            12.7396821975708,
+            2.565150260925293,
+            7.8671555519104
+          ]
+        }
+      ]
+    },
+    {
+      "text": "test fixtures and mocks",
+      "embedding_2d": [
+        11.275164323388525,
+        1.266329388963474,
+        4.659849164720986
+      ],
+      "results": [
+        {
+          "rank": 1,
+          "id": "backend/code-indexer-py/code_indexer/grpc_gen/file_indexer_pb2_grpc.py:28:72",
+          "score": 0.28530806583729146,
+          "file_path": "backend/code-indexer-py/code_indexer/grpc_gen/file_indexer_pb2_grpc.py",
+          "file_name": "file_indexer_pb2_grpc.py",
+          "start_line": 28,
+          "end_line": 72,
+          "chunk_type": "class",
+          "language": "python",
+          "name": "FileIndexerServiceStub",
+          "signature": "class FileIndexerServiceStub(object)",
+          "snippet": "class FileIndexerServiceStub(object):\n    \"\"\"Service for streaming file content from the code editor to the indexer\n    \"\"\"\n\n    def __init__(self, channel):\n        \"\"\"Constructor.\n\n        Args:\n   ...",
+          "position_2d": [
+            11.905499458312988,
+            0.3216748535633087,
+            5.623723030090332
+          ]
+        },
+        {
+          "rank": 2,
+          "id": "backend/code-indexer-py/tests/__init__.py:1:2",
+          "score": 0.2542161518392779,
+          "file_path": "backend/code-indexer-py/tests/__init__.py",
+          "file_name": "__init__.py",
+          "start_line": 1,
+          "end_line": 2,
+          "chunk_type": "file",
+          "language": "python",
+          "name": "(unnamed)",
+          "signature": "",
+          "snippet": "\"\"\"Tests for the code indexer package.\"\"\"\n",
+          "position_2d": [
+            11.767609596252441,
+            -0.6809443831443787,
+            4.136383056640625
+          ]
+        },
+        {
+          "rank": 3,
+          "id": "backend/code-indexer-py/code_indexer/grpc_gen/health_pb2_grpc.py:28:46",
+          "score": 0.19535860207368705,
+          "file_path": "backend/code-indexer-py/code_indexer/grpc_gen/health_pb2_grpc.py",
+          "file_name": "health_pb2_grpc.py",
+          "start_line": 28,
+          "end_line": 46,
+          "chunk_type": "class",
+          "language": "python",
+          "name": "HealthServiceStub",
+          "signature": "class HealthServiceStub(object)",
+          "snippet": "class HealthServiceStub(object):\n    \"\"\"Missing associated documentation comment in .proto file.\"\"\"\n\n    def __init__(self, channel):\n        \"\"\"Constructor.\n\n        Args:\n            channel: A grpc...",
+          "position_2d": [
+            12.645519256591797,
+            2.554835557937622,
+            7.732418537139893
+          ]
+        },
+        {
+          "rank": 4,
+          "id": "backend/code-indexer/src/hello_server.cpp:1:38",
+          "score": 0.17139319020760993,
+          "file_path": "backend/code-indexer/src/hello_server.cpp",
+          "file_name": "hello_server.cpp",
+          "start_line": 1,
+          "end_line": 38,
+          "chunk_type": "file",
+          "language": "cpp",
+          "name": "(unnamed)",
+          "signature": "",
+          "snippet": "#include \"crow.h\"\n\nint main()\n{\n    crow::SimpleApp app;\n\n    CROW_ROUTE(app, \"/\")([]()\n                         { return \"Hello, World!\"; });\n\n    CROW_ROUTE(app, \"/hello/<string>\")([](const std::str...",
+          "position_2d": [
+            11.657721519470215,
+            -0.685692548751831,
+            4.12274169921875
+          ]
+        },
+        {
+          "rank": 5,
+          "id": "backend/code-indexer-py/code_indexer/services/file_indexer_service.py:12:14",
+          "score": 0.16520569757558864,
+          "file_path": "backend/code-indexer-py/code_indexer/services/file_indexer_service.py",
+          "file_name": "file_indexer_service.py",
+          "start_line": 12,
+          "end_line": 14,
+          "chunk_type": "method",
+          "language": "python",
+          "name": "__init__",
+          "signature": "def __init__(self)",
+          "snippet": "def __init__(self):\n        self._logic = IndexerLogic()\n        logger.info(\"FileIndexerService initialized\")",
+          "position_2d": [
+            11.636004447937012,
+            -0.02705410309135914,
+            4.742049694061279
+          ]
+        },
+        {
+          "rank": 6,
+          "id": "src/types/monaco-jsx-highlighter.d.ts:16:40",
+          "score": 0.16425220830364284,
+          "file_path": "src/types/monaco-jsx-highlighter.d.ts",
+          "file_name": "monaco-jsx-highlighter.d.ts",
+          "start_line": 16,
+          "end_line": 40,
+          "chunk_type": "class",
+          "language": "typescript",
+          "name": "MonacoJSXHighlighter",
+          "signature": "class MonacoJSXHighlighter",
+          "snippet": "class MonacoJSXHighlighter {\n    constructor(\n      monaco: Monaco,\n      parse: BabelParser,\n      traverse: BabelTraverse,\n      editor: editor.IStandaloneCodeEditor,\n      options?: HighlighterOpti...",
+          "position_2d": [
+            8.59874153137207,
+            5.735795021057129,
+            2.1086795330047607
+          ]
+        },
+        {
+          "rank": 7,
+          "id": "backend/code-indexer-py/code_indexer/grpc_gen/semantic_search_pb2_grpc.py:28:42",
+          "score": 0.16308150127440849,
+          "file_path": "backend/code-indexer-py/code_indexer/grpc_gen/semantic_search_pb2_grpc.py",
+          "file_name": "semantic_search_pb2_grpc.py",
+          "start_line": 28,
+          "end_line": 42,
+          "chunk_type": "class",
+          "language": "python",
+          "name": "SemanticSearchServiceStub",
+          "signature": "class SemanticSearchServiceStub(object)",
+          "snippet": "class SemanticSearchServiceStub(object):\n    \"\"\"Semantic Search\n    \"\"\"\n\n    def __init__(self, channel):\n        \"\"\"Constructor.\n\n        Args:\n            channel: A grpc.Channel.\n        \"\"\"\n      ...",
+          "position_2d": [
+            11.190601348876953,
+            0.8879151940345764,
+            3.587498664855957
+          ]
+        },
+        {
+          "rank": 8,
+          "id": "backend/code-indexer-py/code_indexer/grpc_gen/file_indexer_pb2_grpc.py:32:72",
+          "score": 0.162641526063938,
+          "file_path": "backend/code-indexer-py/code_indexer/grpc_gen/file_indexer_pb2_grpc.py",
+          "file_name": "file_indexer_pb2_grpc.py",
+          "start_line": 32,
+          "end_line": 72,
+          "chunk_type": "method",
+          "language": "python",
+          "name": "__init__",
+          "signature": "def __init__(self, channel)",
+          "snippet": "def __init__(self, channel):\n        \"\"\"Constructor.\n\n        Args:\n            channel: A grpc.Channel.\n        \"\"\"\n        self.IndexWorkspace = channel.stream_stream(\n                '/file_indexer...",
+          "position_2d": [
+            11.779032707214355,
+            0.25782108306884766,
+            5.615296840667725
+          ]
+        },
+        {
+          "rank": 9,
+          "id": "backend/code-indexer-py/code_indexer/grpc_gen/file_indexer_pb2_grpc.py:75:131",
+          "score": 0.1622852839619028,
+          "file_path": "backend/code-indexer-py/code_indexer/grpc_gen/file_indexer_pb2_grpc.py",
+          "file_name": "file_indexer_pb2_grpc.py",
+          "start_line": 75,
+          "end_line": 131,
+          "chunk_type": "class",
+          "language": "python",
+          "name": "FileIndexerServiceServicer",
+          "signature": "class FileIndexerServiceServicer(object)",
+          "snippet": "class FileIndexerServiceServicer(object):\n    \"\"\"Service for streaming file content from the code editor to the indexer\n    \"\"\"\n\n    def IndexWorkspace(self, request_iterator, context):\n        \"\"\"Ini...",
+          "position_2d": [
+            11.840198516845703,
+            0.41405007243156433,
+            5.675692081451416
+          ]
+        },
+        {
+          "rank": 10,
+          "id": "src/types/monaco-jsx-highlighter.d.ts:77:77",
+          "score": 0.15689750052579132,
+          "file_path": "src/types/monaco-jsx-highlighter.d.ts",
+          "file_name": "monaco-jsx-highlighter.d.ts",
+          "start_line": 77,
+          "end_line": 77,
+          "chunk_type": "function",
+          "language": "typescript",
+          "name": "(unnamed)",
+          "signature": "function ()",
+          "snippet": "function",
+          "position_2d": [
+            8.609946250915527,
+            5.670435905456543,
+            2.173896312713623
+          ]
+        }
+      ]
+    },
+    {
+      "text": "configuration and settings management",
+      "embedding_2d": [
+        10.29706753609067,
+        5.782599737772045,
+        3.118171954468057
+      ],
+      "results": [
+        {
+          "rank": 1,
+          "id": "src/context/settings-context.tsx:69:203",
+          "score": 0.4239301585385532,
+          "file_path": "src/context/settings-context.tsx",
+          "file_name": "settings-context.tsx",
+          "start_line": 69,
+          "end_line": 203,
+          "chunk_type": "function",
+          "language": "typescript",
+          "name": "SettingsProvider",
+          "signature": "function SettingsProvider()",
+          "snippet": "function SettingsProvider({ children }: SettingsProviderProps) {\n    const [state, setState] = useState<SettingsState>({\n        isInitialized: false,\n        isLoading: true,\n        lastOpenedFolder...",
+          "position_2d": [
+            9.669000625610352,
+            7.682276248931885,
+            2.7663357257843018
+          ]
+        },
+        {
+          "rank": 2,
+          "id": "src/context/settings-context.tsx:57:63",
+          "score": 0.4046038651298026,
+          "file_path": "src/context/settings-context.tsx",
+          "file_name": "settings-context.tsx",
+          "start_line": 57,
+          "end_line": 63,
+          "chunk_type": "function",
+          "language": "typescript",
+          "name": "useSettings",
+          "signature": "function useSettings()",
+          "snippet": "function useSettings(): SettingsContextValue {\n    const context = useContext(SettingsContext);\n    if (!context) {\n        throw new Error(\"useSettings must be used within a SettingsProvider\");\n    }...",
+          "position_2d": [
+            9.578479766845703,
+            7.65690279006958,
+            2.7552292346954346
+          ]
+        },
+        {
+          "rank": 3,
+          "id": "src/lib/settings.ts:144:170",
+          "score": 0.398156619826188,
+          "file_path": "src/lib/settings.ts",
+          "file_name": "settings.ts",
+          "start_line": 144,
+          "end_line": 170,
+          "chunk_type": "function",
+          "language": "typescript",
+          "name": "getSettings",
+          "signature": "function getSettings()",
+          "snippet": "async function getSettings(): Promise<AppSettings> {\n    try {\n        const store = await getStore();\n        \n        if (!store) {\n            return DEFAULT_SETTINGS;\n        }\n\n        const last...",
+          "position_2d": [
+            10.101868629455566,
+            7.719845771789551,
+            2.7277510166168213
+          ]
+        },
+        {
+          "rank": 4,
+          "id": "src/lib/settings.ts:372:389",
+          "score": 0.3413321773810915,
+          "file_path": "src/lib/settings.ts",
+          "file_name": "settings.ts",
+          "start_line": 372,
+          "end_line": 389,
+          "chunk_type": "function",
+          "language": "typescript",
+          "name": "saveWorkspacePythonSettings",
+          "signature": "function saveWorkspacePythonSettings()",
+          "snippet": "async function saveWorkspacePythonSettings(\n    workspacePath: string,\n    settings: WorkspacePythonSettings\n): Promise<void> {\n    try {\n        const store = await getStore();\n        if (!store) re...",
+          "position_2d": [
+            10.300963401794434,
+            7.821010589599609,
+            2.649582624435425
+          ]
+        },
+        {
+          "rank": 5,
+          "id": "src/lib/settings.ts:91:93",
+          "score": 0.3324893284013752,
+          "file_path": "src/lib/settings.ts",
+          "file_name": "settings.ts",
+          "start_line": 91,
+          "end_line": 93,
+          "chunk_type": "function",
+          "language": "typescript",
+          "name": "delay",
+          "signature": "function delay()",
+          "snippet": "function delay(ms: number): Promise<void> {\n    return new Promise(resolve => setTimeout(resolve, ms));\n}",
+          "position_2d": [
+            10.00832748413086,
+            7.778695106506348,
+            2.701395034790039
+          ]
+        },
+        {
+          "rank": 6,
+          "id": "src/lib/settings.ts:100:139",
+          "score": 0.3231642882156083,
+          "file_path": "src/lib/settings.ts",
+          "file_name": "settings.ts",
+          "start_line": 100,
+          "end_line": 139,
+          "chunk_type": "function",
+          "language": "typescript",
+          "name": "getStore",
+          "signature": "function getStore()",
+          "snippet": "async function getStore(): Promise<Store | null> {\n    // Return cached instance if available\n    if (storeInstance) {\n        return storeInstance;\n    }\n    \n    // Return existing init promise if w...",
+          "position_2d": [
+            9.980944633483887,
+            7.65896463394165,
+            2.720216751098633
+          ]
+        },
+        {
+          "rank": 7,
+          "id": "src-tauri/src/commands/filesystem.rs:685:766",
+          "score": 0.2969812737091887,
+          "file_path": "src-tauri/src/commands/filesystem.rs",
+          "file_name": "filesystem.rs",
+          "start_line": 685,
+          "end_line": 766,
+          "chunk_type": "other",
+          "language": "rust",
+          "name": "(unnamed)",
+          "signature": "",
+          "snippet": "    if extends.starts_with('.') {\n        // Relative path\n        let mut path = config_dir.join(extends);\n        if !path.extension().map(|e| e == \"json\").unwrap_or(false) {\n            path.set_ex...",
+          "position_2d": [
+            11.424028396606445,
+            4.199936389923096,
+            4.698301792144775
+          ]
+        },
+        {
+          "rank": 8,
+          "id": "backend/code-indexer-py/code_indexer/__init__.py:1:4",
+          "score": 0.29549575062425704,
+          "file_path": "backend/code-indexer-py/code_indexer/__init__.py",
+          "file_name": "__init__.py",
+          "start_line": 1,
+          "end_line": 4,
+          "chunk_type": "file",
+          "language": "python",
+          "name": "(unnamed)",
+          "signature": "",
+          "snippet": "\"\"\"Code Indexer - Code indexing and embedding service for Fleur IDE.\"\"\"\n\n__version__ = \"0.1.0\"\n",
+          "position_2d": [
+            11.705368041992188,
+            -0.5507924556732178,
+            4.259304046630859
+          ]
+        },
+        {
+          "rank": 9,
+          "id": "src/lib/monaco-project-sync.ts:339:357",
+          "score": 0.29305333297285513,
+          "file_path": "src/lib/monaco-project-sync.ts",
+          "file_name": "monaco-project-sync.ts",
+          "start_line": 339,
+          "end_line": 357,
+          "chunk_type": "function",
+          "language": "typescript",
+          "name": "setupProjectPaths",
+          "signature": "function setupProjectPaths()",
+          "snippet": "async function setupProjectPaths(\n  monaco: Monaco,\n  projectRoot: string\n): Promise<void> {\n  try {\n    const { invoke } = await import(\"@tauri-apps/api/core\");\n    \n    // Read the tsconfig from the...",
+          "position_2d": [
+            8.949464797973633,
+            5.128594875335693,
+            1.798931360244751
+          ]
+        },
+        {
+          "rank": 10,
+          "id": "backend/code-indexer-py/code_indexer/clients/__init__.py:1:7",
+          "score": 0.2893460391127872,
+          "file_path": "backend/code-indexer-py/code_indexer/clients/__init__.py",
+          "file_name": "__init__.py",
+          "start_line": 1,
+          "end_line": 7,
+          "chunk_type": "file",
+          "language": "python",
+          "name": "(unnamed)",
+          "signature": "",
+          "snippet": "\"\"\"External service clients.\"\"\"\n\nfrom code_indexer.clients.chroma import global_chroma_client\nfrom code_indexer.clients.redis import global_redis_client\n\n__all__ = [\"global_chroma_client\", \"global_red...",
+          "position_2d": [
+            11.940908432006836,
+            -0.32658132910728455,
+            4.703516960144043
+          ]
+        }
+      ]
+    }
+  ]
+}

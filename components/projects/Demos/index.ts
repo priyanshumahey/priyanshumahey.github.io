@@ -1,2 +1,6 @@
-export * from "./IvDemo"
+export * from "./ASTVisualizerDemo"
+export * from "./FleurDemo"
 export * from "./GitflowDemo"
+export * from "./IvDemo"
+export * from "./SemanticSearchDemo"
+export * from "./TreeSitterDemo"

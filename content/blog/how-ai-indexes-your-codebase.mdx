@@ -1,0 +1,80 @@
+---
+title: How AI Indexes Your Codebase
+description: A visual exploration of code embeddings, semantic search, and how modern AI code assistants understand your code.
+date: 2025-01-31
+published: true
+tags: ["ai", "embeddings", "semantic-search", "code-indexing"]
+---
+
+## How AI Indexes Your Codebase
+
+### Visualizing Code Embeddings
+
+Every function, class, and code chunk in your codebase gets converted into a **1536-dimensional vector** called an embedding.
+
+The visualization below shows 411 code chunks from a real project, reduced to 2D using t-SNE.
+
+<div className="my-8 rounded-xl overflow-hidden border border-[#1a1a1a]">
+  <FleurDemo />
+</div>
+
+#### What You're Seeing
+
+- **Each point** is a code chunk (function, class, method, or file)
+- **Colors** represent programming languages or chunk types
+- **Proximity** indicates semantic similarity - nearby points have similar meaning
+- **Clusters** form naturally around related functionality
+
+---
+
+### How Semantic Search Works
+
+The demo below shows this in action. Select a natural language query and watch as:
+1. The query gets embedded into the same vector space as the code
+2. The system finds the nearest neighbors using cosine similarity
+3. Results are ranked by semantic similarity, not keyword matching
+
+<div className="my-8 rounded-xl overflow-hidden border border-[#1a1a1a]">
+  <SemanticSearchDemo />
+</div>
+
+---
+
+### Understanding Abstract Syntax Trees
+
+Before we can chunk code intelligently, we need to understand its structure. **Tree-sitter** is a parser that transforms source code into an **Abstract Syntax Tree (AST)** - a hierarchical representation of the code's structure.
+
+Watch the animation below to see how tree-sitter parses different programming languages. Try switching between Python, TypeScript, and Rust examples:
+
+<div className="my-8 rounded-xl overflow-hidden border border-[#1a1a1a]">
+  <ASTVisualizerDemo />
+</div>
+
+#### What the AST Reveals
+
+- **Hierarchical structure**: Classes contain methods, functions contain statements
+- **Language-agnostic concepts**: Functions, classes, and types are recognized across languages
+- **Semantic boundaries**: Each node represents a complete syntactic unit
+
+This tree structure is what enables intelligent code chunking, instead of splitting at arbitrary line numbers, we can split at meaningful boundaries.
+
+---
+
+### Smart Code Chunking with Tree-sitter
+
+<div className="my-8 rounded-xl overflow-hidden border border-[#1a1a1a]">
+  <TreeSitterDemo />
+</div>
+
+#### Why This Matters
+
+- **Naive chunking** splits at arbitrary line boundaries, often cutting functions in half
+- **Tree-sitter chunking** respects semantic boundaries - each chunk is a complete function, class, or method
+- Better chunks mean better embeddings, which means more accurate search results
+
+
+**A note on tooling**: Libraries like [Chonkie](https://docs.chonkie.ai/oss/chunkers/code-chunker) provide ready-made AST-aware code chunking out of the box - handling tree-sitter parsing, semantic boundary detection, and chunk extraction automatically. For production use, that's often the right choice. Here, we're implementing it manually to understand the mechanics behind the magic.
+
+---
+
+
