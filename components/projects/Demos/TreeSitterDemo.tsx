@@ -3,9 +3,7 @@
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { AnimatePresence, motion } from "framer-motion";
 import {
-    AlertTriangle,
     Braces,
-    CheckCircle2,
     ChevronDown,
     ChevronRight,
     Code2,
@@ -13,9 +11,7 @@ import {
     Hash,
     Layers,
     Scissors,
-    Search,
     Sparkles,
-    Target,
     TreePine
 } from "lucide-react";
 import { useMemo, useState } from "react";
@@ -153,49 +149,6 @@ const SEMANTIC_CHUNKS = [
     { id: "sem-5", startLine: 24, endLine: 32, label: "calculate_stats", type: "function", nodeId: "func-1" },
 ];
 
-// Sample queries with simulated match scores for each chunking approach
-interface QueryMatch {
-    query: string;
-    description: string;
-    naiveResults: { chunkId: string; score: number; issue?: string }[];
-    semanticResults: { chunkId: string; score: number; benefit?: string }[];
-}
-
-const SAMPLE_QUERIES: QueryMatch[] = [
-    {
-        query: "normalize data to a range",
-        description: "Find the normalization function",
-        naiveResults: [
-            { chunkId: "naive-2", score: 0.72, issue: "Partial match - chunk starts mid-function, missing class context" },
-            { chunkId: "naive-1", score: 0.31, issue: "Low relevance - only contains imports and class header" },
-        ],
-        semanticResults: [
-            { chunkId: "sem-3", score: 0.94, benefit: "Complete function with docstring and full implementation" },
-            { chunkId: "sem-4", score: 0.67, benefit: "Related transform method that calls normalize" },
-        ],
-    },
-    {
-        query: "calculate mean and standard deviation",
-        description: "Find statistics calculation",
-        naiveResults: [
-            { chunkId: "naive-3", score: 0.68, issue: "Partial - chunk includes unrelated transform() ending" },
-        ],
-        semanticResults: [
-            { chunkId: "sem-5", score: 0.91, benefit: "Exact function match with complete stats logic" },
-        ],
-    },
-    {
-        query: "initialize processor with config",
-        description: "Find the constructor",
-        naiveResults: [
-            { chunkId: "naive-1", score: 0.58, issue: "Mixed content - includes imports diluting relevance" },
-        ],
-        semanticResults: [
-            { chunkId: "sem-2", score: 0.89, benefit: "Focused __init__ method with class context" },
-        ],
-    },
-];
-
 // Node type colors
 const NODE_COLORS: Record<string, string> = {
     module: "#10b981",
@@ -245,13 +198,13 @@ function TreeNode({
     return (
         <div className="select-none">
             <div
-                className={`flex items-center gap-1 py-1 px-1 rounded cursor-pointer transition-all ${isSelected
-                        ? "bg-emerald-500/20 ring-1 ring-emerald-500/50"
-                        : isHovered
-                            ? "bg-zinc-700/50"
-                            : "hover:bg-zinc-800/50"
+                className={`flex items-center gap-1 py-1 px-1 rounded cursor-pointer transition-all min-w-0 ${isSelected
+                    ? "bg-emerald-500/20 ring-1 ring-emerald-500/50"
+                    : isHovered
+                        ? "bg-zinc-700/50"
+                        : "hover:bg-zinc-800/50"
                     }`}
-                style={{ paddingLeft: `${depth * 16 + 4}px` }}
+                style={{ paddingLeft: `${depth * 12 + 4}px` }}
                 onClick={() => {
                     onSelect(isSelected ? null : node.id);
                     if (hasChildren) toggleExpand(node.id);
@@ -260,24 +213,24 @@ function TreeNode({
                 onMouseLeave={() => onHover(null)}
             >
                 {hasChildren ? (
-                    <span className="w-4 h-4 flex items-center justify-center text-zinc-500">
+                    <span className="w-4 h-4 flex items-center justify-center text-zinc-500 flex-shrink-0">
                         {isExpanded ? <ChevronDown className="w-3 h-3" /> : <ChevronRight className="w-3 h-3" />}
                     </span>
                 ) : (
-                    <span className="w-4" />
+                    <span className="w-4 flex-shrink-0" />
                 )}
 
-                <Icon className="w-3.5 h-3.5 flex-shrink-0" style={{ color }} />
+                <Icon className="w-3 h-3 flex-shrink-0" style={{ color }} />
 
-                <span className="text-xs text-zinc-400">{node.type}</span>
+                <span className="text-[10px] text-zinc-400 flex-shrink-0">{node.type.replace(/_/g, " ").slice(0, 12)}</span>
 
                 {node.name && (
-                    <span className="text-xs font-medium text-zinc-200 truncate">
-                        {node.name}
+                    <span className="text-[10px] font-medium text-zinc-200 truncate min-w-0">
+                        {node.name.length > 15 ? node.name.slice(0, 15) + "…" : node.name}
                     </span>
                 )}
 
-                <span className="text-[10px] text-zinc-600 ml-auto flex-shrink-0">
+                <span className="text-[9px] text-zinc-600 ml-auto flex-shrink-0">
                     L{node.startLine}{node.endLine !== node.startLine && `-${node.endLine}`}
                 </span>
 
@@ -355,10 +308,10 @@ function VisualTreeNode({
             {/* Node box */}
             <motion.div
                 className={`relative px-2 py-1.5 rounded-lg border-2 cursor-pointer transition-all ${isSelected
-                        ? "ring-2 ring-offset-2 ring-offset-zinc-900"
-                        : isHovered
-                            ? "scale-105"
-                            : ""
+                    ? "ring-2 ring-offset-2 ring-offset-zinc-900"
+                    : isHovered
+                        ? "scale-105"
+                        : ""
                     }`}
                 style={{
                     borderColor: color,
@@ -499,8 +452,6 @@ export function TreeSitterDemo() {
     const [hoveredNode, setHoveredNode] = useState<string | null>(null);
     const [hoveredLine, setHoveredLine] = useState<number | null>(null);
     const [chunkingMode, setChunkingMode] = useState<"naive" | "semantic">("semantic");
-    const [selectedQueryIndex, setSelectedQueryIndex] = useState(0);
-    const [showSearchDemo, setShowSearchDemo] = useState(false);
     const [expandedNodes, setExpandedNodes] = useState<Set<string>>(
         new Set(["root", "class-1"])
     );
@@ -550,18 +501,6 @@ export function TreeSitterDemo() {
 
     return (
         <div className="w-full bg-[#0a0a0a] rounded-xl overflow-hidden border border-zinc-800">
-            {/* Header */}
-            <div className="p-3 sm:p-4 border-b border-zinc-800 bg-zinc-900/50">
-                <div className="flex items-center gap-2 mb-1 sm:mb-2">
-                    <TreePine className="w-4 h-4 text-emerald-400" />
-                    <span className="text-xs sm:text-sm font-medium text-zinc-200">Tree-sitter Code Parsing</span>
-                </div>
-                <p className="text-[10px] sm:text-xs text-zinc-500">
-                    Tree-sitter parses code into an Abstract Syntax Tree (AST), enabling semantic understanding of code structure.
-                    <span className="hidden sm:inline"> Click on AST nodes or code lines to see the connection.</span>
-                </p>
-            </div>
-
             {/* Main content */}
             <div className="flex flex-col lg:flex-row">
                 {/* Source code panel */}
@@ -598,10 +537,10 @@ export function TreeSitterDemo() {
                                     <div
                                         key={i}
                                         className={`flex transition-all duration-100 rounded-sm ${isHighlighted && chunkingMode === "semantic"
-                                                ? "bg-emerald-500/20"
-                                                : isHoveredLine
-                                                    ? "bg-zinc-700/30"
-                                                    : ""
+                                            ? "bg-emerald-500/20"
+                                            : isHoveredLine
+                                                ? "bg-zinc-700/30"
+                                                : ""
                                             }`}
                                         style={{
                                             borderLeft: chunk ? `2px solid ${chunkColor.replace("15", "60")}` : "2px solid transparent",
@@ -648,7 +587,7 @@ export function TreeSitterDemo() {
                 </div>
 
                 {/* Right sidebar - changes based on mode */}
-                <div className="lg:w-80 flex flex-col">
+                <div className="lg:w-72 flex flex-col">
                     <div className="p-1.5 sm:p-2 border-b border-zinc-800 bg-zinc-900/30 flex items-center gap-2">
                         {chunkingMode === "semantic" ? (
                             <>
@@ -688,8 +627,8 @@ export function TreeSitterDemo() {
                                             <div
                                                 key={chunk.id}
                                                 className={`p-3 rounded-lg border transition-all cursor-pointer ${isHovered
-                                                        ? "ring-1 ring-offset-1 ring-offset-zinc-900"
-                                                        : ""
+                                                    ? "ring-1 ring-offset-1 ring-offset-zinc-900"
+                                                    : ""
                                                     }`}
                                                 style={{
                                                     backgroundColor: color + "15",
@@ -750,8 +689,8 @@ export function TreeSitterDemo() {
                         <button
                             onClick={() => setChunkingMode("naive")}
                             className={`px-2 sm:px-3 py-1 sm:py-1.5 rounded text-[10px] sm:text-xs font-medium transition-colors ${chunkingMode === "naive"
-                                    ? "bg-red-500/20 text-red-400 ring-1 ring-red-500/50"
-                                    : "bg-zinc-800 text-zinc-400 hover:bg-zinc-700"
+                                ? "bg-red-500/20 text-red-400 ring-1 ring-red-500/50"
+                                : "bg-zinc-800 text-zinc-400 hover:bg-zinc-700"
                                 }`}
                         >
                             <span className="flex items-center gap-1 sm:gap-1.5">
@@ -762,8 +701,8 @@ export function TreeSitterDemo() {
                         <button
                             onClick={() => setChunkingMode("semantic")}
                             className={`px-2 sm:px-3 py-1 sm:py-1.5 rounded text-[10px] sm:text-xs font-medium transition-colors ${chunkingMode === "semantic"
-                                    ? "bg-emerald-500/20 text-emerald-400 ring-1 ring-emerald-500/50"
-                                    : "bg-zinc-800 text-zinc-400 hover:bg-zinc-700"
+                                ? "bg-emerald-500/20 text-emerald-400 ring-1 ring-emerald-500/50"
+                                : "bg-zinc-800 text-zinc-400 hover:bg-zinc-700"
                                 }`}
                         >
                             <span className="flex items-center gap-1 sm:gap-1.5">
@@ -772,18 +711,6 @@ export function TreeSitterDemo() {
                             </span>
                         </button>
                     </div>
-
-                    {/* Toggle search demo */}
-                    <button
-                        onClick={() => setShowSearchDemo(!showSearchDemo)}
-                        className={`px-2 sm:px-3 py-1 sm:py-1.5 rounded text-[10px] sm:text-xs font-medium transition-colors flex items-center gap-1 sm:gap-1.5 self-start sm:self-auto ${showSearchDemo
-                                ? "bg-blue-500/20 text-blue-400 ring-1 ring-blue-500/50"
-                                : "bg-zinc-800 text-zinc-400 hover:bg-zinc-700"
-                            }`}
-                    >
-                        <Search className="w-3 h-3" />
-                        <span className="hidden sm:inline">{showSearchDemo ? "Hide" : "Show"}</span> Search
-                    </button>
                 </div>
 
                 {/* Chunk visualization */}
@@ -802,8 +729,8 @@ export function TreeSitterDemo() {
                                     animate={{ opacity: 1, scale: 1 }}
                                     exit={{ opacity: 0, scale: 0.9 }}
                                     className={`px-1.5 sm:px-2 py-1 sm:py-1.5 rounded text-[9px] sm:text-xs font-mono ${chunkingMode === "naive"
-                                            ? "bg-zinc-800 text-zinc-400 border border-zinc-700"
-                                            : "bg-emerald-500/10 text-emerald-400 border border-emerald-500/30"
+                                        ? "bg-zinc-800 text-zinc-400 border border-zinc-700"
+                                        : "bg-emerald-500/10 text-emerald-400 border border-emerald-500/30"
                                         }`}
                                     onMouseEnter={() => {
                                         if (chunkingMode === "semantic" && "nodeId" in chunk) {
@@ -824,129 +751,17 @@ export function TreeSitterDemo() {
                             <div className="text-[10px] sm:text-xs text-zinc-400">
                                 <span className="text-red-400 font-medium">⚠ Problem:</span> Naive chunking splits at arbitrary line boundaries.
                                 <span className="hidden sm:inline"> Chunk 2 cuts through the middle of the <code className="text-zinc-300">normalize</code> method,
-                                losing context and creating incomplete embeddings.</span>
+                                    losing context and creating incomplete embeddings.</span>
                             </div>
                         ) : (
                             <div className="text-[10px] sm:text-xs text-zinc-400">
                                 <span className="text-emerald-400 font-medium">✓ Better:</span> Tree-sitter identifies semantic boundaries.
                                 <span className="hidden sm:inline"> Each chunk contains a complete function or method with its docstring,
-                                making embeddings more meaningful for search.</span>
+                                    making embeddings more meaningful for search.</span>
                             </div>
                         )}
                     </div>
                 </div>
-
-                {/* Search Impact Demo */}
-                <AnimatePresence>
-                    {showSearchDemo && (
-                        <motion.div
-                            initial={{ height: 0, opacity: 0 }}
-                            animate={{ height: "auto", opacity: 1 }}
-                            exit={{ height: 0, opacity: 0 }}
-                            className="overflow-hidden border-t border-zinc-800"
-                        >
-                            <div className="p-2 sm:p-3 bg-zinc-900/30">
-                                <div className="flex items-center gap-2 mb-2 sm:mb-3">
-                                    <Target className="w-3.5 sm:w-4 h-3.5 sm:h-4 text-blue-400" />
-                                    <span className="text-xs sm:text-sm font-medium text-zinc-200">Search Quality Comparison</span>
-                                </div>
-
-                                {/* Query selector */}
-                                <div className="flex gap-2 mb-3 sm:mb-4 overflow-x-auto pb-2 -mx-2 px-2 sm:mx-0 sm:px-0 sm:flex-wrap sm:overflow-visible">
-                                    {SAMPLE_QUERIES.map((q, i) => (
-                                        <button
-                                            key={i}
-                                            onClick={() => setSelectedQueryIndex(i)}
-                                            className={`px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg text-[10px] sm:text-xs transition-all flex-shrink-0 text-left ${i === selectedQueryIndex
-                                                    ? "bg-blue-500/20 text-blue-400 ring-1 ring-blue-500/50"
-                                                    : "bg-zinc-800 text-zinc-400 hover:bg-zinc-700"
-                                                }`}
-                                        >
-                                            <div className="font-medium whitespace-nowrap">&quot;{q.query}&quot;</div>
-                                            <div className="text-[9px] sm:text-[10px] text-zinc-500 mt-0.5 whitespace-nowrap">{q.description}</div>
-                                        </button>
-                                    ))}
-                                </div>
-
-                                {/* Results comparison */}
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-2 sm:gap-4">
-                                    {/* Naive results */}
-                                    <div className="p-2 sm:p-3 rounded-lg bg-red-500/5 border border-red-500/20">
-                                        <div className="flex items-center gap-2 mb-2 sm:mb-3">
-                                            <Layers className="w-3.5 sm:w-4 h-3.5 sm:h-4 text-red-400" />
-                                            <span className="text-[10px] sm:text-xs font-medium text-red-400">Naive Chunking Results</span>
-                                        </div>
-                                        <div className="space-y-1.5 sm:space-y-2">
-                                            {SAMPLE_QUERIES[selectedQueryIndex].naiveResults.map((result, i) => {
-                                                const chunk = NAIVE_CHUNKS.find(c => c.id === result.chunkId);
-                                                return (
-                                                    <div key={i} className="p-1.5 sm:p-2 rounded bg-zinc-800/50 border border-zinc-700/50">
-                                                        <div className="flex items-center justify-between mb-0.5 sm:mb-1">
-                                                            <span className="text-[10px] sm:text-xs font-mono text-zinc-300">{chunk?.label}</span>
-                                                            <span className={`text-[10px] sm:text-xs font-bold tabular-nums ${result.score >= 0.8 ? "text-emerald-400" :
-                                                                    result.score >= 0.6 ? "text-yellow-400" : "text-red-400"
-                                                                }`}>
-                                                                {(result.score * 100).toFixed(0)}%
-                                                            </span>
-                                                        </div>
-                                                        <div className="flex items-start gap-1 sm:gap-1.5 text-[9px] sm:text-[10px] text-red-400/80">
-                                                            <AlertTriangle className="w-2.5 sm:w-3 h-2.5 sm:h-3 flex-shrink-0 mt-0.5" />
-                                                            <span className="line-clamp-2">{result.issue}</span>
-                                                        </div>
-                                                    </div>
-                                                );
-                                            })}
-                                            {SAMPLE_QUERIES[selectedQueryIndex].naiveResults.length === 0 && (
-                                                <div className="text-[10px] sm:text-xs text-zinc-500 italic">No relevant matches</div>
-                                            )}
-                                        </div>
-                                    </div>
-
-                                    {/* Semantic results */}
-                                    <div className="p-2 sm:p-3 rounded-lg bg-emerald-500/5 border border-emerald-500/20">
-                                        <div className="flex items-center gap-2 mb-2 sm:mb-3">
-                                            <Sparkles className="w-3.5 sm:w-4 h-3.5 sm:h-4 text-emerald-400" />
-                                            <span className="text-[10px] sm:text-xs font-medium text-emerald-400">Tree-sitter Chunking Results</span>
-                                        </div>
-                                        <div className="space-y-1.5 sm:space-y-2">
-                                            {SAMPLE_QUERIES[selectedQueryIndex].semanticResults.map((result, i) => {
-                                                const chunk = SEMANTIC_CHUNKS.find(c => c.id === result.chunkId);
-                                                return (
-                                                    <div key={i} className="p-1.5 sm:p-2 rounded bg-zinc-800/50 border border-zinc-700/50">
-                                                        <div className="flex items-center justify-between mb-0.5 sm:mb-1">
-                                                            <span className="text-[10px] sm:text-xs font-mono text-zinc-300">{chunk?.label}</span>
-                                                            <span className={`text-[10px] sm:text-xs font-bold tabular-nums ${result.score >= 0.8 ? "text-emerald-400" :
-                                                                    result.score >= 0.6 ? "text-yellow-400" : "text-red-400"
-                                                                }`}>
-                                                                {(result.score * 100).toFixed(0)}%
-                                                            </span>
-                                                        </div>
-                                                        <div className="flex items-start gap-1 sm:gap-1.5 text-[9px] sm:text-[10px] text-emerald-400/80">
-                                                            <CheckCircle2 className="w-2.5 sm:w-3 h-2.5 sm:h-3 flex-shrink-0 mt-0.5" />
-                                                            <span className="line-clamp-2">{result.benefit}</span>
-                                                        </div>
-                                                    </div>
-                                                );
-                                            })}
-                                        </div>
-                                    </div>
-                                </div>
-
-                                {/* Summary */}
-                                <div className="mt-3 sm:mt-4 p-1.5 sm:p-2 rounded bg-blue-500/10 border border-blue-500/20">
-                                    <div className="text-[10px] sm:text-xs text-blue-300">
-                                        <span className="font-medium">Key insight:</span> Semantic chunking produces{" "}
-                                        <span className="font-bold text-emerald-400">
-                                            +{((SAMPLE_QUERIES[selectedQueryIndex].semanticResults[0]?.score || 0) * 100 -
-                                                (SAMPLE_QUERIES[selectedQueryIndex].naiveResults[0]?.score || 0) * 100).toFixed(0)}%
-                                        </span>{" "}
-                                        higher scores<span className="hidden sm:inline"> because chunks contain complete, contextual code units</span>.
-                                    </div>
-                                </div>
-                            </div>
-                        </motion.div>
-                    )}
-                </AnimatePresence>
             </div>
         </div>
     );
