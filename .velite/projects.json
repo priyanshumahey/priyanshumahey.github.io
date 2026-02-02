@@ -1,5 +1,23 @@
 [
   {
+    "slug": "projects/fleur",
+    "title": "Fleur",
+    "description": "An AI-native code editor that showcases how AI should be integrated into development workflows.",
+    "date": "2026-01-31T00:00:00.000Z",
+    "published": true,
+    "tags": [
+      "ai",
+      "code-editor",
+      "embeddings",
+      "rust",
+      "typescript"
+    ],
+    "body": "const{Fragment:e,jsx:n,jsxs:i}=arguments[0];function _createMdxContent(t){const r={a:\"a\",h2:\"h2\",h3:\"h3\",hr:\"hr\",p:\"p\",...t.components},{BlogLinkCard:a,FleurArchitecture:c,GitHubLinkCard:d,LanguageBar:s,NextEditArchitecture:o}=r;return a||_missingMdxReference(\"BlogLinkCard\",!0),c||_missingMdxReference(\"FleurArchitecture\",!0),d||_missingMdxReference(\"GitHubLinkCard\",!0),s||_missingMdxReference(\"LanguageBar\",!0),o||_missingMdxReference(\"NextEditArchitecture\",!0),i(e,{children:[n(r.h2,{id:\"fleur---ai-native-code-editor\",children:n(r.a,{className:\"subheading-anchor\",\"aria-label\":\"Link to section\",href:\"#fleur---ai-native-code-editor\",children:\"Fleur - AI Native Code Editor\"})}),\"\\n\",n(r.p,{children:\"Fleur is an AI-native code editor built with Tauri, featuring semantic code search powered by embeddings and real-time code intelligence.\"}),\"\\n\",n(d,{url:\"https://github.com/priyanshumahey/fleur\"}),\"\\n\",n(s,{languages:[{name:\"TypeScript\",percentage:45},{name:\"Rust\",percentage:35},{name:\"Python\",percentage:15},{name:\"Other\",percentage:5}]}),\"\\n\",n(r.hr,{}),\"\\n\",n(r.h2,{id:\"system-architecture\",children:n(r.a,{className:\"subheading-anchor\",\"aria-label\":\"Link to section\",href:\"#system-architecture\",children:\"System Architecture\"})}),\"\\n\",n(\"div\",{className:\"my-8\",children:n(c,{})}),\"\\n\",n(r.h2,{id:\"next-edit-prediction\",children:n(r.a,{className:\"subheading-anchor\",\"aria-label\":\"Link to section\",href:\"#next-edit-prediction\",children:\"Next Edit Prediction\"})}),\"\\n\",n(\"div\",{className:\"my-8\",children:n(o,{})}),\"\\n\",n(r.hr,{}),\"\\n\",n(r.h3,{id:\"related-blog-posts\",children:n(r.a,{className:\"subheading-anchor\",\"aria-label\":\"Link to section\",href:\"#related-blog-posts\",children:\"Related Blog Posts\"})}),\"\\n\",i(\"div\",{className:\"space-y-3 my-6\",children:[n(a,{slug:\"next-edit-models\",title:\"Next Edit Models\",description:\"Visualizing how AI predicts your next code edits\"}),n(a,{slug:\"how-ai-indexes-your-codebase\",title:\"How AI Indexes Your Codebase\",description:\"A visual exploration of code embeddings and semantic search\"})]})]})}return{default:function(e={}){const{wrapper:i}=e.components||{};return i?n(i,{...e,children:n(_createMdxContent,{...e})}):_createMdxContent(e)}};function _missingMdxReference(e,n){throw new Error(\"Expected \"+(n?\"component\":\"object\")+\" `\"+e+\"` to be defined: you likely forgot to import, pass, or provide it.\")}",
+    "image": "/projects/fleur.png",
+    "featured": true,
+    "slugAsParams": "fleur"
+  },
+  {
     "slug": "projects/genwiki",
     "title": "GenWiki",
     "description": "AI-generated wiki that builds and maintains knowledge bases automatically.",

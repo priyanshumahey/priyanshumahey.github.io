@@ -1,7 +1,9 @@
 "use client"
 
 import { GallerySection, GitflowDemo, IvDemo, WorkSection, type ProjectData } from "@/components/projects"
+import { FleurEditorCard, FleurHeroCard } from "@/components/projects/ProjectCards/FleurHero"
 import { GitHeroCard } from "@/components/projects/ProjectCards/GitflowHero"
+import { ThemeToggle } from "@/components/theme-toggle"
 import { LinkPreview } from "@/components/ui/link-preview"
 import { motion } from "framer-motion"
 import { Github, Linkedin, Mail } from "lucide-react"
@@ -20,7 +22,7 @@ const workExperiences: ProjectData[] = [
     isPrivate: true,
   },
   {
-    title: "Zofiq",
+    title: "Zofiq (Acquired!)",
     description: "AI-powered platform transforming how businesses interact with customers.",
     year: "2024",
     link: "/work/zofiq",
@@ -47,6 +49,14 @@ const workExperiences: ProjectData[] = [
 
 // Additional full-width gallery projects
 const galleryProjects: ProjectData[] = [
+  {
+    title: "Fleur",
+    description: "AI-native code editor with embeddings and semantic search.",
+    year: "2025",
+    link: "/projects/fleur",
+    baseComponent: <FleurHeroCard />,
+    hoverComponent: <FleurEditorCard />,
+  },
   {
     title: "GenWiki",
     description: "AI-generated wiki that builds and maintains knowledge bases automatically.",
@@ -148,7 +158,10 @@ export default function Page() {
   }, [isMobile])
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-[#fafafa]">
+    <div className="min-h-screen bg-white dark:bg-[#0a0a0a] text-neutral-900 dark:text-[#fafafa]">
+      {/* Theme Toggle */}
+      <ThemeToggle />
+      
       {/* Mobile Layout */}
       <div className="lg:hidden">
         {/* Header */}
@@ -178,7 +191,7 @@ export default function Page() {
                 >
                   <Link
                     href={link.href}
-                    className="text-sm text-[#a1a1a1] hover:text-[#fafafa] transition-colors"
+                    className="text-sm text-neutral-600 dark:text-[#a1a1a1] hover:text-neutral-900 dark:hover:text-[#fafafa] transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -187,7 +200,7 @@ export default function Page() {
             </nav>
           </div>
           <motion.div
-            className="text-base leading-relaxed text-[#a1a1a1]"
+            className="text-base leading-relaxed text-neutral-600 dark:text-[#a1a1a1]"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.5 }}
@@ -195,25 +208,25 @@ export default function Page() {
             Building agents, AI software, and recommendation systems at{" "}
             <LinkPreview
               url="https://www.microsoft.com/"
-              className="text-[#fafafa] hover:text-[#a1a1a1] transition-colors font-medium decoration-blue-400 decoration-2 underline-offset-2 underline"
+              className="text-neutral-900 dark:text-[#fafafa] hover:text-neutral-600 dark:hover:text-[#a1a1a1] transition-colors font-medium decoration-blue-500 decoration-2 underline-offset-2 underline"
             >
               Microsoft
             </LinkPreview>
             . Previously built{" "}
             <LinkPreview
               url="https://purplelotusmh.com/"
-              className="text-[#fafafa] hover:text-[#a1a1a1] transition-colors font-medium decoration-blue-400 decoration-2 underline-offset-2 underline"
+              className="text-neutral-900 dark:text-[#fafafa] hover:text-neutral-600 dark:hover:text-[#a1a1a1] transition-colors font-medium decoration-blue-500 decoration-2 underline-offset-2 underline"
             >
               Purple Lotus
             </LinkPreview>
             ,{" "}
             <LinkPreview
               url="https://www.zofiq.com/"
-              className="text-[#fafafa] hover:text-[#a1a1a1] transition-colors font-medium decoration-blue-400 decoration-2 underline-offset-2 underline"
+              className="text-neutral-900 dark:text-[#fafafa] hover:text-neutral-600 dark:hover:text-[#a1a1a1] transition-colors font-medium decoration-blue-500 decoration-2 underline-offset-2 underline"
             >
               Zofiq
             </LinkPreview>
-            , research @ <span className="text-[#fafafa]">UBC</span>.
+            , research @ <span className="text-neutral-900 dark:text-[#fafafa] font-medium">UBC</span>.
           </motion.div>
 
           {/* Social Links */}
@@ -236,7 +249,7 @@ export default function Page() {
                 >
                   <Link
                     href={link.href}
-                    className="w-9 h-9 rounded-full border border-[#333] flex items-center justify-center text-[#888] hover:text-white hover:border-[#555] transition-all"
+                    className="w-9 h-9 rounded-full border border-neutral-300 dark:border-[#333] flex items-center justify-center text-neutral-600 dark:text-[#888] hover:text-neutral-900 dark:hover:text-white hover:border-neutral-500 dark:hover:border-[#555] transition-all"
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={link.label}
@@ -263,7 +276,7 @@ export default function Page() {
       <div className="hidden lg:block">
         <div className="flex">
           {/* Left Panel - Sticky */}
-          <div className="sticky top-0 h-screen overflow-y-auto border-r border-[#1a1a1a] w-[35%]">
+          <div className="sticky top-0 h-screen overflow-y-auto border-r border-neutral-200 dark:border-[#1a1a1a] w-[35%]">
             <div className="p-12 xl:p-16 flex flex-col h-full justify-between">
               {/* Top Content */}
               <div className="space-y-8">
@@ -273,7 +286,7 @@ export default function Page() {
                   transition={{ duration: 0.6, ease: "easeOut" }}
                 >
                   <motion.h1
-                    className="font-bold text-[2.5rem] leading-tight text-[#fafafa] mb-4"
+                    className="font-bold text-[2.5rem] leading-tight text-neutral-900 dark:text-[#fafafa] mb-4"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.2, duration: 0.5 }}
@@ -281,7 +294,7 @@ export default function Page() {
                     Priyanshu Mahey
                   </motion.h1>
                   <motion.div
-                    className="text-base text-[#a1a1a1] leading-relaxed"
+                    className="text-base text-neutral-600 dark:text-[#a1a1a1] leading-relaxed"
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.3, duration: 0.5 }}
@@ -289,25 +302,25 @@ export default function Page() {
                     Building agents, AI software, and recommendation systems at{" "}
                     <LinkPreview
                       url="https://www.microsoft.com/"
-                      className="text-[#fafafa] hover:text-[#d4d4d4] transition-colors font-medium decoration-blue-400 decoration-2 underline-offset-2 underline"
+                      className="text-neutral-900 dark:text-[#fafafa] hover:text-neutral-600 dark:hover:text-[#d4d4d4] transition-colors font-medium decoration-blue-500 decoration-2 underline-offset-2 underline"
                     >
                       Microsoft
                     </LinkPreview>
                     . Previously built{" "}
                     <LinkPreview
                       url="https://purplelotusmh.com/"
-                      className="text-[#fafafa] hover:text-[#d4d4d4] transition-colors font-medium decoration-blue-400 decoration-2 underline-offset-2 underline"
+                      className="text-neutral-900 dark:text-[#fafafa] hover:text-neutral-600 dark:hover:text-[#d4d4d4] transition-colors font-medium decoration-blue-500 decoration-2 underline-offset-2 underline"
                     >
                       Purple Lotus
                     </LinkPreview>
                     ,{" "}
                     <LinkPreview
                       url="https://www.zofiq.com/"
-                      className="text-[#fafafa] hover:text-[#d4d4d4] transition-colors font-medium decoration-blue-400 decoration-2 underline-offset-2 underline"
+                      className="text-neutral-900 dark:text-[#fafafa] hover:text-neutral-600 dark:hover:text-[#d4d4d4] transition-colors font-medium decoration-blue-500 decoration-2 underline-offset-2 underline"
                     >
                       Zofiq
                     </LinkPreview>
-                    , research @<span className="text-[#fafafa]">UBC</span>.
+                    , research @<span className="text-neutral-900 dark:text-[#fafafa] font-medium">UBC</span>.
                   </motion.div>
                 </motion.div>
 
@@ -322,7 +335,7 @@ export default function Page() {
                     <Link
                       key={link.href}
                       href={link.href}
-                      className="text-xs text-[#a1a1a1] hover:text-[#fafafa] transition-colors w-fit"
+                      className="text-xs text-neutral-600 dark:text-[#a1a1a1] hover:text-neutral-900 dark:hover:text-[#fafafa] transition-colors w-fit"
                     >
                       {link.label}
                     </Link>
@@ -350,7 +363,7 @@ export default function Page() {
                     >
                       <Link
                         href={link.href}
-                        className="w-10 h-10 rounded-full border border-[#333] flex items-center justify-center text-[#888] hover:text-white hover:border-[#555] transition-all"
+                        className="w-10 h-10 rounded-full border border-neutral-300 dark:border-[#333] flex items-center justify-center text-neutral-600 dark:text-[#888] hover:text-neutral-900 dark:hover:text-white hover:border-neutral-500 dark:hover:border-[#555] transition-all"
                         target="_blank"
                         rel="noopener noreferrer"
                         aria-label={link.label}
@@ -380,7 +393,7 @@ export default function Page() {
                     <Link
                       key={link.href}
                       href={link.href}
-                      className="text-xs text-[#a1a1a1] hover:text-[#fafafa] transition-colors"
+                      className="text-xs text-neutral-600 dark:text-[#a1a1a1] hover:text-neutral-900 dark:hover:text-[#fafafa] transition-colors"
                     >
                       {link.label}
                     </Link>
@@ -408,7 +421,7 @@ export default function Page() {
 
       {/* Footer */}
       <motion.footer
-        className="w-full bg-[#050505] border-t border-[#1a1a1a] py-12"
+        className="w-full bg-neutral-100 dark:bg-[#050505] border-t border-neutral-200 dark:border-[#1a1a1a] py-12"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
@@ -416,7 +429,7 @@ export default function Page() {
       >
         <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
-            <p className="text-sm text-[#525252]">
+            <p className="text-sm text-neutral-500 dark:text-[#525252]">
               © {new Date().getFullYear()} Priyanshu Mahey
             </p>
             <div className="flex items-center gap-6">
@@ -430,7 +443,7 @@ export default function Page() {
                 >
                   <Link
                     href={link.href}
-                    className="text-xs text-[#737373] hover:text-[#fafafa] transition-colors uppercase tracking-wider"
+                    className="text-xs text-neutral-600 dark:text-[#737373] hover:text-neutral-900 dark:hover:text-[#fafafa] transition-colors uppercase tracking-wider"
                     target="_blank"
                     rel="noopener noreferrer"
                   >

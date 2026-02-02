@@ -1,0 +1,54 @@
+---
+title: Fleur
+description: An AI-native code editor that showcases how AI should be integrated into development workflows.
+date: 2026-01-31
+published: true
+tags: ["ai", "code-editor", "embeddings", "rust", "typescript"]
+image: "/projects/fleur.png"
+featured: true
+---
+
+## Fleur - AI Native Code Editor
+
+Fleur is an AI-native code editor built with Tauri, featuring semantic code search powered by embeddings and real-time code intelligence.
+
+<GitHubLinkCard url="https://github.com/priyanshumahey/fleur" />
+<LanguageBar languages={[
+  { name: "TypeScript", percentage: 45.0 },
+  { name: "Rust", percentage: 35.0 },
+  { name: "Python", percentage: 15.0 },
+  { name: "Other", percentage: 5.0 },
+]} />
+
+
+---
+
+## System Architecture
+
+<div className="my-8">
+  <FleurArchitecture />
+</div>
+
+## Next Edit Prediction
+
+<div className="my-8">
+  <NextEditArchitecture />
+</div>
+
+
+---
+
+### Related Blog Posts
+
+<div className="space-y-3 my-6">
+  <BlogLinkCard 
+    slug="next-edit-models" 
+    title="Next Edit Models" 
+    description="Visualizing how AI predicts your next code edits" 
+  />
+  <BlogLinkCard 
+    slug="how-ai-indexes-your-codebase" 
+    title="How AI Indexes Your Codebase" 
+    description="A visual exploration of code embeddings and semantic search" 
+  />
+</div>

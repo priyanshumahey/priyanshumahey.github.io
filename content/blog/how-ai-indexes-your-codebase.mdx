@@ -1,50 +1,181 @@
 ---
-title: How AI Indexes Your Codebase
-description: A visual exploration of code embeddings, semantic search, and how modern AI code assistants understand your code.
-date: 2025-01-31
+title: How AI Searches Through Your Codebase
+description: An exploration and systemic introduction to different techniques AI software uses to search across your codebase.
+date: 2026-01-31
 published: true
 tags: ["ai", "embeddings", "semantic-search", "code-indexing"]
 ---
 
-## How AI Indexes Your Codebase
+## How AI Searches Through Your Codebase
 
-### Visualizing Code Embeddings
+Modern AI coding assistants need to understand your codebase to provide helpful suggestions. But how do they actually find relevant code? There are two fundamentally different approaches:
 
-Every function, class, and code chunk in your codebase gets converted into a **1536-dimensional vector** called an embedding.
+1. **Grep-based search** — Fast, on-demand text pattern matching (used by Claude Code, Codex CLI)
+2. **Semantic indexing** — Pre-computed embeddings enabling meaning-based search (used by Cursor, VS Code Copilot, Roocode, Kilo Code, Sourcegraph)
 
-The visualization below shows 411 code chunks from a real project, reduced to 2D using t-SNE.
-
-<div className="my-8 rounded-xl overflow-hidden border border-[#1a1a1a]">
-  <FleurDemo />
-</div>
-
-#### What You're Seeing
-
-- **Each point** is a code chunk (function, class, method, or file)
-- **Colors** represent programming languages or chunk types
-- **Proximity** indicates semantic similarity - nearby points have similar meaning
-- **Clusters** form naturally around related functionality
+Let's explore how each approach works.
 
 ---
 
-### How Semantic Search Works
+## Part 1: Grep-Based Search
 
-The demo below shows this in action. Select a natural language query and watch as:
-1. The query gets embedded into the same vector space as the code
-2. The system finds the nearest neighbors using cosine similarity
-3. Results are ranked by semantic similarity, not keyword matching
+The simplest way to find code is **grep** — a tool that scans files line-by-line, testing each against a pattern. It's fast, requires no setup, and works on any codebase immediately.
+
+### How Grep Works
 
 <div className="my-8 rounded-xl overflow-hidden border border-[#1a1a1a]">
-  <SemanticSearchDemo />
+  <GrepDemo />
 </div>
+
+#### Key Characteristics
+
+- **Linear scanning**: Grep reads each file line-by-line, top to bottom
+- **Pattern matching**: Each line is tested against your search pattern (literal text or regex)
+- **No understanding**: Grep finds exact matches — it doesn't know that `authenticate` and `login` are related concepts
+- **No pre-indexing required**: Works instantly on any codebase
+
+---
+
+### How AI Agents Use Grep
+
+AI coding agents like **Claude Code** and **Codex CLI** rely heavily on grep. Why? Because it's fast, deterministic, and doesn't require pre-indexing the codebase.
+
+<div className="my-8 rounded-xl overflow-hidden border border-[#1a1a1a]">
+  <AgentGrepDemo />
+</div>
+
+#### The Agent Workflow
+
+1. **User asks a question** about the codebase
+2. **Agent reasons** about what patterns to search for
+3. **Grep executes** and returns matching lines with file paths
+4. **Agent synthesizes** the results into a coherent answer
+
+This hybrid approach combines the speed of text search with the intelligence of LLMs. The agent formulates smart queries, and grep provides fast, reliable results that the agent then interprets.
+
+---
+
+### Grep: Strengths and Limitations
+
+**Strengths**
+
+- **Deterministic results**: Function names, identifiers, and exact patterns need exact matches — grep excels at this with zero hallucinations
+- **Scales to massive repos**: Whether you have 100 files or 100,000, grep churns through them without breaking a sweat
+- **Minimal infrastructure**: No vector databases, no embedding models, no external services — just your local filesystem
+- **Always fresh**: Every search reads the current state of your code, never a stale index
+
+**Limitations**
+
+- **Token bloat**: Dumping large amounts of raw code into an LLM eats context and drives up costs as repositories grow
+- **Time-consuming exploration**: With tools like Codex CLI, agents can spend significant time iteratively grepping through the codebase to build understanding
+- **No semantic understanding**: Grep can't find "authentication logic" if the code uses `login`, `signIn`, or `verifyCredentials` — you need to know the exact terms
+
+---
+
+## Part 2: Semantic Indexing
+
+Tools like **Cursor**, **VS Code Copilot**, **Roocode**, **Kilo Code**, and **Sourcegraph** take a different approach: they pre-index your codebase into searchable vector embeddings. This enables semantic search — finding code by *meaning*, not just text patterns.
+
+### The Indexing Pipeline
+
+<div className="my-8 rounded-xl overflow-hidden border border-[#1a1a1a]">
+  <IndexingPipelineDemo />
+</div>
+
+The pipeline transforms raw source code into searchable vectors:
+1. **Scan** — Traverse the codebase and read source files
+2. **Detect** — Identify programming languages
+3. **Chunk** — Parse code into semantic units using AST analysis
+4. **Embed** — Convert chunks into high-dimensional vectors
+5. **Store** — Save vectors in a database for fast retrieval
+
+Let's explore each stage.
+
+---
+
+### What Gets Indexed (and What Doesn't)
+
+The indexer is smart about what it processes. It automatically **excludes**:<Citation id={1} /><Citation id={2} />
+
+- **Binary files and images** — Non-text content that can't be meaningfully embedded
+- **Large files (>1MB)** — Files too large to process efficiently
+- **Git internals** — `.git` folders and repository metadata
+- **Dependencies** — `node_modules`, `vendor`, `venv`, and other package directories
+- **Ignored files** — Anything matching `.gitignore` patterns
+
+This filtering ensures the index stays focused on *your* code, not third-party libraries or generated artifacts.
+
+---
+
+### Incremental Updates
+
+Re-indexing an entire codebase on every change would be painfully slow. Modern indexers use several strategies to stay fast:<Citation id={1} /><Citation id={2} /><Citation id={3} />
+
+| Strategy | How It Works |
+|----------|--------------|
+| **File Watching** | Monitors your workspace for changes in real-time |
+| **Smart Updates** | Only reprocesses modified files, not the entire codebase |
+| **Hash-based Caching** | Compares file hashes to avoid reprocessing unchanged content |
+| **Branch Aware** | Automatically handles Git branch switches and updates the index accordingly |
+| **Multi-Folder Workspaces** | Each folder maintains its own index with separate settings and status |
+
+This means after the initial indexing, updates happen in seconds rather than minutes — even for large codebases.
+
+---
+
+### How Cursor Detects Changes: Merkle Trees
+
+Cursor uses a clever data structure called a **Merkle tree** to efficiently detect which files have changed.<Citation id={4} /><Citation id={5} /><Citation id={6} />
+
+A Merkle tree works like a fingerprinting system for your codebase:
+
+1. Each file gets a unique cryptographic hash (fingerprint)
+2. Pairs of hashes are combined into parent hashes
+3. This continues until you have a single **root hash** representing the entire codebase
+
+When any file changes, its hash changes — and that change propagates up through all parent hashes to the root. By comparing root hashes, Cursor can instantly detect *that* something changed, then walk down the tree to find *exactly which files* need re-indexing.
+
+This approach significantly reduces bandwidth and processing time. In a workspace with 50,000 files, only the branches where hashes differ need to be examined — not the entire codebase.
+
+---
+
+### Embedding Caching & Privacy
+
+Smart caching makes re-indexing fast, while privacy measures protect sensitive information:<Citation id={4} /><Citation id={5} /><Citation id={6} />
+
+**Caching Strategy**
+- Embeddings are cached by the hash of each chunk's content
+- When code hasn't changed, the cached embedding is reused
+- Indexing the same codebase a second time is nearly instant
+- Teams benefit from shared caches across developers
+
+**Privacy Measures**
+- Only embeddings and metadata are stored remotely — raw source code stays local
+- File paths are obfuscated before transmission (e.g., `src/payments/invoice.py` → `a9f3/x72k/qp1m.f4`)
+- Path obfuscation hides sensitive details while preserving directory structure for filtering
+- Users can control what's indexed via `.cursorignore` or similar ignore files
+
+---
+
+### Index Reuse Across Teams
+
+Here's a powerful optimization: most teams work from near-identical copies of the same codebase. Cursor found that clones average **92% similarity** across users within an organization.<Citation id={6} />
+
+Instead of rebuilding every index from scratch, Cursor can securely reuse a teammate's existing index:
+
+| Repo Size | Without Reuse | With Reuse |
+|-----------|---------------|------------|
+| Median | 7.87 seconds | 525 ms |
+| 90th percentile | 2.82 minutes | 1.87 seconds |
+| 99th percentile | 4.03 hours | 21 seconds |
+
+This works through **similarity hashing** — the client computes a simhash from its Merkle tree and searches for matching indexes from teammates. Cryptographic proofs ensure you only see results for code you actually have locally.
 
 ---
 
 ### Understanding Abstract Syntax Trees
 
-Before we can chunk code intelligently, we need to understand its structure. **Tree-sitter** is a parser that transforms source code into an **Abstract Syntax Tree (AST)** - a hierarchical representation of the code's structure.
-
-Watch the animation below to see how tree-sitter parses different programming languages. Try switching between Python, TypeScript, and Rust examples:
+Before we can chunk code intelligently, we need to understand its structure. **Tree-sitter** is a parser that transforms source code into an **Abstract Syntax Tree (AST)** — a hierarchical representation of the code's structure.
 
 <div className="my-8 rounded-xl overflow-hidden border border-[#1a1a1a]">
   <ASTVisualizerDemo />
@@ -56,7 +187,7 @@ Watch the animation below to see how tree-sitter parses different programming la
 - **Language-agnostic concepts**: Functions, classes, and types are recognized across languages
 - **Semantic boundaries**: Each node represents a complete syntactic unit
 
-This tree structure is what enables intelligent code chunking, instead of splitting at arbitrary line numbers, we can split at meaningful boundaries.
+This tree structure is what enables intelligent code chunking — instead of splitting at arbitrary line numbers, we can split at meaningful boundaries.
 
 ---
 
@@ -69,12 +200,151 @@ This tree structure is what enables intelligent code chunking, instead of splitt
 #### Why This Matters
 
 - **Naive chunking** splits at arbitrary line boundaries, often cutting functions in half
-- **Tree-sitter chunking** respects semantic boundaries - each chunk is a complete function, class, or method
+- **Tree-sitter chunking** respects semantic boundaries — each chunk is a complete function, class, or method
 - Better chunks mean better embeddings, which means more accurate search results
 
-
-**A note on tooling**: Libraries like [Chonkie](https://docs.chonkie.ai/oss/chunkers/code-chunker) provide ready-made AST-aware code chunking out of the box - handling tree-sitter parsing, semantic boundary detection, and chunk extraction automatically. For production use, that's often the right choice. Here, we're implementing it manually to understand the mechanics behind the magic.
+**A note on tooling**: Libraries like [Chonkie](https://docs.chonkie.ai/oss/chunkers/code-chunker) provide ready-made AST-aware code chunking out of the box — handling tree-sitter parsing, semantic boundary detection, and chunk extraction automatically. For production use, that's often the right choice.
 
 ---
+
+### Visualizing Code Embeddings
+
+Every function, class, and code chunk gets converted into a **1536-dimensional vector** called an embedding. The visualization below shows 411 code chunks from a real project, reduced to 2D using t-SNE.
+
+<div className="my-8 rounded-xl overflow-hidden border border-[#1a1a1a]">
+  <FleurDemo />
+</div>
+
+#### What You're Seeing
+
+- **Each point** is a code chunk (function, class, method, or file)
+- **Colors** represent programming languages or chunk types
+- **Proximity** indicates semantic similarity — nearby points have similar meaning
+- **Clusters** form naturally around related functionality
+
+#### Observations
+
+- **Language clustering**: Python and C++ code naturally separate into distinct regions
+- **CUDA kernels**: GPU code forms its own cluster, reflecting its specialized semantics
+- **Cross-language bridges**: Some areas show mixing where Python bindings interface with C++
+- **Scale**: Even with 5,000 points, clear structure emerges from the embedding space
+
+---
+
+### How Semantic Search Works
+
+With embeddings stored, semantic search becomes possible. Select a natural language query and watch as:
+1. The query gets embedded into the same vector space as the code
+2. The system finds the nearest neighbors using cosine similarity
+3. Results are ranked by semantic similarity, not keyword matching
+
+<div className="my-8 rounded-xl overflow-hidden border border-[#1a1a1a]">
+  <SemanticSearchDemo />
+</div>
+
+
+## Part 3: Comparing the Approaches
+
+Both grep-based search and semantic indexing have their place — the right choice depends on your priorities.<Citation id={7} /><Citation id={8} />
+
+### Why Some Tools Skip Indexing
+
+As Nick Baumann from Cline explains, indexing introduces complexity that may not be worth the trade-off:<Citation id={7} />
+
+> "We don't index your codebase, and this choice isn't an oversight — it's a fundamental design decision."
+
+The creator of Claude Code echoed similar concerns, noting that implementing indexing introduces problems around **security**, **privacy**, **staleness**, and **reliability**.
+
+### The Case Against RAG for Code
+
+Cline's blog articulates three key challenges with retrieval-augmented generation (RAG) approaches:<Citation id={7} />
+
+1. **Code doesn't think in chunks** — When you chunk code for embeddings, you're tearing apart its logic. A function call might be in one chunk, its definition in another, and the critical context that explains *why* it exists scattered across a dozen fragments.
+
+2. **Indexes decay while code evolves** — Software development moves fast. Functions get refactored, dependencies update, entire modules get rewritten. An index is a snapshot frozen in time — every merge is a potential divergence between reality and your AI's understanding.
+
+3. **Security becomes a liability** — Your codebase isn't just text — it's your competitive advantage. Creating vector embeddings means creating a secondary representation of your IP that needs to be stored somewhere, doubling your security surface.
+
+### The Case For Semantic Search
+
+Cursor's documentation highlights why semantic search remains valuable:<Citation id={8} />
+
+- **Faster results**: Compute happens during indexing (offline) rather than at runtime, so searches are faster and cheaper
+- **Better accuracy**: Custom-trained models retrieve more relevant results than string matching
+- **Fewer follow-ups**: Users send fewer clarifying messages and use fewer tokens compared to grep-only search
+- **Conceptual matching**: Find code by what it does, not just what it's named
+
+As Cursor notes: "Agent uses both grep and semantic search together. Grep excels at finding exact patterns, while semantic search excels at finding conceptually similar code."
+
+### The Trade-off
+
+| Approach | Best For | Challenges |
+|----------|----------|------------|
+| **Grep-based** | Exact matches, massive repos, privacy-sensitive environments, zero setup | Token usage, exploration time, no semantic understanding |
+| **Semantic indexing** | Conceptual queries, large teams, frequently searched codebases | Index staleness, security surface, infrastructure complexity |
+
+Modern tools increasingly combine both approaches — using grep for precision and semantic search for discovery. The future likely isn't one or the other, but intelligent orchestration of both.
+
+---
+
+### Related Project
+
+<ProjectLinkCard 
+  slug="fleur" 
+  title="Fleur" 
+  description="AI-native code editor" 
+  icon="flower" 
+/>
+
+<References references={[
+  {
+    id: 1,
+    title: "Codebase Indexing",
+    url: "https://kilo.ai/docs/customize/context/codebase-indexing",
+    source: "Kilo Code Documentation"
+  },
+  {
+    id: 2,
+    title: "Codebase Indexing",
+    url: "https://docs.roocode.com/features/codebase-indexing",
+    source: "Roo Code Documentation"
+  },
+  {
+    id: 3,
+    title: "Real-time Codebase Indexing",
+    url: "https://cocoindex.io/examples/code_index",
+    source: "CocoIndex Examples"
+  },
+  {
+    id: 4,
+    title: "How Cursor Indexes Codebases Fast",
+    url: "https://read.engineerscodex.com/p/how-cursor-indexes-codebases-fast",
+    source: "Engineer's Codex"
+  },
+  {
+    id: 5,
+    title: "How Cursor Actually Indexes Your Codebase",
+    url: "https://towardsdatascience.com/how-cursor-actually-indexes-your-codebase/",
+    source: "Towards Data Science"
+  },
+  {
+    id: 6,
+    title: "Securely Indexing Large Codebases",
+    url: "https://cursor.com/blog/secure-codebase-indexing",
+    source: "Cursor Blog"
+  },
+  {
+    id: 7,
+    title: "Why Cline Doesn't Index Your Codebase (And Why That's a Good Thing)",
+    url: "https://cline.bot/blog/why-cline-doesnt-index-your-codebase-and-why-thats-a-good-thing",
+    source: "Cline Blog"
+  },
+  {
+    id: 8,
+    title: "Semantic Search",
+    url: "https://cursor.com/docs/context/semantic-search",
+    source: "Cursor Documentation"
+  }
+]} />
 
 
