@@ -42,7 +42,7 @@ export function WorkSection({ title, projects, className = "" }: WorkSectionProp
       variants={sectionVariants}
     >
       <motion.p
-        className="text-xs uppercase tracking-wider text-[#525252]"
+        className="text-xs uppercase tracking-wider text-neutral-500 dark:text-[#a1a1a1]"
         variants={titleVariants}
       >
         {title}

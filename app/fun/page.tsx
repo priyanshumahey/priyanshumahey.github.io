@@ -1,6 +1,7 @@
 "use client";
 
 import { BookDescription, BookTitle, ModernBookCover } from "@/components/book";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { FileText, Github, Linkedin, Mail } from "lucide-react";
 import Link from "next/link";
 
@@ -31,12 +32,15 @@ const Icons = {
 
 export default function FunPage() {
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-[#fafafa]">
+    <div className="min-h-screen bg-white dark:bg-[#0a0a0a] text-neutral-900 dark:text-[#fafafa]">
+      {/* Theme Toggle */}
+      <ThemeToggle />
+      
       {/* Mobile Layout */}
       <div className="lg:hidden">
         <header className="space-y-6 px-6 pt-8">
           <div>
-            <Link href="/" className="text-2xl leading-[1.1] font-medium tracking-tight text-[#fafafa] hover:text-[#a1a1a1] transition-colors">
+            <Link href="/" className="text-2xl leading-[1.1] font-medium tracking-tight text-neutral-900 dark:text-[#fafafa] hover:text-neutral-500 dark:hover:text-[#a1a1a1] transition-colors">
               Priyanshu Mahey.
             </Link>
             <nav className="flex flex-row gap-4 pt-3">
@@ -44,7 +48,7 @@ export default function FunPage() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="text-sm text-[#a1a1a1] hover:text-[#fafafa] transition-colors"
+                  className="text-sm text-neutral-500 dark:text-[#a1a1a1] hover:text-neutral-900 dark:hover:text-[#fafafa] transition-colors"
                 >
                   {link.label}
                 </Link>
@@ -54,16 +58,16 @@ export default function FunPage() {
         </header>
 
         <main className="px-6 pb-16">
-          <section className="py-12 border-b border-[#1a1a1a]">
+          <section className="py-12 border-b border-neutral-200 dark:border-[#1a1a1a]">
             <h1 className="text-3xl font-medium tracking-tight mb-3">Fun</h1>
-            <p className="text-base text-[#a1a1a1] leading-relaxed">
+            <p className="text-base text-neutral-500 dark:text-[#a1a1a1] leading-relaxed">
               Things I enjoy outside of work.
             </p>
           </section>
 
           {/* Currently Reading */}
-          <section className="py-8 border-b border-[#1a1a1a]">
-            <h2 className="text-sm font-medium text-[#525252] uppercase tracking-wider mb-6">Currently Reading</h2>
+          <section className="py-8 border-b border-neutral-200 dark:border-[#1a1a1a]">
+            <h2 className="text-sm font-medium text-neutral-400 dark:text-[#525252] uppercase tracking-wider mb-6">Currently Reading</h2>
             <div className="flex justify-center">
               <ModernBookCover size="md" color="amber">
                 <BookTitle>Northanger Abbey</BookTitle>
@@ -81,7 +85,7 @@ export default function FunPage() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="w-10 h-10 rounded-full border border-[#333] flex items-center justify-center text-[#888] hover:text-white hover:border-[#555] transition-all"
+                  className="w-10 h-10 rounded-full border border-neutral-300 dark:border-[#333] flex items-center justify-center text-neutral-500 dark:text-[#888] hover:text-neutral-900 dark:hover:text-white hover:border-neutral-500 dark:hover:border-[#555] transition-all"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={link.label}
@@ -99,7 +103,7 @@ export default function FunPage() {
         <div className="max-w-4xl mx-auto px-8 py-16">
           {/* Header */}
           <header className="flex items-center justify-between mb-16">
-            <Link href="/" className="text-lg font-medium text-[#fafafa] hover:text-[#a1a1a1] transition-colors">
+            <Link href="/" className="text-lg font-medium text-neutral-900 dark:text-[#fafafa] hover:text-neutral-500 dark:hover:text-[#a1a1a1] transition-colors">
               ← Back
             </Link>
             <nav className="flex items-center gap-6">
@@ -108,8 +112,8 @@ export default function FunPage() {
                   key={link.href}
                   href={link.href}
                   className={`text-sm transition-colors ${link.href === "/fun"
-                    ? "text-[#fafafa]"
-                    : "text-[#737373] hover:text-[#fafafa]"
+                    ? "text-neutral-900 dark:text-[#fafafa]"
+                    : "text-neutral-500 dark:text-[#737373] hover:text-neutral-900 dark:hover:text-[#fafafa]"
                     }`}
                 >
                   {link.label}
@@ -121,14 +125,14 @@ export default function FunPage() {
           {/* Title Section */}
           <section className="mb-16">
             <h1 className="text-[2.5rem] font-bold leading-tight tracking-tight mb-4">Fun</h1>
-            <p className="text-xl text-[#a1a1a1] leading-relaxed max-w-2xl">
+            <p className="text-xl text-neutral-500 dark:text-[#a1a1a1] leading-relaxed max-w-2xl">
               Things I enjoy outside of work.
             </p>
           </section>
 
           {/* Currently Reading */}
           <section className="mb-16">
-            <h2 className="text-sm font-medium text-[#525252] uppercase tracking-wider mb-8">Currently Reading</h2>
+            <h2 className="text-sm font-medium text-neutral-400 dark:text-[#525252] uppercase tracking-wider mb-8">Currently Reading</h2>
             <div className="flex justify-center py-8">
               <ModernBookCover size="md" color="amber">
                 <BookTitle>Northanger Abbey</BookTitle>
@@ -142,10 +146,10 @@ export default function FunPage() {
       </div>
 
       {/* Footer */}
-      <footer className="w-full bg-[#050505] border-t border-[#1a1a1a] py-12">
+      <footer className="w-full bg-neutral-100 dark:bg-[#050505] border-t border-neutral-200 dark:border-[#1a1a1a] py-12">
         <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
-            <p className="text-sm text-[#525252]">
+            <p className="text-sm text-neutral-400 dark:text-[#525252]">
               © {new Date().getFullYear()} Priyanshu Mahey
             </p>
             <div className="flex items-center gap-6">
@@ -153,7 +157,7 @@ export default function FunPage() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="text-xs text-[#737373] hover:text-[#fafafa] transition-colors uppercase tracking-wider"
+                  className="text-xs text-neutral-500 dark:text-[#737373] hover:text-neutral-900 dark:hover:text-[#fafafa] transition-colors uppercase tracking-wider"
                   target="_blank"
                   rel="noopener noreferrer"
                 >

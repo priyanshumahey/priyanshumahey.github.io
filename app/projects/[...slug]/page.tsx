@@ -1,9 +1,10 @@
 import { projects } from "#site/content";
 import { MDXContent } from "@/components/blog/mdx-components";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { notFound } from "next/navigation";
 
 import "@/styles/mdx.css";
-import { ArrowLeft, ExternalLink, Github } from "lucide-react";
+import { ExternalLink, Github } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -39,18 +40,30 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
     }
 
     return (
-        <div className="min-h-screen bg-[#0a0a0a] text-[#fafafa]">
+        <div className="min-h-screen bg-white dark:bg-[#0a0a0a] text-neutral-900 dark:text-[#fafafa]">
+            {/* Theme Toggle */}
+            <ThemeToggle />
+            
             {/* Mobile Layout */}
 
             <div className="lg:hidden">
-                <header className="px-6 pt-6 pb-4 border-b border-[#1a1a1a]">
-                    <Link
-                        href="/"
-                        className="inline-flex items-center gap-2 text-sm text-[#a1a1a1] hover:text-[#fafafa] transition-colors"
-                    >
-                        <ArrowLeft className="w-4 h-4" />
-                        Back to home
-                    </Link>
+                <header className="space-y-6 px-6 pt-8">
+                    <div>
+                        <Link href="/" className="text-2xl leading-[1.1] font-medium tracking-tight text-neutral-900 dark:text-[#fafafa] hover:text-neutral-500 dark:hover:text-[#a1a1a1] transition-colors">
+                            Priyanshu Mahey.
+                        </Link>
+                        <nav className="flex flex-row gap-4 pt-3">
+                            {navLinks.map((link) => (
+                                <Link
+                                    key={link.href}
+                                    href={link.href}
+                                    className="text-sm text-neutral-500 dark:text-[#a1a1a1] hover:text-neutral-900 dark:hover:text-[#fafafa] transition-colors"
+                                >
+                                    {link.label}
+                                </Link>
+                            ))}
+                        </nav>
+                    </div>
                 </header>
 
                 <main className="px-6 pb-16">
@@ -61,7 +74,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                                 {project.title}
                             </h1>
                             {project.description && (
-                                <p className="text-lg text-[#737373] leading-relaxed">
+                                <p className="text-lg text-neutral-500 dark:text-[#e5e5e5] leading-relaxed">
                                     {project.description}
                                 </p>
                             )}
@@ -72,7 +85,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                                         href={project.github}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="inline-flex items-center gap-2 text-sm text-[#a1a1a1] hover:text-[#fafafa] transition-colors"
+                                        className="inline-flex items-center gap-2 text-sm text-neutral-500 dark:text-[#a1a1a1] hover:text-neutral-900 dark:hover:text-[#fafafa] transition-colors"
                                     >
                                         <Github className="w-4 h-4" />
                                         GitHub
@@ -83,7 +96,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                                         href={project.demo}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="inline-flex items-center gap-2 text-sm text-[#a1a1a1] hover:text-[#fafafa] transition-colors"
+                                        className="inline-flex items-center gap-2 text-sm text-neutral-500 dark:text-[#a1a1a1] hover:text-neutral-900 dark:hover:text-[#fafafa] transition-colors"
                                     >
                                         <ExternalLink className="w-4 h-4" />
                                         Live Demo
@@ -94,7 +107,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
                         {/* Featured Image */}
                         {project.image && (
-                            <div className="relative aspect-video rounded-xl overflow-hidden bg-[#171717] mb-8">
+                            <div className="relative aspect-video rounded-xl overflow-hidden bg-neutral-100 dark:bg-[#171717] mb-8">
                                 <Image
                                     src={project.image}
                                     alt={project.title}
@@ -106,7 +119,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                         )}
 
                         {/* Article Content */}
-                        <div className="prose prose-invert prose-base max-w-none prose-headings:text-[#fafafa] prose-headings:font-semibold prose-p:text-[#a1a1a1] prose-p:leading-relaxed prose-a:text-blue-400 prose-a:decoration-blue-400/50 prose-a:underline-offset-2 hover:prose-a:decoration-blue-400 prose-strong:text-[#fafafa] prose-code:text-[#fafafa] prose-li:text-[#a1a1a1] prose-blockquote:border-l-blue-400 prose-blockquote:text-[#737373] prose-blockquote:not-italic prose-img:rounded-xl">
+                        <div className="prose prose-neutral dark:prose-invert prose-base max-w-none">
                             <MDXContent code={project.body} />
                         </div>
                     </article>
@@ -115,22 +128,18 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
             {/* Desktop Layout */}
             <div className="hidden lg:block">
-                <div className="max-w-3xl mx-auto px-8 py-12">
-                    {/* Top Navigation */}
+                <div className="max-w-4xl mx-auto px-8 py-16">
+                    {/* Header */}
                     <header className="flex items-center justify-between mb-16">
-                        <Link
-                            href="/"
-                            className="inline-flex items-center gap-2 text-sm text-[#a1a1a1] hover:text-[#fafafa] transition-colors"
-                        >
-                            <ArrowLeft className="w-4 h-4" />
-                            Back to home
+                        <Link href="/" className="text-lg font-medium text-neutral-900 dark:text-[#fafafa] hover:text-neutral-500 dark:hover:text-[#a1a1a1] transition-colors">
+                            ← Back
                         </Link>
                         <nav className="flex items-center gap-6">
                             {navLinks.map((link) => (
                                 <Link
                                     key={link.href}
                                     href={link.href}
-                                    className="text-sm text-[#737373] hover:text-[#fafafa] transition-colors"
+                                    className="text-sm text-neutral-500 dark:text-[#737373] hover:text-neutral-900 dark:hover:text-[#fafafa] transition-colors"
                                 >
                                     {link.label}
                                 </Link>
@@ -145,7 +154,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                                 {project.title}
                             </h1>
                             {project.description && (
-                                <p className="text-xl text-[#737373] leading-relaxed">
+                                <p className="text-xl text-neutral-500 dark:text-[#e5e5e5] leading-relaxed">
                                     {project.description}
                                 </p>
                             )}
@@ -156,7 +165,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                                         href={project.github}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="inline-flex items-center gap-2 px-4 py-2 text-sm text-[#fafafa] bg-[#1a1a1a] hover:bg-[#252525] rounded-lg transition-colors"
+                                        className="inline-flex items-center gap-2 px-4 py-2 text-sm text-neutral-900 dark:text-[#fafafa] bg-neutral-100 dark:bg-[#1a1a1a] hover:bg-neutral-200 dark:hover:bg-[#252525] rounded-lg transition-colors"
                                     >
                                         <Github className="w-4 h-4" />
                                         View on GitHub
@@ -167,7 +176,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                                         href={project.demo}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="inline-flex items-center gap-2 px-4 py-2 text-sm text-[#fafafa] bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors"
+                                        className="inline-flex items-center gap-2 px-4 py-2 text-sm text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors"
                                     >
                                         <ExternalLink className="w-4 h-4" />
                                         Live Demo
@@ -178,7 +187,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
                         {/* Featured Image */}
                         {project.image && (
-                            <div className="relative aspect-video rounded-2xl overflow-hidden bg-[#171717] mb-12">
+                            <div className="relative aspect-video rounded-2xl overflow-hidden bg-neutral-100 dark:bg-[#171717] mb-12">
                                 <Image
                                     src={project.image}
                                     alt={project.title}
@@ -190,23 +199,23 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                         )}
 
                         {/* Article Content */}
-                        <div className="prose prose-invert prose-lg max-w-none prose-headings:text-[#fafafa] prose-headings:font-semibold prose-headings:tracking-tight prose-h2:text-2xl prose-h2:mt-12 prose-h2:mb-4 prose-h3:text-xl prose-h3:mt-8 prose-h3:mb-3 prose-p:text-[#a1a1a1] prose-p:leading-[1.8] prose-a:text-blue-400 prose-a:decoration-blue-400/50 prose-a:underline-offset-2 hover:prose-a:decoration-blue-400 prose-strong:text-[#fafafa] prose-code:text-[#fafafa] prose-code:bg-[#1a1a1a] prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:before:content-none prose-code:after:content-none prose-li:text-[#a1a1a1] prose-li:leading-relaxed prose-ul:my-6 prose-ol:my-6 prose-blockquote:border-l-2 prose-blockquote:border-l-blue-400 prose-blockquote:text-[#737373] prose-blockquote:not-italic prose-blockquote:pl-6 prose-img:rounded-xl prose-hr:border-[#1a1a1a]">
+                        <div className="prose prose-neutral dark:prose-invert prose-lg max-w-none">
                             <MDXContent code={project.body} />
                         </div>
                     </article>
 
                     {/* Footer */}
-                    <footer className="mt-16 pt-8 border-t border-[#1a1a1a]">
+                    <footer className="mt-16 pt-8 border-t border-neutral-200 dark:border-[#1a1a1a]">
                         <div className="flex items-center justify-between">
                             <Link
                                 href="/"
-                                className="text-sm text-[#525252] hover:text-[#fafafa] transition-colors"
+                                className="text-sm text-neutral-400 dark:text-[#a1a1a1] hover:text-neutral-900 dark:hover:text-[#fafafa] transition-colors"
                             >
                                 © {new Date().getFullYear()} Priyanshu Mahey
                             </Link>
                             <Link
                                 href="/"
-                                className="text-sm text-[#737373] hover:text-[#fafafa] transition-colors"
+                                className="text-sm text-neutral-500 dark:text-[#e5e5e5] hover:text-neutral-900 dark:hover:text-[#fafafa] transition-colors"
                             >
                                 Back to home
                             </Link>

@@ -1,5 +1,6 @@
 import { posts } from "#site/content";
 import { MDXContent } from "@/components/blog/mdx-components";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { notFound } from "next/navigation";
 
 import { formatDate, sortPosts } from "@/lib/utils";
@@ -58,24 +59,36 @@ export default async function PostPage({ params }: PostPageProps) {
   const readTime = estimateReadTime(post.body);
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-[#fafafa]">
+    <div className="min-h-screen bg-white dark:bg-[#0a0a0a] text-neutral-900 dark:text-[#fafafa]">
+      {/* Theme Toggle */}
+      <ThemeToggle />
+
       {/* Mobile Layout */}
       <div className="lg:hidden">
-        <header className="px-6 pt-6 pb-4 border-b border-[#1a1a1a]">
-          <Link
-            href="/blog"
-            className="inline-flex items-center gap-2 text-sm text-[#a1a1a1] hover:text-[#fafafa] transition-colors"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            All posts
-          </Link>
+        <header className="space-y-6 px-6 pt-8">
+          <div>
+            <Link href="/" className="text-2xl leading-[1.1] font-medium tracking-tight text-neutral-900 dark:text-[#fafafa] hover:text-neutral-500 dark:hover:text-[#a1a1a1] transition-colors">
+              Priyanshu Mahey.
+            </Link>
+            <nav className="flex flex-row gap-4 pt-3">
+              {navLinks.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="text-sm text-neutral-500 dark:text-[#a1a1a1] hover:text-neutral-900 dark:hover:text-[#fafafa] transition-colors"
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </nav>
+          </div>
         </header>
 
         <main className="px-6 pb-16">
           <article className="py-8">
             {/* Article Header */}
             <header className="mb-8">
-              <div className="flex items-center gap-3 text-sm text-[#525252] mb-4">
+              <div className="flex items-center gap-3 text-sm text-neutral-400 dark:text-[#a1a1a1] mb-4">
                 <time dateTime={post.date}>{formatDate(post.date)}</time>
                 <span>·</span>
                 <span>{readTime} min read</span>
@@ -84,12 +97,12 @@ export default async function PostPage({ params }: PostPageProps) {
                 {post.title}
               </h1>
               {post.description && (
-                <p className="text-lg text-[#737373] leading-relaxed">
+                <p className="text-lg text-neutral-500 dark:text-[#d4d4d4] leading-relaxed">
                   {post.description}
                 </p>
               )}
               {post.authors && (
-                <p className="text-sm text-[#a1a1a1] mt-4">
+                <p className="text-sm text-neutral-500 dark:text-[#d4d4d4] mt-4">
                   By {post.authors.join(", ")}
                 </p>
               )}
@@ -97,7 +110,7 @@ export default async function PostPage({ params }: PostPageProps) {
 
             {/* Featured Image */}
             {post.image && (
-              <div className="relative aspect-video rounded-xl overflow-hidden bg-[#171717] mb-8">
+              <div className="relative aspect-video rounded-xl overflow-hidden bg-neutral-100 dark:bg-[#171717] mb-8">
                 <Image
                   src={post.image}
                   alt={post.title}
@@ -109,22 +122,22 @@ export default async function PostPage({ params }: PostPageProps) {
             )}
 
             {/* Article Content */}
-            <div className="prose prose-invert prose-base max-w-none">
+            <div className="prose prose-neutral dark:prose-invert prose-base max-w-none">
               <MDXContent code={post.body} />
             </div>
           </article>
 
           {/* Post Navigation */}
-          <nav className="border-t border-[#1a1a1a] pt-8 space-y-4">
+          <nav className="border-t border-neutral-200 dark:border-[#1a1a1a] pt-8 space-y-4">
             {prev && (
               <Link
                 href={`/${prev.slug}`}
-                className="block p-4 rounded-xl border border-[#1a1a1a] hover:border-[#333] hover:bg-[#0f0f0f] transition-all group"
+                className="block p-4 rounded-xl border border-neutral-200 dark:border-[#1a1a1a] hover:border-neutral-400 dark:hover:border-[#333] hover:bg-neutral-50 dark:hover:bg-[#0f0f0f] transition-all group"
               >
-                <span className="text-xs text-[#525252] uppercase tracking-wider">
+                <span className="text-xs text-neutral-400 dark:text-[#a1a1a1] uppercase tracking-wider">
                   Previous
                 </span>
-                <p className="text-base font-medium text-[#fafafa] group-hover:text-blue-400 transition-colors mt-1">
+                <p className="text-base font-medium text-neutral-900 dark:text-[#fafafa] group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors mt-1">
                   {prev.title}
                 </p>
               </Link>
@@ -132,12 +145,12 @@ export default async function PostPage({ params }: PostPageProps) {
             {next && (
               <Link
                 href={`/${next.slug}`}
-                className="block p-4 rounded-xl border border-[#1a1a1a] hover:border-[#333] hover:bg-[#0f0f0f] transition-all group"
+                className="block p-4 rounded-xl border border-neutral-200 dark:border-[#1a1a1a] hover:border-neutral-400 dark:hover:border-[#333] hover:bg-neutral-50 dark:hover:bg-[#0f0f0f] transition-all group"
               >
-                <span className="text-xs text-[#525252] uppercase tracking-wider">
+                <span className="text-xs text-neutral-400 dark:text-[#a1a1a1] uppercase tracking-wider">
                   Next
                 </span>
-                <p className="text-base font-medium text-[#fafafa] group-hover:text-blue-400 transition-colors mt-1">
+                <p className="text-base font-medium text-neutral-900 dark:text-[#fafafa] group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors mt-1">
                   {next.title}
                 </p>
               </Link>
@@ -148,15 +161,11 @@ export default async function PostPage({ params }: PostPageProps) {
 
       {/* Desktop Layout */}
       <div className="hidden lg:block">
-        <div className="max-w-3xl mx-auto px-8 py-12">
-          {/* Top Navigation */}
+        <div className="max-w-4xl mx-auto px-8 py-16">
+          {/* Header */}
           <header className="flex items-center justify-between mb-16">
-            <Link
-              href="/blog"
-              className="inline-flex items-center gap-2 text-sm text-[#a1a1a1] hover:text-[#fafafa] transition-colors"
-            >
-              <ArrowLeft className="w-4 h-4" />
-              All posts
+            <Link href="/" className="text-lg font-medium text-neutral-900 dark:text-[#fafafa] hover:text-neutral-500 dark:hover:text-[#a1a1a1] transition-colors">
+              ← Back
             </Link>
             <nav className="flex items-center gap-6">
               {navLinks.map((link) => (
@@ -164,8 +173,8 @@ export default async function PostPage({ params }: PostPageProps) {
                   key={link.href}
                   href={link.href}
                   className={`text-sm transition-colors ${link.href === "/blog"
-                      ? "text-[#fafafa]"
-                      : "text-[#737373] hover:text-[#fafafa]"
+                    ? "text-neutral-900 dark:text-[#fafafa]"
+                    : "text-neutral-500 dark:text-[#737373] hover:text-neutral-900 dark:hover:text-[#fafafa]"
                     }`}
                 >
                   {link.label}
@@ -181,7 +190,7 @@ export default async function PostPage({ params }: PostPageProps) {
                 {post.title}
               </h1>
               {post.description && (
-                <p className="text-xl text-[#737373] leading-relaxed">
+                <p className="text-xl text-neutral-500 dark:text-[#d4d4d4] leading-relaxed">
                   {post.description}
                 </p>
               )}
@@ -189,7 +198,7 @@ export default async function PostPage({ params }: PostPageProps) {
 
             {/* Featured Image */}
             {post.image && (
-              <div className="relative aspect-video rounded-2xl overflow-hidden bg-[#171717] mb-12">
+              <div className="relative aspect-video rounded-2xl overflow-hidden bg-neutral-100 dark:bg-[#171717] mb-12">
                 <Image
                   src={post.image}
                   alt={post.title}
@@ -201,24 +210,24 @@ export default async function PostPage({ params }: PostPageProps) {
             )}
 
             {/* Article Content */}
-            <div className="prose prose-invert prose-lg max-w-none">
+            <div className="prose prose-neutral dark:prose-invert prose-lg max-w-none">
               <MDXContent code={post.body} />
             </div>
           </article>
 
           {/* Post Navigation */}
-          <nav className="mt-12 pt-12 border-t border-[#1a1a1a]">
+          <nav className="mt-12 pt-12 border-t border-neutral-200 dark:border-[#1a1a1a]">
             <div className="grid grid-cols-2 gap-6">
               {prev ? (
                 <Link
                   href={`/${prev.slug}`}
-                  className="group p-6 rounded-2xl border border-[#1a1a1a] hover:border-[#333] hover:bg-[#0f0f0f] transition-all"
+                  className="group p-6 rounded-2xl border border-neutral-200 dark:border-[#1a1a1a] hover:border-neutral-400 dark:hover:border-[#333] hover:bg-neutral-50 dark:hover:bg-[#0f0f0f] transition-all"
                 >
-                  <div className="flex items-center gap-2 text-xs text-[#525252] uppercase tracking-wider mb-2">
+                  <div className="flex items-center gap-2 text-xs text-neutral-400 dark:text-[#a1a1a1] uppercase tracking-wider mb-2">
                     <ArrowLeft className="w-3 h-3" />
                     Previous
                   </div>
-                  <p className="text-base font-medium text-[#fafafa] group-hover:text-blue-400 transition-colors line-clamp-2">
+                  <p className="text-base font-medium text-neutral-900 dark:text-[#fafafa] group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-2">
                     {prev.title}
                   </p>
                 </Link>
@@ -228,13 +237,13 @@ export default async function PostPage({ params }: PostPageProps) {
               {next ? (
                 <Link
                   href={`/${next.slug}`}
-                  className="group p-6 rounded-2xl border border-[#1a1a1a] hover:border-[#333] hover:bg-[#0f0f0f] transition-all text-right"
+                  className="group p-6 rounded-2xl border border-neutral-200 dark:border-[#1a1a1a] hover:border-neutral-400 dark:hover:border-[#333] hover:bg-neutral-50 dark:hover:bg-[#0f0f0f] transition-all text-right"
                 >
-                  <div className="flex items-center justify-end gap-2 text-xs text-[#525252] uppercase tracking-wider mb-2">
+                  <div className="flex items-center justify-end gap-2 text-xs text-neutral-400 dark:text-[#a1a1a1] uppercase tracking-wider mb-2">
                     Next
                     <ArrowRight className="w-3 h-3" />
                   </div>
-                  <p className="text-base font-medium text-[#fafafa] group-hover:text-blue-400 transition-colors line-clamp-2">
+                  <p className="text-base font-medium text-neutral-900 dark:text-[#fafafa] group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-2">
                     {next.title}
                   </p>
                 </Link>
@@ -245,17 +254,17 @@ export default async function PostPage({ params }: PostPageProps) {
           </nav>
 
           {/* Footer */}
-          <footer className="mt-16 pt-8 border-t border-[#1a1a1a]">
+          <footer className="mt-16 pt-8 border-t border-neutral-200 dark:border-[#1a1a1a]">
             <div className="flex items-center justify-between">
               <Link
                 href="/"
-                className="text-sm text-[#525252] hover:text-[#fafafa] transition-colors"
+                className="text-sm text-neutral-400 dark:text-[#a1a1a1] hover:text-neutral-900 dark:hover:text-[#fafafa] transition-colors"
               >
                 © {new Date().getFullYear()} Priyanshu Mahey
               </Link>
               <Link
                 href="/blog"
-                className="text-sm text-[#737373] hover:text-[#fafafa] transition-colors"
+                className="text-sm text-neutral-500 dark:text-[#d4d4d4] hover:text-neutral-900 dark:hover:text-[#fafafa] transition-colors"
               >
                 View all posts
               </Link>

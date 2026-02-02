@@ -69,7 +69,7 @@ export function LanguageBar({ languages }: LanguageBarProps) {
     return (
         <div className="w-full space-y-3 mt-4">
             {/* Progress bar */}
-            <div className="flex h-2 w-full overflow-hidden rounded-full bg-[#1a1a1a]">
+            <div className="flex h-2 w-full overflow-hidden rounded-full bg-neutral-200 dark:bg-[#1a1a1a]">
                 {languages.map((lang) => (
                     <div
                         key={lang.name}
@@ -88,8 +88,8 @@ export function LanguageBar({ languages }: LanguageBarProps) {
                 {languages.map((lang) => (
                     <div key={lang.name} className="flex items-center gap-1.5">
                         <span className="size-3 rounded-full" style={{ backgroundColor: getLanguageColor(lang.name) }} />
-                        <span className="text-sm font-medium text-[#fafafa]">{lang.name}</span>
-                        <span className="text-sm text-[#737373]">{lang.percentage}%</span>
+                        <span className="text-sm font-medium text-neutral-900 dark:text-[#fafafa]">{lang.name}</span>
+                        <span className="text-sm text-neutral-500 dark:text-[#d4d4d4]">{lang.percentage}%</span>
                     </div>
                 ))}
             </div>

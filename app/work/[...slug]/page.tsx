@@ -1,9 +1,10 @@
 import { works } from "#site/content";
 import { MDXContent } from "@/components/blog/mdx-components";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { notFound } from "next/navigation";
 
 import "@/styles/mdx.css";
-import { ArrowLeft, ExternalLink } from "lucide-react";
+import { ExternalLink } from "lucide-react";
 import Link from "next/link";
 
 const navLinks = [
@@ -25,17 +26,6 @@ async function getWorkFromParams(params: { slug: string[] }) {
     return work;
 }
 
-function getAdjacentWorks(currentSlug: string) {
-    const sortedWorks = works.filter((w) => w.published).sort((a, b) =>
-        new Date(b.startDate).getTime() - new Date(a.startDate).getTime()
-    );
-    const currentIndex = sortedWorks.findIndex((w) => w.slugAsParams === currentSlug);
-    return {
-        prev: currentIndex < sortedWorks.length - 1 ? sortedWorks[currentIndex + 1] : null,
-        next: currentIndex > 0 ? sortedWorks[currentIndex - 1] : null,
-    };
-}
-
 export async function generateStaticParams(): Promise<{ slug: string[] }[]> {
     return works.map((work) => ({ slug: work.slugAsParams.split("/") }));
 }
@@ -49,17 +39,29 @@ export default async function WorkPage({ params }: WorkPageProps) {
     }
 
     return (
-        <div className="min-h-screen bg-[#0a0a0a] text-[#fafafa]">
+        <div className="min-h-screen bg-white dark:bg-[#0a0a0a] text-neutral-900 dark:text-[#fafafa]">
+            {/* Theme Toggle */}
+            <ThemeToggle />
+
             {/* Mobile Layout */}
             <div className="lg:hidden">
-                <header className="px-6 pt-6 pb-4 border-b border-[#1a1a1a]">
-                    <Link
-                        href="/"
-                        className="inline-flex items-center gap-2 text-sm text-[#a1a1a1] hover:text-[#fafafa] transition-colors"
-                    >
-                        <ArrowLeft className="w-4 h-4" />
-                        Back to home
-                    </Link>
+                <header className="space-y-6 px-6 pt-8">
+                    <div>
+                        <Link href="/" className="text-2xl leading-[1.1] font-medium tracking-tight text-neutral-900 dark:text-[#fafafa] hover:text-neutral-500 dark:hover:text-[#a1a1a1] transition-colors">
+                            Priyanshu Mahey.
+                        </Link>
+                        <nav className="flex flex-row gap-4 pt-3">
+                            {navLinks.map((link) => (
+                                <Link
+                                    key={link.href}
+                                    href={link.href}
+                                    className="text-sm text-neutral-500 dark:text-[#a1a1a1] hover:text-neutral-900 dark:hover:text-[#fafafa] transition-colors"
+                                >
+                                    {link.label}
+                                </Link>
+                            ))}
+                        </nav>
+                    </div>
                 </header>
 
                 <main className="px-6 pb-16">
@@ -75,21 +77,21 @@ export default async function WorkPage({ params }: WorkPageProps) {
                                         href={work.link}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="text-[#525252] hover:text-[#fafafa] transition-colors"
+                                        className="text-neutral-400 dark:text-[#a1a1a1] hover:text-neutral-900 dark:hover:text-[#fafafa] transition-colors"
                                     >
                                         <ExternalLink className="w-5 h-5" />
                                     </Link>
                                 )}
                             </div>
                             {work.description && (
-                                <p className="text-lg text-[#737373] leading-relaxed">
+                                <p className="text-lg text-neutral-500 dark:text-[#e5e5e5] leading-relaxed">
                                     {work.description}
                                 </p>
                             )}
                         </header>
 
                         {/* Article Content */}
-                        <div className="prose prose-invert prose-base max-w-none">
+                        <div className="prose prose-neutral dark:prose-invert prose-base max-w-none">
                             <MDXContent code={work.body} />
                         </div>
                     </article>
@@ -98,22 +100,18 @@ export default async function WorkPage({ params }: WorkPageProps) {
 
             {/* Desktop Layout */}
             <div className="hidden lg:block">
-                <div className="max-w-3xl mx-auto px-8 py-12">
-                    {/* Top Navigation */}
+                <div className="max-w-4xl mx-auto px-8 py-16">
+                    {/* Header */}
                     <header className="flex items-center justify-between mb-16">
-                        <Link
-                            href="/"
-                            className="inline-flex items-center gap-2 text-sm text-[#a1a1a1] hover:text-[#fafafa] transition-colors"
-                        >
-                            <ArrowLeft className="w-4 h-4" />
-                            Back to home
+                        <Link href="/" className="text-lg font-medium text-neutral-900 dark:text-[#fafafa] hover:text-neutral-500 dark:hover:text-[#a1a1a1] transition-colors">
+                            ← Back
                         </Link>
                         <nav className="flex items-center gap-6">
                             {navLinks.map((link) => (
                                 <Link
                                     key={link.href}
                                     href={link.href}
-                                    className="text-sm text-[#737373] hover:text-[#fafafa] transition-colors"
+                                    className="text-sm text-neutral-500 dark:text-[#737373] hover:text-neutral-900 dark:hover:text-[#fafafa] transition-colors"
                                 >
                                     {link.label}
                                 </Link>
@@ -133,37 +131,37 @@ export default async function WorkPage({ params }: WorkPageProps) {
                                         href={work.link}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="text-[#525252] hover:text-[#fafafa] transition-colors"
+                                        className="text-neutral-400 dark:text-[#a1a1a1] hover:text-neutral-900 dark:hover:text-[#fafafa] transition-colors"
                                     >
                                         <ExternalLink className="w-6 h-6" />
                                     </Link>
                                 )}
                             </div>
                             {work.description && (
-                                <p className="text-xl text-[#737373] leading-relaxed">
+                                <p className="text-xl text-neutral-500 dark:text-[#e5e5e5] leading-relaxed">
                                     {work.description}
                                 </p>
                             )}
                         </header>
 
                         {/* Article Content */}
-                        <div className="prose prose-invert prose-lg max-w-none">
+                        <div className="prose prose-neutral dark:prose-invert prose-lg max-w-none">
                             <MDXContent code={work.body} />
                         </div>
                     </article>
 
                     {/* Footer */}
-                    <footer className="mt-16 pt-8 border-t border-[#1a1a1a]">
+                    <footer className="mt-16 pt-8 border-t border-neutral-200 dark:border-[#1a1a1a]">
                         <div className="flex items-center justify-between">
                             <Link
                                 href="/"
-                                className="text-sm text-[#525252] hover:text-[#fafafa] transition-colors"
+                                className="text-sm text-neutral-400 dark:text-[#a1a1a1] hover:text-neutral-900 dark:hover:text-[#fafafa] transition-colors"
                             >
                                 © {new Date().getFullYear()} Priyanshu Mahey
                             </Link>
                             <Link
                                 href="/"
-                                className="text-sm text-[#737373] hover:text-[#fafafa] transition-colors"
+                                className="text-sm text-neutral-500 dark:text-[#e5e5e5] hover:text-neutral-900 dark:hover:text-[#fafafa] transition-colors"
                             >
                                 Back to home
                             </Link>

@@ -10,8 +10,8 @@ interface EmploymentCardProps {
 
 export default function EmploymentCard({ logo, department, company, link }: EmploymentCardProps) {
     const cardContent = (
-        <div className="flex items-center gap-3 rounded-lg bg-[#1a1a1a] hover:bg-[#222222] transition-colors px-4 py-3 w-full border border-[#2a2a2a]">
-            <div className="flex h-10 w-10 items-center justify-center rounded-md bg-[#252525] flex-shrink-0 overflow-hidden">
+        <div className="flex items-center gap-3 rounded-lg bg-neutral-100 dark:bg-[#1a1a1a] hover:bg-neutral-200 dark:hover:bg-[#222222] transition-colors px-4 py-3 w-full border border-neutral-200 dark:border-[#2a2a2a]">
+            <div className="flex h-10 w-10 items-center justify-center rounded-md bg-neutral-200 dark:bg-[#252525] flex-shrink-0 overflow-hidden">
                 <Image
                     src={logo}
                     alt={`${company} logo`}
@@ -21,8 +21,8 @@ export default function EmploymentCard({ logo, department, company, link }: Empl
                 />
             </div>
             <div className="flex flex-col min-w-0">
-                <span className="text-sm font-medium text-white leading-tight">{department}</span>
-                <span className="text-sm text-[#737373] leading-tight">{company}</span>
+                <span className="text-sm font-medium text-neutral-900 dark:text-white leading-tight">{department}</span>
+                <span className="text-sm text-neutral-500 dark:text-[#d4d4d4] leading-tight">{company}</span>
             </div>
         </div>
     )
@@ -42,7 +42,7 @@ export default function EmploymentCard({ logo, department, company, link }: Empl
 export function EmploymentCardCompact({ logo, department, company, link }: EmploymentCardProps) {
     const cardContent = (
         <div className="flex items-center gap-3 py-2">
-            <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-[#1f1f1f] flex-shrink-0 overflow-hidden">
+            <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-neutral-100 dark:bg-[#1f1f1f] flex-shrink-0 overflow-hidden">
                 <Image
                     src={logo}
                     alt={`${company} logo`}
@@ -52,8 +52,8 @@ export function EmploymentCardCompact({ logo, department, company, link }: Emplo
                 />
             </div>
             <div className="flex flex-col min-w-0">
-                <span className="text-base font-medium text-white leading-tight">{department}</span>
-                <span className="text-sm text-[#888888] leading-tight">{company}</span>
+                <span className="text-base font-medium text-neutral-900 dark:text-white leading-tight">{department}</span>
+                <span className="text-sm text-neutral-500 dark:text-[#888888] leading-tight">{company}</span>
             </div>
         </div>
     )

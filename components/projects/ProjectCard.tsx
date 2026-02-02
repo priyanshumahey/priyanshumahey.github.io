@@ -157,7 +157,7 @@ export function ProjectCard({ project, index, variant = "large" }: ProjectCardPr
         onMouseLeave={() => setIsHovered(false)}
       >
         <motion.div
-          className={`relative ${aspectClass} rounded-xl overflow-hidden bg-[#0f0f0f] mb-4`}
+          className={`relative ${aspectClass} rounded-xl overflow-hidden bg-neutral-100 dark:bg-[#0f0f0f] mb-4`}
           initial="rest"
           whileHover="hover"
           animate="rest"
@@ -250,16 +250,16 @@ export function ProjectCard({ project, index, variant = "large" }: ProjectCardPr
         <div className="flex items-baseline justify-between gap-4">
           <div className="flex items-center gap-2 min-w-0">
             {project.isPrivate && (
-              <Lock className="w-3.5 h-3.5 text-[#525252] flex-shrink-0" />
+              <Lock className="w-3.5 h-3.5 text-neutral-500 dark:text-[#a1a1a1] flex-shrink-0" />
             )}
-            <h3 className="text-lg font-normal text-[#fafafa] group-hover:text-[#d4d4d4] transition-colors truncate">
+            <h3 className="text-lg font-normal text-neutral-900 dark:text-[#fafafa] group-hover:text-neutral-600 dark:group-hover:text-[#d4d4d4] transition-colors truncate">
               {project.title}
             </h3>
           </div>
-          <span className="text-sm text-[#737373] flex-shrink-0">{project.year}</span>
+          <span className="text-sm text-neutral-600 dark:text-[#d4d4d4] flex-shrink-0">{project.year}</span>
         </div>
 
-        <p className="text-sm text-[#737373] mt-1 line-clamp-2">
+        <p className="text-sm text-neutral-600 dark:text-[#d4d4d4] mt-1 line-clamp-2">
           {project.description}
         </p>
       </Link>

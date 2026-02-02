@@ -67,7 +67,7 @@ function GalleryItem({
         onMouseLeave={() => setIsHovered(false)}
       >
         <motion.div 
-          className={`relative rounded-xl overflow-hidden bg-[#0a0a0a] ${isFirst ? 'aspect-4/3 lg:aspect-2/1' : 'aspect-4/3'}`}
+          className={`relative rounded-xl overflow-hidden bg-neutral-100 dark:bg-[#0a0a0a] ${isFirst ? 'aspect-4/3 lg:aspect-2/1' : 'aspect-4/3'}`}
           whileHover={{ scale: 1.01 }}
           transition={{ duration: 0.4 }}
         >
@@ -166,17 +166,17 @@ function GalleryItem({
         <div className="mt-4 flex items-baseline justify-between gap-4">
           <div className="flex items-center gap-2 min-w-0">
             {project.isPrivate && (
-              <Lock className="w-3 h-3 text-[#525252] flex-shrink-0" />
+              <Lock className="w-3 h-3 text-neutral-500 dark:text-[#a1a1a1] flex-shrink-0" />
             )}
-            <h3 className="text-base font-medium text-[#fafafa] group-hover:text-[#d4d4d4] transition-colors truncate">
+            <h3 className="text-base font-medium text-neutral-900 dark:text-[#fafafa] group-hover:text-neutral-600 dark:group-hover:text-[#d4d4d4] transition-colors truncate">
               {project.title}
             </h3>
           </div>
-          <p className="text-xs text-[#737373] uppercase tracking-wider whitespace-nowrap shrink-0">
+          <p className="text-xs text-neutral-600 dark:text-[#d4d4d4] uppercase tracking-wider whitespace-nowrap shrink-0">
             {project.year}
           </p>
         </div>
-        <p className="text-sm text-[#737373] mt-1 line-clamp-2">
+        <p className="text-sm text-neutral-600 dark:text-[#d4d4d4] mt-1 line-clamp-2">
           {project.description}
         </p>
       </Link>
@@ -199,7 +199,7 @@ export function GallerySection({
     : projects
 
   return (
-    <div className="w-full bg-[#050505] border-t border-[#1a1a1a]">
+    <div className="w-full bg-neutral-100 dark:bg-[#050505] border-t border-neutral-200 dark:border-[#1a1a1a]">
       <div className="max-w-[1400px] mx-auto px-6 lg:px-12 py-24">
         {/* Mobile: Single column with all projects */}
         <div className="flex flex-col gap-12 lg:hidden">
@@ -250,7 +250,7 @@ export function GallerySection({
           >
             <motion.button
               onClick={onShowMore}
-              className="px-6 py-3 text-sm text-[#a1a1a1] border border-[#333] rounded-full hover:text-[#fafafa] hover:border-[#555] transition-all"
+              className="px-6 py-3 text-sm text-neutral-600 dark:text-[#a1a1a1] border border-neutral-300 dark:border-[#333] rounded-full hover:text-neutral-900 dark:hover:text-[#fafafa] hover:border-neutral-500 dark:hover:border-[#555] transition-all"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.98 }}
             >
