@@ -1,40 +1,62 @@
 @reference "tailwindcss";
 
 /* ===================================
-   MDX STYLING - SLEEK DARK MODE THEME
+   MDX STYLING - LIGHT/DARK MODE THEME
    =================================== */
 
-/* Code blocks */
-[data-rehype-pretty-code-figure] pre {
-  @apply px-0 bg-[#0c0c0c] rounded-xl my-8 border border-[#1a1a1a];
+/* Code blocks - always dark background since using github-dark theme */
+[data-rehype-pretty-code-figure] {
+  @apply rounded-xl my-8;
+  background-color: #1a1b26 !important;
+}
+
+[data-rehype-pretty-code-figure] pre,
+.prose [data-rehype-pretty-code-figure] pre,
+.prose pre:has(code[data-theme]) {
+  @apply px-0 rounded-xl border border-[#2a2b36] m-0 py-4;
+  background-color: #1a1b26 !important;
+  overflow-x: auto;
+  max-width: 100%;
 }
 
 [data-rehype-pretty-code-figure] code {
-  @apply text-sm !leading-loose md:text-base border-0 p-0;
-}
-
-[data-rehype-pretty-code-figure] code[data-line-numbers] {
+  @apply text-sm !leading-relaxed md:text-[0.9rem] border-0 p-0;
+  background-color: transparent !important;
+  color: #e1e4e8 !important;
   counter-reset: line;
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+  display: grid;
 }
 
-[data-rehype-pretty-code-figure] code[data-line-numbers] > [data-line]::before {
+/* Ensure all text inside code blocks is visible */
+[data-rehype-pretty-code-figure] code span {
+  color: inherit;
+}
+
+/* Line styling */
+[data-rehype-pretty-code-figure] code > [data-line] {
+  @apply px-2;
+  display: block;
+}
+
+[data-rehype-pretty-code-figure] code > [data-line]::before {
   counter-increment: line;
   content: counter(line);
-  @apply mr-4 inline-block w-4 text-right text-[#3a3a3a];
+  @apply inline-block w-4 mr-3 text-right select-none;
+  color: #4a5568;
+  font-size: 0.75rem;
 }
 
-[data-rehype-pretty-code-figure] [data-line] {
-  @apply border-l-2 border-l-transparent px-5 py-0.5;
-}
-
+/* Highlighted lines */
 [data-rehype-pretty-code-figure] [data-highlighted-line] {
-  background: rgba(59, 130, 246, 0.08);
-  @apply border-l-blue-500;
+  background: rgba(99, 102, 241, 0.1);
+  border-left: 2px solid #6366f1;
+  margin-left: -2px;
 }
 
 [data-rehype-pretty-code-figure] [data-highlighted-chars] {
-  @apply rounded bg-blue-500/15;
-  box-shadow: 0 0 0 4px rgb(59 130 246 / 0.15);
+  @apply rounded bg-indigo-500/20;
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2);
 }
 
 [data-rehype-pretty-code-figure] [data-chars-id] {
@@ -43,7 +65,15 @@
 
 /* Heading anchors */
 .subheading-anchor {
-  @apply text-[#fafafa] no-underline hover:underline decoration-blue-500/50 underline-offset-4;
+  @apply text-neutral-900 dark:text-[#fafafa] no-underline hover:underline decoration-blue-500/50 underline-offset-4;
+}
+
+/* ===================================
+   GLOBAL PROSE WRAPPING
+   =================================== */
+
+.prose {
+  overflow-wrap: anywhere;
 }
 
 /* ===================================
@@ -51,19 +81,40 @@
    =================================== */
 
 .prose h1 {
-  @apply text-[#fafafa] font-bold tracking-tight text-3xl md:text-4xl mt-0 mb-6;
+  @apply font-bold tracking-tight text-3xl md:text-4xl mt-0 mb-6;
+  color: #171717;
+}
+
+.dark .prose h1 {
+  color: #fafafa;
 }
 
 .prose h2 {
-  @apply text-[#fafafa] font-semibold tracking-tight text-xl md:text-2xl mt-14 mb-5 pb-3 border-b border-[#1a1a1a];
+  @apply font-semibold tracking-tight text-xl md:text-2xl mt-14 mb-5 pb-3 border-b border-neutral-200;
+  color: #171717;
+}
+
+.dark .prose h2 {
+  color: #fafafa;
+  border-color: #333;
 }
 
 .prose h3 {
-  @apply text-[#e5e5e5] font-semibold tracking-tight text-lg md:text-xl mt-10 mb-4;
+  @apply font-semibold tracking-tight text-lg md:text-xl mt-10 mb-4;
+  color: #262626;
+}
+
+.dark .prose h3 {
+  color: #fafafa;
 }
 
 .prose h4 {
-  @apply text-[#d4d4d4] font-medium tracking-tight text-base md:text-lg mt-8 mb-3;
+  @apply font-medium tracking-tight text-base md:text-lg mt-8 mb-3;
+  color: #404040;
+}
+
+.dark .prose h4 {
+  color: #fafafa;
 }
 
 /* Heading links - keep them clean */
@@ -84,15 +135,30 @@
    =================================== */
 
 .prose p {
-  @apply text-[#a1a1a1] leading-[1.85] text-base md:text-[1.0625rem] mb-6;
+  @apply leading-[1.85] text-base md:text-[1.0625rem] mb-6;
+  color: #404040;
+}
+
+.dark .prose p {
+  color: #d4d4d4;
 }
 
 .prose strong {
-  @apply text-[#fafafa] font-semibold;
+  @apply font-semibold;
+  color: #171717;
+}
+
+.dark .prose strong {
+  color: #ffffff;
 }
 
 .prose em {
-  @apply text-[#b5b5b5] italic;
+  @apply italic;
+  color: #404040;
+}
+
+.dark .prose em {
+  color: #d4d4d4;
 }
 
 /* ===================================
@@ -112,7 +178,12 @@
 }
 
 .prose ul > li {
-  @apply relative pl-6 text-[#a1a1a1] leading-relaxed text-base md:text-[1.0625rem];
+  @apply relative pl-6 leading-relaxed text-base md:text-[1.0625rem];
+  color: #404040;
+}
+
+.dark .prose ul > li {
+  color: #d4d4d4;
 }
 
 .prose ul > li::before {
@@ -121,13 +192,23 @@
 }
 
 .prose ol > li {
-  @apply relative pl-8 text-[#a1a1a1] leading-relaxed text-base md:text-[1.0625rem];
+  @apply relative pl-8 leading-relaxed text-base md:text-[1.0625rem];
   counter-increment: list-counter;
+  color: #404040;
+}
+
+.dark .prose ol > li {
+  color: #d4d4d4;
 }
 
 .prose ol > li::before {
   content: counter(list-counter) ".";
-  @apply absolute left-0 top-0 text-[#525252] font-medium tabular-nums;
+  @apply absolute left-0 top-0 font-medium tabular-nums;
+  color: #a3a3a3;
+}
+
+.dark .prose ol > li::before {
+  color: #888;
 }
 
 /* Nested lists */
@@ -143,7 +224,7 @@
 }
 
 .prose li strong {
-  @apply text-[#e5e5e5];
+  @apply text-neutral-800 dark:text-white;
 }
 
 /* ===================================
@@ -155,16 +236,155 @@
 }
 
 .prose blockquote p {
-  @apply text-[#9ca3af] italic text-base leading-relaxed;
+  @apply text-neutral-600 italic text-base leading-relaxed;
+}
+
+.dark .prose blockquote p {
+  color: #d4d4d4;
 }
 
 /* ===================================
    CODE (INLINE)
    =================================== */
 
-.prose code {
-  @apply text-[#e5e5e5] bg-[#1a1a1a] px-1.5 py-0.5 rounded text-[0.9em] font-mono 
-         border border-[#262626];
+/* Inline code - code not inside a pre element */
+.prose :not(pre) > code,
+.prose p > code,
+.prose li > code,
+.prose td > code,
+.prose th > code,
+.prose :not(pre):not([data-rehype-pretty-code-figure]) > code,
+code:not([data-theme]):not([data-language]) {
+  @apply px-1 py-0.5 rounded text-[0.875em] font-medium;
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+  color: #1f2937 !important;
+  background-color: #f3f4f6 !important;
+  border: 1px solid #e5e7eb !important;
+  box-shadow: none !important;
+  display: inline !important;
+  vertical-align: baseline;
+  word-break: break-word;
+  /* Prevent line numbers from code blocks */
+  counter-reset: none !important;
+  counter-increment: none !important;
+}
+
+/* Inline code rendered by rehype-pretty-code (has span inside) */
+.prose p code[data-theme],
+.prose li code[data-theme],
+.prose td code[data-theme],
+.prose th code[data-theme] {
+  @apply px-1 py-0.5 rounded text-[0.875em] font-medium;
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+  color: #1f2937 !important;
+  background-color: #f3f4f6 !important;
+  border: 1px solid #e5e7eb !important;
+  box-shadow: none !important;
+  display: inline !important;
+  counter-reset: none !important;
+  counter-increment: none !important;
+}
+
+.prose p code[data-theme] span,
+.prose li code[data-theme] span,
+.prose td code[data-theme] span,
+.prose th code[data-theme] span {
+  color: #1f2937 !important;
+  display: inline !important;
+}
+
+.dark .prose p code[data-theme],
+.dark .prose li code[data-theme],
+.dark .prose td code[data-theme],
+.dark .prose th code[data-theme] {
+  color: #e5e7eb !important;
+  background-color: #374151 !important;
+  border: 1px solid #4b5563 !important;
+}
+
+.dark .prose p code[data-theme] span,
+.dark .prose li code[data-theme] span,
+.dark .prose td code[data-theme] span,
+.dark .prose th code[data-theme] span {
+  color: #e5e7eb !important;
+}
+
+/* Kill any pseudo-elements that might show line numbers */
+.prose :not(pre) > code::before,
+.prose :not(pre) > code::after,
+.prose p > code::before,
+.prose p > code::after,
+.prose li > code::before,
+.prose li > code::after,
+.prose td > code::before,
+.prose td > code::after,
+.prose th > code::before,
+.prose th > code::after,
+.prose :not(pre) > code *::before,
+.prose :not(pre) > code *::after {
+  content: none !important;
+  display: none !important;
+  counter-increment: none !important;
+}
+
+/* Ensure spans inside inline code don't get line number treatment */
+.prose :not(pre) > code span,
+.prose p > code span,
+.prose li > code span {
+  display: inline !important;
+  color: inherit !important;
+}
+ 
+/* Dark mode inline code */
+.dark .prose :not(pre) > code,
+.dark .prose p > code,
+.dark .prose li > code,
+.dark .prose td > code,
+.dark .prose th > code,
+.dark code:not([data-theme]):not([data-language]) {
+  color: #e5e7eb !important;
+  background-color: #374151 !important;
+  border: 1px solid #4b5563 !important;
+}
+
+.dark .prose :not(pre) > code span,
+.dark .prose p > code span,
+.dark .prose li > code span {
+  color: #e5e7eb !important;
+}
+
+/* Inline code inside links */
+.prose a > code {
+  color: inherit !important;
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-underline-offset: 3px;
+}
+
+/* Inline code inside headings - more subtle */
+.prose h1 > code,
+.prose h2 > code,
+.prose h3 > code,
+.prose h4 > code {
+  @apply text-[0.85em] font-semibold;
+  background-color: #f3f4f6 !important;
+  color: #374151 !important;
+  border-color: #e5e7eb !important;
+}
+
+.dark .prose h1 > code,
+.dark .prose h2 > code,
+.dark .prose h3 > code,
+.dark .prose h4 > code {
+  background-color: #374151 !important;
+  color: #d1d5db !important;
+  border-color: #4b5563 !important;
+}
+
+/* Code blocks - ensure no extra styles from prose */
+.prose [data-rehype-pretty-code-figure] code,
+.prose pre code {
+  @apply bg-transparent border-0 p-0 text-inherit;
 }
 
 .prose code::before,
@@ -177,7 +397,7 @@
    =================================== */
 
 .prose hr {
-  @apply border-0 h-px bg-gradient-to-r from-transparent via-[#262626] to-transparent my-12;
+  @apply border-0 h-px bg-gradient-to-r from-transparent via-neutral-300 dark:via-[#444] to-transparent my-12;
 }
 
 /* ===================================
@@ -189,7 +409,7 @@
 }
 
 .prose figcaption {
-  @apply text-center text-sm text-[#525252] mt-3;
+  @apply text-center text-sm text-neutral-500 dark:text-[#999] mt-3;
 }
 
 /* ===================================
@@ -201,19 +421,38 @@
 }
 
 .prose thead {
-  @apply border-b border-[#262626];
+  @apply border-b border-neutral-300;
+}
+
+.dark .prose thead {
+  border-color: #444;
 }
 
 .prose th {
-  @apply text-left text-[#fafafa] font-semibold py-3 px-4;
+  @apply text-left font-semibold py-3 px-4;
+  color: #171717;
+}
+
+.dark .prose th {
+  color: #fafafa;
 }
 
 .prose td {
-  @apply text-[#a1a1a1] py-3 px-4 border-b border-[#1a1a1a];
+  @apply py-3 px-4 border-b border-neutral-200;
+  color: #404040;
+}
+
+.dark .prose td {
+  color: #d4d4d4;
+  border-color: #333;
 }
 
 .prose tr:hover td {
-  @apply bg-[#0f0f0f];
+  background-color: #f9fafb;
+}
+
+.dark .prose tr:hover td {
+  background-color: #1f1f1f;
 }
 
 /* ===================================
@@ -223,21 +462,37 @@
 /* First paragraph after heading - slightly larger */
 .prose h2 + p,
 .prose h3 + p {
-  @apply text-[#b5b5b5];
+  color: #404040;
+}
+
+.dark .prose h2 + p,
+.dark .prose h3 + p {
+  color: #d4d4d4;
 }
 
 /* Lead paragraph styling */
 .prose .lead {
-  @apply text-lg md:text-xl text-[#b5b5b5] leading-relaxed;
+  @apply text-lg md:text-xl leading-relaxed;
+  color: #404040;
+}
+
+.dark .prose .lead {
+  color: #d4d4d4;
 }
 
 /* Focus highlight for important content */
 .prose mark {
-  @apply bg-amber-500/20 text-amber-200 px-1 rounded;
+  @apply bg-amber-100 dark:bg-amber-500/20 text-amber-800 dark:text-amber-200 px-1 rounded;
 }
 
 /* Keyboard shortcuts */
 .prose kbd {
-  @apply bg-[#1a1a1a] border border-[#2a2a2a] rounded px-1.5 py-0.5 text-xs 
-         font-mono text-[#d4d4d4] shadow-sm;
+  @apply bg-neutral-100 border border-neutral-300 rounded px-1.5 py-0.5 text-xs font-mono shadow-sm;
+  color: #404040;
+}
+
+.dark .prose kbd {
+  background-color: #252525;
+  border-color: #3a3a3a;
+  color: #d4d4d4;
 }
