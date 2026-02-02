@@ -322,18 +322,18 @@ export function FleurDemo() {
             const pointData = node.data as { x: number; y: number; point: EmbeddingPoint };
             const point = pointData.point;
             return (
-              <div className="bg-zinc-900 border border-zinc-700 rounded-lg p-3 max-w-xs shadow-xl">
-                <div className="font-mono text-sm text-emerald-400 mb-1">{point.filename}</div>
+              <div className="bg-zinc-900 border border-zinc-700 rounded-lg p-3 min-w-[240px] shadow-xl">
+                <div className="font-mono text-sm text-emerald-400 mb-1 break-all">{point.filename}</div>
                 {point.name && <div className="text-zinc-300 text-sm font-medium">{point.name}</div>}
                 <div className="flex gap-2 mt-2">
                   <span
-                    className="px-1.5 py-0.5 text-xs rounded"
+                    className="px-1.5 py-0.5 text-xs rounded whitespace-nowrap"
                     style={{ backgroundColor: LANGUAGE_COLORS[point.language] + "30", color: LANGUAGE_COLORS[point.language] }}
                   >
                     {point.language}
                   </span>
                   <span
-                    className="px-1.5 py-0.5 text-xs rounded"
+                    className="px-1.5 py-0.5 text-xs rounded whitespace-nowrap"
                     style={{ backgroundColor: CHUNK_TYPE_COLORS[point.chunk_type] + "30", color: CHUNK_TYPE_COLORS[point.chunk_type] }}
                   >
                     {point.chunk_type}

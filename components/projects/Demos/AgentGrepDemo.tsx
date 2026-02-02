@@ -190,11 +190,11 @@ export function AgentGrepDemo() {
     return (
         <div className="w-full bg-[#0a0a0a] rounded-xl overflow-hidden border border-zinc-800">
             {/* Scenario selector */}
-            <div className="p-3 border-b border-zinc-800 bg-zinc-900/30">
+            <div className="p-4 border-b border-zinc-800 bg-zinc-900/30">
                 <div className="relative">
                     <button
                         onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                        className="w-full flex items-center justify-between gap-2 px-3 py-2 bg-zinc-800/50 hover:bg-zinc-800 rounded-lg border border-zinc-700 transition-colors"
+                        className="w-full flex items-center justify-between gap-2 px-4 py-3 bg-zinc-800/50 hover:bg-zinc-800 rounded-lg border border-zinc-700 transition-colors"
                     >
                         <div className="flex items-center gap-2 min-w-0">
                             <MessageSquare className="w-3.5 h-3.5 text-blue-400 flex-shrink-0" />
@@ -232,12 +232,12 @@ export function AgentGrepDemo() {
             {/* Main content */}
             <div className="flex flex-col">
                 {/* Agent thinking */}
-                <div className="p-3 border-b border-zinc-800">
+                <div className="p-4 border-b border-zinc-800">
                     <div className="flex items-center gap-2 mb-2">
                         <Sparkles className="w-3.5 h-3.5 text-purple-400" />
                         <span className="text-[10px] font-medium text-zinc-300 uppercase tracking-wider">Agent Reasoning</span>
                     </div>
-                    <div className="space-y-1.5">
+                    <div className="space-y-2">
                         {scenario.agentThinking.map((thought, i) => (
                             <motion.div
                                 key={i}
@@ -255,7 +255,7 @@ export function AgentGrepDemo() {
                 </div>
 
                 {/* Grep command */}
-                <div className="p-3 border-b border-zinc-800 bg-zinc-900/20">
+                <div className="p-4 border-b border-zinc-800 bg-zinc-900/20">
                     <div className="flex items-center gap-2 mb-2">
                         <Terminal className="w-3.5 h-3.5 text-green-400" />
                         <span className="text-[10px] font-medium text-zinc-300 uppercase tracking-wider">Tool Call: grep</span>
@@ -270,7 +270,7 @@ export function AgentGrepDemo() {
                             </motion.div>
                         )}
                     </div>
-                    <div className="font-mono text-[11px] text-green-400 bg-zinc-950 rounded px-2 py-1.5 overflow-x-auto">
+                    <div className="font-mono text-[11px] text-green-400 bg-zinc-950 rounded px-3 py-2 overflow-x-auto">
                         <span className="text-zinc-500">$ </span>
                         {scenario.grepCommand}
                     </div>
@@ -278,15 +278,15 @@ export function AgentGrepDemo() {
 
                 {/* Grep results */}
                 <div className="border-b border-zinc-800">
-                    <div className="p-2 border-b border-zinc-800/50 bg-zinc-900/30 flex items-center gap-2">
+                    <div className="p-3 border-b border-zinc-800/50 bg-zinc-900/30 flex items-center gap-2">
                         <FileSearch className="w-3.5 h-3.5 text-yellow-400" />
                         <span className="text-[10px] font-medium text-zinc-300">Results</span>
                         <span className="text-[10px] text-zinc-500">
                             {visibleResults} / {scenario.grepResults.length} matches
                         </span>
                     </div>
-                    <ScrollArea className="h-[140px]">
-                        <div className="p-2 space-y-1">
+                    <ScrollArea className="h-[240px]">
+                        <div className="p-3 space-y-2">
                             <AnimatePresence mode="popLayout">
                                 {scenario.grepResults.slice(0, visibleResults).map((result, i) => (
                                     <motion.div
@@ -317,7 +317,7 @@ export function AgentGrepDemo() {
                 </div>
 
                 {/* Agent response */}
-                <div className="p-3 bg-zinc-900/30">
+                <div className="p-4 bg-zinc-900/30">
                     <div className="flex items-center gap-2 mb-2">
                         <Bot className="w-3.5 h-3.5 text-blue-400" />
                         <span className="text-[10px] font-medium text-zinc-300 uppercase tracking-wider">Agent Response</span>
@@ -341,7 +341,7 @@ export function AgentGrepDemo() {
             </div>
 
             {/* Footer */}
-            <div className="px-3 py-2 border-t border-zinc-800 bg-zinc-900/50 flex items-center gap-4">
+            <div className="px-4 py-3 border-t border-zinc-800 bg-zinc-900/50 flex items-center gap-4">
                 <div className="flex items-center gap-1.5 text-[10px] text-zinc-400">
                     <Zap className="w-3 h-3 text-yellow-400" />
                     <span>Grep finds code by pattern matching</span>
