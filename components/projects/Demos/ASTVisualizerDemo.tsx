@@ -574,18 +574,6 @@ export function ASTVisualizerDemo() {
 
     return (
         <div className="w-full bg-[#0a0a0a] rounded-xl overflow-hidden border border-zinc-800">
-            {/* Header */}
-            <div className="p-4 border-b border-zinc-800 bg-zinc-900/50">
-                <div className="flex items-center gap-2 mb-2">
-                    <TreePine className="w-4 h-4 text-emerald-400" />
-                    <span className="text-sm font-medium text-zinc-200">How Tree-sitter Parses Code</span>
-                </div>
-                <p className="text-xs text-zinc-500">
-                    Watch tree-sitter transform source code into an Abstract Syntax Tree.
-                    Hover over nodes to see their source location.
-                </p>
-            </div>
-
             {/* Controls */}
             <div className="p-3 border-b border-zinc-800 bg-zinc-900/30 flex items-center gap-3 flex-wrap">
                 {/* Sample selector */}
