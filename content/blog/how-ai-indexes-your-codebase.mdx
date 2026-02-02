@@ -8,50 +8,44 @@ tags: ["ai", "embeddings", "semantic-search", "code-indexing"]
 
 ## How AI Searches Through Your Codebase
 
-Modern AI coding assistants need to understand your codebase to provide helpful suggestions. But how do they actually find relevant code? There are two fundamentally different approaches:
+When VS Code copilot first came out, I saw this little animation at the corner of my screen saying that the codebase was "indexing". This was a while back and I didn't think much of it. Then I noticed Cursor doing the same thing. 
+At first I didn't think much of it until I started using Claude Code which didn't mention anything about indexing. This got me a bit curious about how exactly different AI tools actually search and interact with the codebase I'm building.
 
-1. **Grep-based search** — Fast, on-demand text pattern matching (used by Claude Code, Codex CLI)
-2. **Semantic indexing** — Pre-computed embeddings enabling meaning-based search (used by Cursor, VS Code Copilot, Roocode, Kilo Code, Sourcegraph)
+Modern AI coding assistants need to understand your codebase to actually be useful. The only question is, how do they actually know which part of your codebase is relevant to your objective? The naive approach would be to stuff the context window
+with the entire codebase, but that quickly becomes impractical as projects grow. Instead, we need targeted search techniques that help the AI find the right code snippets to work with. To do this, there's two primary approaches:
 
-Let's explore how each approach works.
+1. **Grep-based search** — Fast, on-demand text pattern matching (used by Claude Code, Codex CLI, Cline)
+2. **Semantic indexing** — Pre-computed embeddings enabling meaning-based search (used by Cursor, VS Code Copilot, Roocode)
+
+The goal of this blog post was to explore both approaches in detail and understand why different tools choose one over the other. This isn't a deep deep dive into the accuracy or performance of each method since that's probably best left
+to empirical benchmarks. Instead, I talk primarily about implementation and compling information from various sources.
 
 ---
 
 ## Part 1: Grep-Based Search
 
-The simplest way to find code is **grep** — a tool that scans files line-by-line, testing each against a pattern. It's fast, requires no setup, and works on any codebase immediately.
+The simplest way to find code is **grep** which stands for *G*lobal *R*egular *E*xpression *P*rint. It's nothing new, it's been a staple in Unix command lines for decades. It's fast, requires no setup, and works on any codebase immediately. Grep scans each file line by line and checks against a
+pattern (string or regex). It then outputs exactly which lines match the pattern. There's no pre-indexing or understanding, grep just finds exact text matches.
+Grep requires no prior setup, just some sort of terminal access to run the command. This makes it ideal for quick lookups or exploration.
 
 ### How Grep Works
+
+Let's say we have a codebase with a couple of files in it. We can use grep to search for specific patterns or literal strings. If you press scan, you'll see how grep searches through each file line by line until a match is made.
+On the right, we keep track of all the matches and where the matches were.
 
 <div className="my-8 rounded-xl overflow-hidden border border-[#1a1a1a]">
   <GrepDemo />
 </div>
 
-#### Key Characteristics
-
-- **Linear scanning**: Grep reads each file line-by-line, top to bottom
-- **Pattern matching**: Each line is tested against your search pattern (literal text or regex)
-- **No understanding**: Grep finds exact matches — it doesn't know that `authenticate` and `login` are related concepts
-- **No pre-indexing required**: Works instantly on any codebase
-
 ---
 
-### How AI Agents Use Grep
-
-AI coding agents like **Claude Code** and **Codex CLI** rely heavily on grep. Why? Because it's fast, deterministic, and doesn't require pre-indexing the codebase.
+AI agents are pretty good at using tools like grep to explore codebases. Given access to the grep command, they can easily formulate search queries. Even if they miss, they can quickly iterate by refining their queries based on results.
+The flow is simple. Once the user asks a question, the agent reasons about what patterns to search for. It then executes grep and collects the matching lines with file paths. From there, the agent reads relevant snippets and synthesizes them into a coherent answer.
+This technique is incredibly simple and requires no additional infrastructure beyond the grep command itself.
 
 <div className="my-8 rounded-xl overflow-hidden border border-[#1a1a1a]">
   <AgentGrepDemo />
 </div>
-
-#### The Agent Workflow
-
-1. **User asks a question** about the codebase
-2. **Agent reasons** about what patterns to search for
-3. **Grep executes** and returns matching lines with file paths
-4. **Agent synthesizes** the results into a coherent answer
-
-This hybrid approach combines the speed of text search with the intelligence of LLMs. The agent formulates smart queries, and grep provides fast, reliable results that the agent then interprets.
 
 ---
 
@@ -59,22 +53,24 @@ This hybrid approach combines the speed of text search with the intelligence of 
 
 **Strengths**
 
-- **Deterministic results**: Function names, identifiers, and exact patterns need exact matches — grep excels at this with zero hallucinations
-- **Scales to massive repos**: Whether you have 100 files or 100,000, grep churns through them without breaking a sweat
-- **Minimal infrastructure**: No vector databases, no embedding models, no external services — just your local filesystem
+- **Deterministic results**: Function names, identifiers, and exact patterns need exact matche: grep excels at this with zero hallucinations
+- **Scales to massive repos**: Whether you have 100 files or 100,000, grep churns through them relatively quickly
+- **Minimal infrastructure**: No vector databases, no embedding models, no external services
 - **Always fresh**: Every search reads the current state of your code, never a stale index
 
 **Limitations**
 
 - **Token bloat**: Dumping large amounts of raw code into an LLM eats context and drives up costs as repositories grow
 - **Time-consuming exploration**: With tools like Codex CLI, agents can spend significant time iteratively grepping through the codebase to build understanding
-- **No semantic understanding**: Grep can't find "authentication logic" if the code uses `login`, `signIn`, or `verifyCredentials` — you need to know the exact terms
+- **No semantic understanding**: Grep can't find "authentication logic" if the code uses `login`, `signIn`, or `verifyCredentials`. It only finds exact text matches
 
 ---
 
 ## Part 2: Semantic Indexing
 
-Tools like **Cursor**, **VS Code Copilot**, **Roocode**, **Kilo Code**, and **Sourcegraph** take a different approach: they pre-index your codebase into searchable vector embeddings. This enables semantic search — finding code by *meaning*, not just text patterns.
+The other approach to underestanding your codebase is to build a **semantic index**. Instead of getting exact text matches, semantic search finds code through the use of vector embeddings
+that attempt to capture meaning. **Cursor**, **VS Code Copilot**, **Roocode**, and **Kilo Code** all use this approach. They pre-index your codebase so that at query time, they can quickly find semantically relevant snippets.
+Semantic embeddings require a much larger upfront investment in infrastructure and computation. They require a vector store, embedding model and an indexing pipeline.
 
 ### The Indexing Pipeline
 
@@ -89,7 +85,7 @@ The pipeline transforms raw source code into searchable vectors:
 4. **Embed** — Convert chunks into high-dimensional vectors
 5. **Store** — Save vectors in a database for fast retrieval
 
-Let's explore each stage.
+At a high level, all of these are core components we need to implement semantic search.
 
 ---
 
@@ -209,7 +205,9 @@ This tree structure is what enables intelligent code chunking — instead of spl
 
 ### Visualizing Code Embeddings
 
-Every function, class, and code chunk gets converted into a **1536-dimensional vector** called an embedding. The visualization below shows 411 code chunks from a real project, reduced to 2D using t-SNE.
+In order to set up these code embeddings, I used jina-code-embeddings-1.5b-Q8_0<Citation id={9} />. This model is designed for code retrieval which includes text-to-code, code-to-code and code-to-text.
+To run it locally, I used Llama.cpp and embeded one of a personal project of mine. In additon, I set up basic chunking using tree-sitter to split the code into functions and classes.
+Every function, class, and code chunk  gets converted into a **1536-dimensional vector** and below, we visualize it using t-SNE to reduce it down to 2D.
 
 <div className="my-8 rounded-xl overflow-hidden border border-[#1a1a1a]">
   <FleurDemo />
@@ -221,13 +219,6 @@ Every function, class, and code chunk gets converted into a **1536-dimensional v
 - **Colors** represent programming languages or chunk types
 - **Proximity** indicates semantic similarity — nearby points have similar meaning
 - **Clusters** form naturally around related functionality
-
-#### Observations
-
-- **Language clustering**: Python and C++ code naturally separate into distinct regions
-- **CUDA kernels**: GPU code forms its own cluster, reflecting its specialized semantics
-- **Cross-language bridges**: Some areas show mixing where Python bindings interface with C++
-- **Scale**: Even with 5,000 points, clear structure emerges from the embedding space
 
 ---
 
@@ -344,6 +335,12 @@ Modern tools increasingly combine both approaches — using grep for precision a
     title: "Semantic Search",
     url: "https://cursor.com/docs/context/semantic-search",
     source: "Cursor Documentation"
+  },
+  {
+    id: 9,
+    title: "jina-code-embeddings-1.5b",
+    url: "https://huggingface.co/jinaai/jina-code-embeddings-1.5b",
+    source: "Hugging Face"
   }
 ]} />
 
