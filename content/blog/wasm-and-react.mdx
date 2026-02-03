@@ -7,126 +7,45 @@ published: true
 authors: ["Priyanshu Mahey"]
 ---
 
+I've been curious about WASM for a while, but my question has always been: **how do I actually integrate it into my web app?**
 
-This post shows a **minimal, end-to-end “Hello World”** for compiling Rust to WebAssembly and calling it from a React app.
+In this post, I build a small Rust function, compile it to WASM, and call it from a React app. That's it — a minimal end-to-end example.
 
-Stack used here:
-
-- **TanStack Start** (React + TanStack Router)
-- **Vite** (bundler under the hood)
-- **Bun** (package manager + runtime)
-- **Rust → WASM** via `wasm-bindgen`
-
-The goal is simple:
-
-> Call a Rust function from React and render the returned string.
+**Stack**: TanStack Start, Vite, Bun, Rust + `wasm-bindgen`
 
 ---
 
-## A quick WebAssembly primer (what, how, why)
+## Quick WASM Primer
 
-### What is WebAssembly (WASM)?
+WebAssembly is a compilation target. Languages like Rust compile to `.wasm`, and JavaScript loads that module and calls its functions. It's not trying to replace JS — it lets you run performance-critical code in a sandboxed environment.
 
-WebAssembly is a **portable, low-level binary format** designed to run safely and fast in web browsers (and increasingly, outside the browser too). Think of it as a compilation target: languages like Rust, C/C++, and others can compile to `.wasm`, and then JavaScript can load that module and call its exported functions.
+The runtime flow is simple: fetch the `.wasm` bytes → compile → instantiate → call exports from JavaScript.
 
-WASM is **not JavaScript**, and it’s not trying to replace JavaScript. Instead, it complements JS by giving you a way to run performance-critical code in a sandboxed environment.
+One catch: strings and complex data don't cross the JS↔WASM boundary easily. That's why `wasm-bindgen` exists — it generates the glue code so Rust functions feel natural to call from JavaScript.
 
-### How it works in the browser
+### When does WASM actually make sense?
 
-At runtime, WebAssembly is executed by the browser’s WebAssembly engine. Conceptually, the steps look like:
+WASM shines for CPU-heavy work: parsing, compression, image processing, crypto, simulations. It's also useful when you want to share code across web and desktop (via Tauri) or when Rust's memory safety matters.
 
-1. **Fetch the `.wasm` bytes** (network, local file, bundler output, etc.)
-2. **Compile** the module into something the engine can execute
-3. **Instantiate** it (create an “instance” with its own state)
-4. **Call exports** (functions, memory, tables) from JavaScript
-
-In JavaScript terms, you typically deal with a `WebAssembly.Instance` whose `exports` contains the things your module made available.
-
-A WebAssembly module can export:
-
-- **Functions** (easy to call)
-- **Linear memory** (a big byte buffer; in JS it shows up as an `ArrayBuffer`)
-- **Tables** (used for function references)
-
-Numbers cross the JS↔WASM boundary easily, but **strings and complex data** usually require conventions and helper code to copy bytes in/out of linear memory. That’s a big reason `wasm-bindgen` exists: it generates the “glue” that makes Rust functions feel natural to call from JavaScript.
-
-### Why would you use WASM in a React app?
-
-React is a UI layer; most apps still need *work* done underneath the UI. WASM shines when that work is:
-
-- **CPU-heavy** (parsing, compression, image/audio processing, crypto, search, simulation)
-- **Algorithmically complex** and easier to write/test in a systems language
-- **Shared** across environments (web + desktop via Tauri, CLI tools, etc.)
-- **Safety sensitive** (Rust’s memory safety + strong typing can reduce certain classes of bugs)
-
-It’s usually *not* a win for simple CRUD or UI logic. The overhead of crossing the JS↔WASM boundary and bundling/loading the module means you should reserve WASM for places where it clearly pays off.
+It's *not* worth it for simple CRUD or UI logic. The overhead of crossing the JS↔WASM boundary means you should save it for places where it clearly pays off.
 
 ---
 
-## Loading and running WASM (what the browser APIs look like)
+## Under the hood
 
-This project uses `wasm-bindgen` + Vite, so you don’t have to write raw WebAssembly loading code yourself. But it’s still worth understanding what’s happening.
-
-MDN’s guide (recommended reading):
-
-- https://developer.mozilla.org/en-US/docs/WebAssembly/Guides/Loading_and_running
-
-Key takeaways (paraphrased):
-
-- Browsers don’t (yet) have a native “just `import` a `.wasm` file” flow the same way they fetch JS modules. In practice, tooling generates JavaScript that performs the fetch/instantiate step.
-- There are two main styles of loading:
-  - **Streaming**: compile/instantiate directly from the network stream (faster, less copying)
-  - **ArrayBuffer**: fetch all bytes into memory first, then instantiate (more compatible, slower)
-
-The high-level pattern looks like this:
-
-```js
-// Preferred when available:
-// - fetch() downloads the module
-// - instantiateStreaming() compiles/instantiates as bytes stream in
-const { instance } = await WebAssembly.instantiateStreaming(
-  fetch("/myModule.wasm"),
-  importObject,
-);
-
-// Fallback pattern:
-const bytes = await fetch("/myModule.wasm").then((r) => r.arrayBuffer());
-const { instance } = await WebAssembly.instantiate(bytes, importObject);
-
-// Then call exports:
-instance.exports.exported_func();
-```
-
-One subtle detail from the platform API: depending on which overload you use, `WebAssembly.instantiate(...)` can give you **both** a compiled `module` and a running `instance`. You usually only need `instance`, but keeping `module` around can be useful if you want to cache it, create multiple instances, or share it with another context (like a Worker).
-
-In the code generated by `wasm-bindgen`, you can actually see this exact strategy: it tries `WebAssembly.instantiateStreaming(...)` first, and falls back to `WebAssembly.instantiate(...)` if needed.
+You don't need to write raw loading code — `wasm-bindgen` handles it. But if you're curious, check [MDN's guide](https://developer.mozilla.org/en-US/docs/WebAssembly/Guides/Loading_and_running). The browser fetches the `.wasm` bytes, compiles, instantiates, and then you call exports.
 
 ---
 
-## What you’ll build
+## The goal
 
-- A Rust function:
-
-```rust
-hello("TanStack") -> "Hello from Rust, TanStack!"
-```
-
-- A small TypeScript wrapper that loads the WASM module once
-- A React page that calls the Rust function and shows the result
+A Rust function that returns `"Hello from Rust, TanStack!"`, callable from React. Let's build it.
 
 ---
 
-## Prerequisites (one time)
+## Prerequisites
 
-Verify you have Bun + Rust installed:
-
-```bash
-bun --version
-rustc --version
-cargo --version
-```
-
-Add the WASM target and install the bindgen CLI:
+You'll need Bun and Rust installed. Then add the WASM target:
 
 ```bash
 rustup target add wasm32-unknown-unknown
@@ -137,31 +56,19 @@ cargo install wasm-bindgen-cli
 
 ## Project layout
 
-This repo keeps Rust and the React app side-by-side:
+Rust lives in `wasm/`, and the generated artifacts go to `src/wasm/` so React can import them.
 
 ```
-./
-├─ src/                 # React/TanStack Start app source
-│  └─ wasm/             # JS glue + .wasm output (imported by React)
-├─ wasm/                # Rust crate compiled to WASM
-│  ├─ Cargo.toml
-│  └─ src/lib.rs
-├─ package.json
-└─ bun.lock
+├─ src/wasm/      # Generated JS glue + .wasm
+├─ wasm/          # Rust source
 ```
-
-Key idea: **Rust lives in `wasm/`**, and the generated web-ready artifacts are placed in **`src/wasm/`** so the frontend can import them.
 
 ---
 
-## 1) Create the Rust WASM crate
-
-From the repo root:
+## 1) Create the Rust crate
 
 ```bash
-mkdir -p wasm
-cd wasm
-cargo init --lib
+mkdir -p wasm && cd wasm && cargo init --lib
 ```
 
 Update `wasm/Cargo.toml`:
@@ -179,13 +86,13 @@ crate-type = ["cdylib"]
 wasm-bindgen = "0.2"
 ```
 
-Why `cdylib`? It tells Rust to produce a binary suitable for linking as a dynamic library — which is what the WASM toolchain expects.
+(`cdylib` tells Rust to produce a dynamic library — what the WASM toolchain expects.)
 
 ---
 
-## 2) Expose a Rust function to JavaScript
+## 2) Write the Rust function
 
-In `wasm/src/lib.rs`:
+`wasm/src/lib.rs`:
 
 ```rust
 use wasm_bindgen::prelude::*;
@@ -196,34 +103,23 @@ pub fn hello(name: &str) -> String {
 }
 ```
 
-The `#[wasm_bindgen]` attribute is what makes this function callable from JavaScript.
+`#[wasm_bindgen]` makes this callable from JavaScript.
 
 ---
 
-## 3) Compile Rust to WebAssembly
-
-Still inside the `wasm/` directory, compile for the WASM target:
+## 3) Compile to WASM
 
 ```bash
-cargo build --target wasm32-unknown-unknown
+cd wasm && cargo build --target wasm32-unknown-unknown
 ```
 
-That produces a `.wasm` artifact here (debug build):
-
-```
-wasm/target/wasm32-unknown-unknown/debug/hello_wasm.wasm
-```
+This produces `wasm/target/wasm32-unknown-unknown/debug/hello_wasm.wasm`.
 
 ---
 
-## 4) Generate browser-friendly bindings with wasm-bindgen
+## 4) Generate JS bindings
 
-Raw `.wasm` isn’t very ergonomic to import directly. `wasm-bindgen` generates:
-
-- a tiny JS “glue” module (handles string passing, memory, etc.)
-- the `.wasm` binary your browser loads
-
-From `wasm/`:
+Raw `.wasm` isn't ergonomic to import. `wasm-bindgen` generates the glue:
 
 ```bash
 wasm-bindgen \
@@ -233,26 +129,13 @@ wasm-bindgen \
   target/wasm32-unknown-unknown/debug/hello_wasm.wasm
 ```
 
-After this, you should see:
-
-```
-src/wasm/
-├─ hello_wasm.js
-└─ hello_wasm_bg.wasm
-```
-
-Notes:
-
-- `--target web` outputs an ES-module-friendly wrapper intended for browsers.
-- `--no-typescript` keeps output minimal. (You can remove it later if you want `.d.ts` generation.)
+This creates `src/wasm/hello_wasm.js` and `hello_wasm_bg.wasm`.
 
 ---
 
-## 5) Add a tiny loader wrapper in TypeScript
+## 5) Add a loader wrapper
 
-The generated module needs an async initialization step (it fetches/instantiates the `.wasm`).
-
-Create `src/wasm/hello.ts`:
+The generated module needs async initialization. Create `src/wasm/hello.ts`:
 
 ```ts
 import init, { hello } from "./hello_wasm";
@@ -264,18 +147,15 @@ export async function helloFromWasm(name: string) {
     await init();
     initialized = true;
   }
-
   return hello(name);
 }
 ```
 
-This wrapper gives you a clean API (`helloFromWasm`) and ensures initialization happens only once.
-
 ---
 
-## 6) Call the WASM function from React
+## 6) Call it from React
 
-Use it in any route/component. For example, in `src/routes/index.tsx`:
+`src/routes/index.tsx`:
 
 ```tsx
 import { useEffect, useState } from "react";
@@ -285,59 +165,24 @@ export default function Home() {
   const [msg, setMsg] = useState("Loading...");
 
   useEffect(() => {
-    helloFromWasm("TanStack")
-      .then(setMsg)
-      .catch((err) => {
-        console.error(err);
-        setMsg("Failed to load WASM (check console)");
-      });
+    helloFromWasm("TanStack").then(setMsg);
   }, []);
 
-  return (
-    <div style={{ padding: 24 }}>
-      <h1>TanStack Start + Rust WASM</h1>
-      <p>{msg}</p>
-    </div>
-  );
+  return <p>{msg}</p>;
 }
 ```
 
 ---
 
-## 7) Run the app
-
-From the repo root:
+## 7) Run it
 
 ```bash
-bun install
-bun dev
+bun install && bun dev
 ```
 
-Open the dev server and you should see:
+You should see: **Hello from Rust, TanStack!**
 
-> Hello from Rust, TanStack!
-
----
-
-## Development workflow (rebuild loop)
-
-Any time you change Rust code, rebuild WASM + regenerate bindings:
-
-```bash
-cd wasm
-cargo build --target wasm32-unknown-unknown
-wasm-bindgen \
-  --target web \
-  --out-dir ../src/wasm \
-  --no-typescript \
-  target/wasm32-unknown-unknown/debug/hello_wasm.wasm
-```
-
-Tip: once this feels solid, you can automate it with a `package.json` script or a watcher. But doing it manually at first helps you understand the pipeline:
-
-1) Rust compile → `.wasm`
-2) `wasm-bindgen` → JS glue + `.wasm` for web
-3) React imports and calls the generated bindings
+Whenever you change Rust code, just rebuild with `cargo build --target wasm32-unknown-unknown` and rerun the `wasm-bindgen` command.
 
 ---
 

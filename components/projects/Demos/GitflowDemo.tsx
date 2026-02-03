@@ -274,10 +274,10 @@ function computeLayout(commits: Commit[]): LayoutData {
 // ============================================================================
 
 export function GitflowDemo() {
-  const [isHovered, setIsHovered] = useState(false)
   const [visibleCount, setVisibleCount] = useState(4)
   const [highlightedBranch, setHighlightedBranch] = useState<string | null>(null)
-  const [animationPhase, setAnimationPhase] = useState<"idle" | "building" | "highlighting">("idle")
+  const [animationPhase, setAnimationPhase] = useState<"building" | "highlighting">("building")
+  const [cycleCount, setCycleCount] = useState(0)
 
   // Visible commits based on animation state
   const visibleCommits = useMemo(() => {
@@ -289,17 +289,14 @@ export function GitflowDemo() {
     return computeLayout(visibleCommits)
   }, [visibleCommits])
 
-  // Animation sequence
+  // Animation sequence - loops continuously
   useEffect(() => {
-    if (!isHovered) {
-      setAnimationPhase("idle")
-      setVisibleCount(4)
-      setHighlightedBranch(null)
+    if (animationPhase !== "building") {
       return
     }
 
-    // Start building phase
-    setAnimationPhase("building")
+    // Reset to initial state
+    setVisibleCount(4)
     let currentCount = 4
 
     // Gradually reveal commits
@@ -315,7 +312,7 @@ export function GitflowDemo() {
     }, 280)
 
     return () => clearInterval(buildInterval)
-  }, [isHovered])
+  }, [animationPhase, cycleCount])
 
   // Branch highlighting cycle
   useEffect(() => {
@@ -326,19 +323,24 @@ export function GitflowDemo() {
 
     const branches = Object.keys(BRANCH_COLORS)
     let index = 0
+    let cyclesPassed = 0
 
     const highlightInterval = setInterval(() => {
       setHighlightedBranch(branches[index])
       index = (index + 1) % branches.length
 
-      // After cycling through all branches twice, reset
+      // After cycling through all branches twice, restart the loop
       if (index === 0) {
-        setTimeout(() => {
-          setHighlightedBranch(null)
-          // Reset animation
-          setVisibleCount(4)
-          setAnimationPhase("building")
-        }, 1500)
+        cyclesPassed++
+        if (cyclesPassed >= 2) {
+          clearInterval(highlightInterval)
+          setTimeout(() => {
+            setHighlightedBranch(null)
+            // Trigger a new animation cycle
+            setCycleCount((c) => c + 1)
+            setAnimationPhase("building")
+          }, 1000)
+        }
       }
     }, 1200)
 
@@ -363,12 +365,10 @@ export function GitflowDemo() {
 
   return (
     <div
-      className="relative w-full h-full min-h-[280px] select-none cursor-pointer overflow-auto md:overflow-hidden"
+      className="relative w-full h-full min-h-[280px] select-none overflow-auto md:overflow-hidden"
       style={{
         background: "linear-gradient(145deg, #0a0a0a 0%, #111118 50%, #0d1117 100%)",
       }}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
     >
       {/* SVG Git Graph */}
       <div className="min-h-full flex items-center justify-center p-4">
@@ -394,7 +394,7 @@ export function GitflowDemo() {
                   initial={{ pathLength: 0, opacity: 0 }}
                   animate={{
                     pathLength: 1,
-                    opacity: isDimmed ? 0.15 : isHovered ? 1 : 0.6,
+                    opacity: isDimmed ? 0.15 : 1,
                   }}
                   transition={{
                     pathLength: { duration: 0.5, delay: i * 0.03, ease: "easeOut" },
@@ -431,7 +431,7 @@ export function GitflowDemo() {
                   )}
 
                   {/* HEAD pulse ring */}
-                  {isHead && isHovered && (
+                  {isHead && (
                     <motion.circle
                       cx={pos.x}
                       cy={pos.y}
@@ -470,7 +470,7 @@ export function GitflowDemo() {
                     strokeWidth={2}
                     initial={{ scale: 0, opacity: 0 }}
                     animate={{
-                      scale: isHovered ? 1 : 0.85,
+                      scale: 1,
                       opacity: isDimmed ? 0.2 : 1,
                     }}
                     transition={{
@@ -500,7 +500,7 @@ export function GitflowDemo() {
                     fontFamily="monospace"
                     fill="#6b7280"
                     initial={{ opacity: 0, x: pos.x + NODE_RADIUS }}
-                    animate={{ opacity: isDimmed ? 0.1 : isHovered ? 0.8 : 0.4, x: pos.x + NODE_RADIUS + 8 }}
+                    animate={{ opacity: isDimmed ? 0.1 : 0.8, x: pos.x + NODE_RADIUS + 8 }}
                     transition={{ duration: 0.3, delay: index * 0.03 }}
                   >
                     {commit.hash}
@@ -511,7 +511,7 @@ export function GitflowDemo() {
                     <motion.g
                       key={`${commit.id}-ref-${refIndex}`}
                       initial={{ opacity: 0, x: -4 }}
-                      animate={{ opacity: isDimmed ? 0.1 : isHovered ? 1 : 0, x: 0 }}
+                      animate={{ opacity: isDimmed ? 0.1 : 1, x: 0 }}
                       transition={{ duration: 0.2, delay: index * 0.03 + 0.1 }}
                     >
                       <rect
@@ -524,15 +524,15 @@ export function GitflowDemo() {
                           ref.type === "head"
                             ? "rgba(16, 185, 129, 0.15)"
                             : ref.type === "tag"
-                            ? "rgba(245, 158, 11, 0.15)"
-                            : "rgba(139, 92, 246, 0.15)"
+                              ? "rgba(245, 158, 11, 0.15)"
+                              : "rgba(139, 92, 246, 0.15)"
                         }
                         stroke={
                           ref.type === "head"
                             ? "rgba(16, 185, 129, 0.3)"
                             : ref.type === "tag"
-                            ? "rgba(245, 158, 11, 0.3)"
-                            : "rgba(139, 92, 246, 0.3)"
+                              ? "rgba(245, 158, 11, 0.3)"
+                              : "rgba(139, 92, 246, 0.3)"
                         }
                         strokeWidth={0.5}
                       />
@@ -546,8 +546,8 @@ export function GitflowDemo() {
                           ref.type === "head"
                             ? "#10b981"
                             : ref.type === "tag"
-                            ? "#f59e0b"
-                            : "#8b5cf6"
+                              ? "#f59e0b"
+                              : "#8b5cf6"
                         }
                       >
                         {ref.name.length > 6 ? ref.name.slice(0, 6) + "…" : ref.name}
@@ -565,7 +565,7 @@ export function GitflowDemo() {
       <motion.div
         className="absolute top-3 left-3 z-10"
         initial={{ opacity: 0.6 }}
-        animate={{ opacity: isHovered ? 1 : 0.6 }}
+        animate={{ opacity: 1 }}
         transition={{ duration: 0.3 }}
       >
         <div className="flex items-center gap-1.5 px-2 py-1 bg-black/60 backdrop-blur-sm rounded-md border border-white/10">
@@ -588,7 +588,7 @@ export function GitflowDemo() {
 
       {/* Status indicator */}
       <AnimatePresence>
-        {isHovered && animationPhase !== "idle" && (
+        {animationPhase && (
           <motion.div
             className="absolute top-3 right-3 z-10"
             initial={{ opacity: 0, x: 10 }}
@@ -612,49 +612,40 @@ export function GitflowDemo() {
 
       {/* Branch legend */}
       <AnimatePresence>
-        {isHovered && (
-          <motion.div
-            className="absolute bottom-3 left-3 z-10 flex flex-wrap gap-1"
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 8 }}
-            transition={{ duration: 0.25, delay: 0.1 }}
-          >
-            {branchStats.map((branch) => (
-              <motion.div
-                key={branch.name}
-                className="flex items-center gap-1 px-1.5 py-0.5 bg-black/60 backdrop-blur-sm rounded border"
-                animate={{
-                  borderColor: highlightedBranch === branch.name ? branch.color + "60" : "rgba(255,255,255,0.1)",
-                  backgroundColor: highlightedBranch === branch.name ? branch.color + "15" : "rgba(0,0,0,0.6)",
-                }}
-                transition={{ duration: 0.2 }}
-              >
-                <span
-                  className="w-1.5 h-1.5 rounded-full"
-                  style={{ backgroundColor: branch.color }}
-                />
-                <span className="text-[8px] text-neutral-400 font-medium">
-                  {branch.name.replace("feature/", "").replace("hotfix/", "")}
-                </span>
-              </motion.div>
-            ))}
-          </motion.div>
-        )}
+        <motion.div
+          className="absolute bottom-3 left-3 z-10 flex flex-wrap gap-1"
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 8 }}
+          transition={{ duration: 0.25, delay: 0.1 }}
+        >
+          {branchStats.map((branch) => (
+            <motion.div
+              key={branch.name}
+              className="flex items-center gap-1 px-1.5 py-0.5 bg-black/60 backdrop-blur-sm rounded border"
+              animate={{
+                borderColor: highlightedBranch === branch.name ? branch.color + "60" : "rgba(255,255,255,0.1)",
+                backgroundColor: highlightedBranch === branch.name ? branch.color + "15" : "rgba(0,0,0,0.6)",
+              }}
+              transition={{ duration: 0.2 }}
+            >
+              <span
+                className="w-1.5 h-1.5 rounded-full"
+                style={{ backgroundColor: branch.color }}
+              />
+              <span className="text-[8px] text-neutral-400 font-medium">
+                {branch.name.replace("feature/", "").replace("hotfix/", "")}
+              </span>
+            </motion.div>
+          ))}
+        </motion.div>
       </AnimatePresence>
 
       {/* Gradient overlays */}
       <div className="absolute top-0 inset-x-0 h-8 bg-gradient-to-b from-[#0a0a0a] to-transparent pointer-events-none z-[5]" />
       <div className="absolute bottom-0 inset-x-0 h-10 bg-gradient-to-t from-[#0a0a0a] to-transparent pointer-events-none z-[5]" />
 
-      {/* Hover hint */}
-      <motion.div
-        className="absolute bottom-2.5 right-3 z-10"
-        animate={{ opacity: isHovered ? 0 : 0.5 }}
-        transition={{ duration: 0.2 }}
-      >
-        <span className="text-[9px] text-neutral-600">Hover to explore</span>
-      </motion.div>
+
     </div>
   )
 }
