@@ -2,6 +2,7 @@ import { works } from "#site/content";
 import { MDXContent } from "@/components/blog/mdx-components";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { notFound } from "next/navigation";
+import { Metadata } from "next";
 
 import "@/styles/mdx.css";
 import { ExternalLink } from "lucide-react";
@@ -28,6 +29,22 @@ async function getWorkFromParams(params: { slug: string[] }) {
 
 export async function generateStaticParams(): Promise<{ slug: string[] }[]> {
     return works.map((work) => ({ slug: work.slugAsParams.split("/") }));
+}
+
+export async function generateMetadata({ params }: WorkPageProps): Promise<Metadata> {
+    const resolvedParams = await params;
+    const work = await getWorkFromParams(resolvedParams);
+
+    if (!work) {
+        return {
+            title: "Work Not Found",
+        };
+    }
+
+    return {
+        title: `${work.title} | Priyanshu Mahey`,
+        description: work.description,
+    };
 }
 
 export default async function WorkPage({ params }: WorkPageProps) {

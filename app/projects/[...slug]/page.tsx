@@ -2,6 +2,7 @@ import { projects } from "#site/content";
 import { MDXContent } from "@/components/blog/mdx-components";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { notFound } from "next/navigation";
+import { Metadata } from "next";
 
 import "@/styles/mdx.css";
 import { ExternalLink, Github } from "lucide-react";
@@ -29,6 +30,22 @@ async function getProjectFromParams(params: { slug: string[] }) {
 
 export async function generateStaticParams(): Promise<{ slug: string[] }[]> {
     return projects.map((project) => ({ slug: project.slugAsParams.split("/") }));
+}
+
+export async function generateMetadata({ params }: ProjectPageProps): Promise<Metadata> {
+    const resolvedParams = await params;
+    const project = await getProjectFromParams(resolvedParams);
+
+    if (!project) {
+        return {
+            title: "Project Not Found",
+        };
+    }
+
+    return {
+        title: `${project.title} | Priyanshu Mahey`,
+        description: project.description,
+    };
 }
 
 export default async function ProjectPage({ params }: ProjectPageProps) {

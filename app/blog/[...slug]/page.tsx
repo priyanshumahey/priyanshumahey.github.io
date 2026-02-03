@@ -2,6 +2,7 @@ import { posts } from "#site/content";
 import { MDXContent } from "@/components/blog/mdx-components";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { notFound } from "next/navigation";
+import { Metadata } from "next";
 
 import { formatDate, sortPosts } from "@/lib/utils";
 import "@/styles/mdx.css";
@@ -45,6 +46,22 @@ function estimateReadTime(content: string): number {
 
 export async function generateStaticParams(): Promise<{ slug: string[] }[]> {
   return posts.map((post) => ({ slug: post.slugAsParams.split("/") }));
+}
+
+export async function generateMetadata({ params }: PostPageProps): Promise<Metadata> {
+  const resolvedParams = await params;
+  const post = await getPostFromParams(resolvedParams);
+
+  if (!post) {
+    return {
+      title: "Post Not Found",
+    };
+  }
+
+  return {
+    title: `${post.title} | Priyanshu Mahey`,
+    description: post.description,
+  };
 }
 
 export default async function PostPage({ params }: PostPageProps) {

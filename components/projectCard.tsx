@@ -1,24 +1,27 @@
-import { Code2, Flower2, Sparkles, type LucideIcon } from "lucide-react";
+import { Code2, Flower2, GitBranch, Sparkles, type LucideIcon } from "lucide-react";
 import Link from "next/link";
 
-type IconName = "flower" | "code" | "sparkles";
+type IconName = "flower" | "code" | "sparkles" | "git-branch";
 
 const iconMap: Record<IconName, LucideIcon> = {
   flower: Flower2,
   code: Code2,
   sparkles: Sparkles,
+  "git-branch": GitBranch,
 };
 
 const gradientMap: Record<IconName, string> = {
   flower: "from-pink-500/20 to-rose-500/20 border-pink-500/30",
   code: "from-emerald-500/20 to-teal-500/20 border-emerald-500/30",
   sparkles: "from-amber-500/20 to-orange-500/20 border-amber-500/30",
+  "git-branch": "from-orange-500/20 to-red-500/20 border-orange-500/30",
 };
 
 const iconColorMap: Record<IconName, string> = {
   flower: "text-pink-400",
   code: "text-emerald-400",
   sparkles: "text-amber-400",
+  "git-branch": "text-orange-400",
 };
 
 interface ProjectLinkCardProps {
