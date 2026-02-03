@@ -22,3 +22,172 @@ tags: ["ai", "code-editing", "predictions", "developer-tools"]
   description="AI-native code editor" 
   icon="flower" 
 />
+
+
+
+## Blog Outline: How Next Edit Models Work
+
+### Recommended Structure
+
+#### 1. **Introduction: Beyond Autocomplete**
+- Explain the evolution from traditional autocomplete (cursor-position insertion) to Next Edit (predicting changes anywhere in the file)
+- Key insight: Developers spend more time *editing* existing code than writing new code
+- Next Edit understands not just what to add, but what to **change, move, or remove**
+
+#### 2. **The Three Core Challenges**
+Based on Augment's research, break down the three fundamental problems:
+
+**a) Figuring Out What the User Is Trying to Accomplish (Intent Detection)**
+- Non-linear editing histories are messy (copy-paste, undo/redo, jumping between files)
+- Models can hallucinate intentions or undo recent user changes
+- Solution: Simulate realistic editing scenarios from GitHub commits/PRs
+- Balance between "helpful but noisy" vs "accurate but passive"
+
+**b) Figuring Out Where to Make Changes (Localization)**
+- Must work on large codebases with tens of thousands of files
+- Need speed for interactive use (sub-100ms)
+- Solution: Trained retriever models for fast localization, not LLM-based navigation
+
+**c) Figuring Out How to Make the Edits (Generation)**
+- Need to generate deletions, replacements, not just insertions
+- Latency constraints (can't naively generate thousands of tokens)
+- Solution: Novel diff decoding schemes, compact edit formats
+
+#### 3. **Architecture Deep Dive**
+
+**a) Training Data & Format**
+- Sources: GitHub commits, pull requests, real developer edit sequences
+- Key insight from Sweep: Use `original`/`updated` blocks instead of unified diff format (easier for LLMs to parse than `-`/`+` line markers)
+- Special tokens for editable regions, cursor position, file boundaries
+- Example format from Pochi/Sweep showing the training structure
+
+**b) The Sliding Window Approach**
+- Fixed window size (e.g., 10 lines above + 10 lines below cursor = 21 lines)
+- Why fixed windows beat AST-based boundaries:
+  - Consistent output length for stable training
+  - Model focuses on content, not boundary prediction
+- Editable region markers vs. full rewrite approaches
+
+**c) Context Construction at Inference**
+- Recent edit history (`<edit_history>`)
+- Additional semantic context (types, docs, codebase patterns)
+- Current file state with cursor position
+- Multi-file context from recent changes
+
+#### 4. **Training Process**
+
+**a) Supervised Fine-Tuning (SFT)**
+- Training on ~100k entries across next-edit, FIM, and noise reduction
+- Data scraped from popular permissively-licensed repos
+- Language distribution matching (Java, Kotlin, Python, etc.)
+
+**b) Reinforcement Learning (Why it matters)**
+- SFT teaches the task, but RL handles edge cases
+- Key rewards:
+  - **Parse reward**: Does the output code parse correctly (tree-sitter)?
+  - **Regularization**: Is the change size reasonable?
+- RL allows multiple valid solutions, not just exact match
+
+#### 5. **Why Tokenization & Format Matter (The Sweep Insights)**
+
+| Problem | Bad Approach | Good Approach |
+|---------|--------------|---------------|
+| Boundary markers | `<\|editable_region_start\|>` (7 tokens) | Special tokens (1 token) |
+| Diff format | Unified diff with `-`/`+` | `original`/`updated` blocks |
+| Multi-file context | Custom tokens | Pretrained special tokens |
+| System prompts | Lengthy instructions | Minimal/none |
+
+#### 6. **Speed & Latency Optimization**
+
+**a) Model Architecture Choices**
+- Diffusion models (Mercury Coder): 700-1100 tokens/sec, parallel generation
+- Small specialized models (1.5B-7B parameters) vs large general models
+- Local inference vs API-based
+
+**b) Speculative Decoding**
+- N-gram based speculation for faster token generation
+- Early cancellation logic
+- TensorRT-LLM optimizations, FP8 quantization
+
+#### 7. **Evaluation: Why Exact Match Matters**
+
+- "Almost correct" suggestions are worse than no suggestion
+- User flow interruption from partial corrections
+- LLM-as-judge for semantic correctness (Pochi's approach)
+- Benchmark categories:
+  - Below cursor edits
+  - Above cursor edits  
+  - Tab-to-jump (far edits)
+  - FIM completions
+  - Noisiness (when NOT to suggest)
+
+---
+
+## Recommended Interactive Components
+
+Here are the components you should consider building:
+
+### 1. **EditPredictionDemo**
+An interactive visualization showing:
+- A code editor with cursor position
+- Recent edit history panel
+- The "editable window" highlighted (10 lines above/below)
+- Animated prediction appearing as diff overlay
+- Tab to accept, Esc to reject interaction
+
+### 2. **TrainingFormatVisualizer**
+Show the difference between:
+- Unified diff format (how humans see it)
+- Tokenized view (how the model sees it)
+- `original`/`updated` block format
+- Interactive toggle between views
+
+### 3. **SlidingWindowDemo**
+Visualize:
+- Cursor moving through code
+- The 21-line window updating dynamically
+- Why fixed windows beat AST-based boundaries
+- Comparison of window approaches
+
+### 4. **ContextStackVisualizer**
+Show the layers of context fed to the model:
+- Edit history (recent changes)
+- Current file state
+- Multi-file context
+- Semantic context (types, docs)
+- How they stack together in the prompt
+
+### 5. **SpeedQualityTradeoffChart**
+Interactive scatter plot (similar to Sweep's):
+- X-axis: Speed (tokens/second)
+- Y-axis: Quality (accuracy %)
+- Plot different models (Zeta, Instinct, Mercury, Sweep, Qwen)
+- Highlight the Pareto frontier
+
+### 6. **TokenizationComparison**
+Side-by-side showing:
+- Good tokenization (special tokens, 1 token each)
+- Bad tokenization (`<|editable_region_start|>`, 7 tokens)
+- Impact on latency and accuracy
+
+### 7. **RLRewardVisualizer**
+Show the RL training process:
+- Parse reward: Does it compile?
+- Size reward: Is the change reasonable?
+- Graph showing improvement over training step s
+
+### 8. **ModelDecisionFlowchart**
+Interactive flowchart showing:
+- When does Next Edit trigger?
+- How does it decide where to edit?
+- When does it suppress suggestions (noisiness)?
+
+---
+
+
+https://blog.continue.dev/next-edit-powered-by-mercury-coder/
+https://world.hey.com/jimmy.cerone/link-of-the-day-how-zed-s-open-source-edit-predictions-work-8b668a81
+https://blog.sweep.dev/posts/oss-next-edit
+https://docs.continue.dev/ide-extensions/autocomplete/next-edit
+http://docs.getpochi.com/developer-updates/how-we-created-nes-model/
+https://www.augmentcode.com/blog/the-ai-research-behind-next-edit
