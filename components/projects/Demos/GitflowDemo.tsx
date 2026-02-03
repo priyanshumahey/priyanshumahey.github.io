@@ -363,7 +363,7 @@ export function GitflowDemo() {
 
   return (
     <div
-      className="relative w-full h-full min-h-[280px] select-none cursor-pointer overflow-hidden"
+      className="relative w-full h-full min-h-[280px] select-none cursor-pointer overflow-auto md:overflow-hidden"
       style={{
         background: "linear-gradient(145deg, #0a0a0a 0%, #111118 50%, #0d1117 100%)",
       }}
@@ -371,12 +371,12 @@ export function GitflowDemo() {
       onMouseLeave={() => setIsHovered(false)}
     >
       {/* SVG Git Graph */}
-      <div className="absolute inset-0 flex items-center justify-center">
+      <div className="min-h-full flex items-center justify-center p-4">
         <svg
           width={graphWidth + 120}
           height={graphHeight + 20}
           className="overflow-visible"
-          style={{ maxWidth: "100%", maxHeight: "100%" }}
+          style={{ maxWidth: "100%" }}
         >
           <g transform={`translate(${60 - graphWidth / 2 + 40}, 10)`}>
             {/* Paths with animation */}

@@ -1,6 +1,6 @@
 import EmploymentCard, { EmploymentCardCompact } from "@/components/employmentCard";
 import { LanguageBar } from "@/components/language-bar";
-import { AgentGrepDemo, ASTVisualizerDemo, FleurDemo, GrepDemo, IndexingPipelineDemo, IvDemo, NextEditArchitecture, NextEditDemo, SemanticSearchDemo, TreeSitterDemo } from "@/components/projects/Demos";
+import { AgentGrepDemo, ASTVisualizerDemo, FleurDemo, GitflowAnimatedDemo, GrepDemo, IndexingPipelineDemo, IvDemo, NextEditArchitecture, NextEditDemo, SemanticSearchDemo, TreeSitterDemo } from "@/components/projects/Demos";
 import { FleurArchitecture } from "@/components/projects/Demos/Fleur/FleurArchitecture";
 import { GitflowDemo } from "@/components/projects/Demos/GitflowDemo";
 import Image from "next/image";
@@ -28,6 +28,7 @@ const components = {
   EmploymentCardCompact,
   IvDemo,
   GitflowDemo,
+  GitflowAnimatedDemo,
   GrepDemo,
   AgentGrepDemo,
   FleurDemo,
