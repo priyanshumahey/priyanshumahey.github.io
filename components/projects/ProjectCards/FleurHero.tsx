@@ -97,7 +97,7 @@ export function FleurEditorCard() {
             />
 
             {/* Mini VS Code-like editor window */}
-            <div className="relative z-10 w-full max-w-[280px] rounded-lg border border-[#2a2a2a] bg-[#1e1e1e] shadow-2xl overflow-hidden">
+            <div className="relative z-10 w-full max-w-[280px] rounded-lg border border-[#2a2a2a] bg-[#1e1e1e] shadow-2xl overflow-hidden not-prose">
                 {/* Title bar */}
                 <div className="flex items-center gap-2 px-3 py-2 bg-[#252526] border-b border-[#1a1a1a]">
                     <div className="flex gap-1.5">
@@ -130,19 +130,19 @@ export function FleurEditorCard() {
                     {/* Line 1 */}
                     <div className="flex whitespace-pre">
                         <span className="w-5 text-right pr-2 text-[#858585] select-none">1</span>
-                        <code>
+                        <span className="bg-transparent">
                             <span className="text-[#c586c0]">def</span>
                             <span className="text-[#dcdcaa]"> search</span>
                             <span className="text-[#d4d4d4]">(</span>
                             <span className="text-[#9cdcfe]">query</span>
                             <span className="text-[#d4d4d4]">):</span>
-                        </code>
+                        </span>
                     </div>
                     
                     {/* Line 2 */}
                     <div className="flex whitespace-pre">
                         <span className="w-5 text-right pr-2 text-[#858585] select-none">2</span>
-                        <code>
+                        <span className="bg-transparent">
                             <span className="text-[#d4d4d4]">{"    "}</span>
                             <span className="text-[#9cdcfe]">emb</span>
                             <span className="text-[#d4d4d4]"> = </span>
@@ -150,13 +150,13 @@ export function FleurEditorCard() {
                             <span className="text-[#d4d4d4]">(</span>
                             <span className="text-[#9cdcfe]">query</span>
                             <span className="text-[#d4d4d4]">)</span>
-                        </code>
+                        </span>
                     </div>
                     
                     {/* Line 3 with ghost text */}
                     <div className="flex whitespace-pre">
                         <span className="w-5 text-right pr-2 text-[#858585] select-none">3</span>
-                        <code className="relative">
+                        <span className="relative bg-transparent">
                             <span className="text-[#d4d4d4]">{"    "}</span>
                             <span className="text-[#c586c0]">return</span>
                             <span className="text-[#d4d4d4]"> </span>
@@ -174,7 +174,7 @@ export function FleurEditorCard() {
                             >
                                 index.search(emb, k=10)
                             </motion.span>
-                        </code>
+                        </span>
                     </div>
                 </div>
 
