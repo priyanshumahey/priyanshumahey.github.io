@@ -72,13 +72,13 @@ const galleryProjects: ProjectData[] = [
     image: "/projects/vibration1.png",
     hoverImage: "/projects/vibration2.png",
   },
-  {
-    title: "MS-PAL",
-    description: "AI native workflow assistant in a notebook.",
-    year: "2025",
-    link: "/projects/ms-pal",
-    image: "/projects/mspal1.png",
-  },
+  // {
+  //   title: "MS-PAL",
+  //   description: "AI native workflow assistant in a notebook.",
+  //   year: "2025",
+  //   link: "/projects/ms-pal",
+  //   image: "/projects/mspal1.png",
+  // },
   {
     title: "iv",
     description: "Voice to text with real-time audio visualization.",
@@ -108,7 +108,7 @@ const socialLinks = [
 
 const navLinks = [
   { href: "/blog", label: "Writing" },
-  { href: "/fun", label: "Fun" },
+  // { href: "/fun", label: "Fun" },,
   { href: "/about", label: "About" },
   { href: "/resume", label: "Resume" },
 ]
