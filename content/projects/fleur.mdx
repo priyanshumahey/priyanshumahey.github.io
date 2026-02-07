@@ -7,35 +7,279 @@ tags: ["ai", "code-editor", "embeddings", "rust", "typescript"]
 featured: true
 ---
 
-## Fleur - AI Native Code Editor
+<div className="my-8">
+  <Image src="/projects/fleur/fleur.gif" alt="Fleur AI Code Editor" width={1200} height={675} className="w-full rounded-xl border border-border" unoptimized />
+</div>
 
-Fleur is an AI-native code editor built with Tauri, featuring semantic code search powered by embeddings and real-time code intelligence.
+<div className="flex flex-wrap gap-x-12 gap-y-4 my-8 text-sm">
+  <div>
+    <span className="block uppercase text-[11px] font-semibold tracking-widest text-muted-foreground/60 mb-1">Timeline</span>
+    <span className="text-foreground">January 2026</span>
+  </div>
+  <div>
+    <span className="block uppercase text-[11px] font-semibold tracking-widest text-muted-foreground/60 mb-1">Stack</span>
+    <span className="text-foreground">React · Rust · Python · gRPC</span>
+  </div>
+  <div>
+    <span className="block uppercase text-[11px] font-semibold tracking-widest text-muted-foreground/60 mb-1">Focus</span>
+    <span className="text-foreground">AI · Code Intelligence · Embeddings</span>
+  </div>
+</div>
 
 <GitHubLinkCard url="https://github.com/priyanshumahey/fleur" />
 <LanguageBar languages={[
-  { name: "TypeScript", percentage: 45.0 },
-  { name: "Rust", percentage: 35.0 },
-  { name: "Python", percentage: 15.0 },
-  { name: "Other", percentage: 5.0 },
+  { name: "TypeScript", percentage: 48.7 },
+  { name: "Python", percentage: 25.0 },
+  { name: "Rust", percentage: 21.9 },
+  { name: "Jupyter Notebook", percentage: 2.0 },
+  { name: "CSS", percentage: 1.1 },
+  { name: "JavaScript", percentage: 0.7 },
+  { name: "Other", percentage: 0.6 },
 ]} />
-
 
 ---
 
-## System Architecture
+<span className="block uppercase text-[11px] font-semibold tracking-widest text-muted-foreground/60 mb-4">MOTIVATION</span>
 
-<div className="my-8">
-  <FleurArchitecture />
+## Why build an AI code editor from scratch?
+
+AI-assisted coding tools have become ubiquitous — GitHub Copilot, Cursor, Windsurf — but most developers interact with them as black boxes.
+You type, a suggestion appears, and you either accept it or don't. The underlying mechanics of _how_ these tools understand your code,
+_what_ makes a prediction good, and _why_ certain suggestions appear at certain moments remain opaque.
+
+I wanted to peel back that abstraction. Not just to use AI coding tools, but to **build one** — understanding every layer from
+file watching and codebase indexing, through embedding generation and semantic retrieval, to next-edit prediction and agentic code generation.
+
+Fleur is the result: a fully functional AI-native code editor built with Tauri, React, Rust, and Python. It implements the three core
+capabilities found in modern AI editors — **codebase indexing**, **next-edit prediction**, and an **AI copilot** — each built from scratch
+with local models, so every piece of the pipeline is visible and hackable.
+
+---
+
+<span className="block uppercase text-[11px] font-semibold tracking-widest text-muted-foreground/60 mb-4">OVERVIEW</span>
+
+## Core Capabilities
+
+<span className="block text-muted-foreground text-lg mb-8">
+Three pillars define how AI integrates into the editing experience. Each one required a different approach to model selection, data flow, and UX.
+</span>
+
+<div className="grid grid-cols-1 md:grid-cols-3 gap-8 my-8">
+  <div>
+    <h4 className="text-lg font-bold text-foreground mb-2">Codebase Indexing</h4>
+    <span className="block text-muted-foreground text-sm">
+      A file watcher streams changes through a Rust → Python pipeline. Tree-sitter parses ASTs into semantic chunks, Jina Code embeds them into 768-dimensional vectors, and ChromaDB stores them for instant semantic search.
+    </span>
+  </div>
+  <div>
+    <h4 className="text-lg font-bold text-foreground mb-2">Next Edit Prediction</h4>
+    <span className="block text-muted-foreground text-sm">
+      After a 2-second typing pause, the editor sends your original file, current edits, and recent diffs to Sweep's Next-Edit 1.5B model. The predicted file is diffed line-by-line and surfaced as native Monaco ghost text.
+    </span>
+  </div>
+  <div>
+    <h4 className="text-lg font-bold text-foreground mb-2">AI Copilot</h4>
+    <span className="block text-muted-foreground text-sm">
+      An agentic assistant powered by Azure-hosted models with full codebase context via RAG retrieval. It can reason over multiple files, generate code, and provide inline suggestions — all backed by semantic search over the indexed codebase.
+    </span>
+  </div>
 </div>
 
+---
+
+<span className="block uppercase text-[11px] font-semibold tracking-widest text-muted-foreground/60 mb-4">ARCHITECTURE</span>
+
+## Editor Anatomy
+
+<span className="block text-muted-foreground mb-6">
+  Fleur is a desktop application built on Tauri, with a React + Monaco frontend and a Rust backend that communicates with Python AI services over gRPC.
+  This split lets the UI stay fast and responsive while heavy inference runs in separate processes.
+</span>
+
+<div className="my-8">
+  <FleurExplodedView />
+</div>
+
+<span className="block text-muted-foreground/60 text-xs text-center italic -mt-4 mb-8">Interactive exploded view of the editor — hover to explore each layer of the architecture.</span>
+
+---
+
+<span className="block uppercase text-[11px] font-semibold tracking-widest text-muted-foreground/60 mb-4">INDEXING</span>
+
+## Code Indexing
+
+<span className="block text-muted-foreground mb-6">
+  The indexing pipeline is the foundation everything else is built on. Without an understanding of the codebase, neither the copilot nor next-edit prediction
+  can provide meaningful suggestions. The pipeline has two modes: an initial bulk scan that syncs the full workspace, and a real-time watcher that
+  streams incremental updates as you edit.
+</span>
+
+<div className="my-8">
+  <CodeIndexingArchitecture />
+</div>
+
+<span className="block text-muted-foreground/60 text-xs text-center italic -mt-4 mb-8">Animated pipeline showing data flow from file watcher through to vector storage.</span>
+
+<span className="block text-muted-foreground mb-6">
+  File changes are detected by the **notify** crate (FSEvents on macOS, inotify on Linux) with a 500ms debounce window. Events pass through a filtering
+  layer — gitignore rules, common exclusions like `node_modules`, and SHA-256 content hashing to skip unchanged files. Valid events flow into a
+  tokio mpsc channel (capacity 1,000) that feeds the Python backend, where tree-sitter extracts semantic code chunks and Jina Code generates embeddings.
+</span>
+
+<div className="my-8">
+  <FileWatcherDemo />
+</div>
+
+<span className="block text-muted-foreground/60 text-xs text-center italic -mt-4 mb-8">Simulated file events flowing through the watcher — filtered files are dropped, valid changes are queued for indexing.</span>
+
+---
+
+<span className="block uppercase text-[11px] font-semibold tracking-widest text-muted-foreground/60 mb-4">PREDICTION</span>
+
 ## Next Edit Prediction
+
+<span className="block text-muted-foreground mb-6">
+  Next-edit prediction is one of the more compelling AI features in modern editors. Rather than waiting for you to ask for help,
+  the editor observes your editing patterns and proactively suggests what you'll type next. Fleur uses the **Sweep Next-Edit 1.5B** model
+  (quantized GGUF, running locally via llama.cpp with Metal GPU acceleration) to generate predictions.
+</span>
+
+<span className="block text-muted-foreground mb-6">
+  The flow works like this: after a 2-second typing pause, the editor collects the original saved file, current editor state, up to 3 context files
+  from open tabs, and your recent diffs. These are assembled into a structured prompt and sent to the model. The predicted file is diffed
+  against the current content line-by-line, and the first changed region is surfaced as Monaco ghost text — the same mechanism VS Code uses for Copilot.
+  Press Tab to accept, Escape to dismiss.
+</span>
+
+<div className="my-8">
+  <NextEditAnimatedDemo />
+</div>
+
+<span className="block text-muted-foreground/60 text-xs text-center italic -mt-4 mb-8">The editor detects a typing pause, runs inference, and surfaces ghost text inline — Tab to accept.</span>
 
 <div className="my-8">
   <NextEditArchitecture />
 </div>
 
+<span className="block text-muted-foreground/60 text-xs text-center italic -mt-4 mb-8">Animated architecture diagram tracing the prediction request from editor to model and back.</span>
 
 ---
+
+<span className="block uppercase text-[11px] font-semibold tracking-widest text-muted-foreground/60 mb-4">AI COPILOT</span>
+
+## Copilot
+
+<span className="block text-muted-foreground mb-6">
+  The copilot ties everything together. It calls Azure-hosted models and uses RAG (retrieval-augmented generation) to pull relevant code chunks
+  from the indexed codebase, providing the language model with precise context rather than dumping entire files into the prompt. This means the
+  copilot can answer questions about code it hasn't directly seen — as long as it's semantically related to the query.
+</span>
+
+<div className="my-8">
+  <CopilotArchitecture />
+</div>
+
+<span className="block text-muted-foreground/60 text-xs text-center italic -mt-4 mb-8">The copilot pipeline — query embedding, semantic retrieval from ChromaDB, and prompt assembly for the Azure-hosted model.</span>
+
+<span className="block text-muted-foreground mb-4 text-sm">
+  Every copilot interaction is logged in real time — requests, retrieved context chunks, model responses, and latency. This observability layer
+  was critical during development for debugging retrieval quality and prompt construction.
+</span>
+
+<div className="my-8">
+  <Image src="/projects/fleur/fleur-logging.gif" alt="Fleur copilot logging dashboard" width={1200} height={675} className="w-full rounded-xl border border-border" unoptimized />
+</div>
+
+<span className="block text-muted-foreground/60 text-xs text-center italic -mt-4 mb-8">Live logging view tracking copilot requests, retrieved code context, and model responses.</span>
+
+<span className="block text-muted-foreground mb-4 text-sm">
+  The copilot generates proposed changes that the user reviews inline before accepting or declining — no code is applied automatically.
+  This review step keeps the developer in control while still benefiting from multi-file reasoning.
+</span>
+
+<div className="my-8">
+  <Image src="/projects/fleur/fleur-copilot.gif" alt="Fleur AI Copilot in action" width={1200} height={675} className="w-full rounded-xl border border-border" unoptimized />
+</div>
+
+<span className="block text-muted-foreground/60 text-xs text-center italic -mt-4 mb-8">The copilot suggests code changes — the user reviews each proposal and accepts or declines before anything is applied.</span>
+
+---
+
+<span className="block uppercase text-[11px] font-semibold tracking-widest text-muted-foreground/60 mb-4">KEY DECISIONS</span>
+
+## Design Decisions & Trade-offs
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-8 my-8">
+  <div>
+    <h4 className="text-lg font-bold text-foreground mb-2">Local models where possible, cloud where it matters</h4>
+    <span className="block text-muted-foreground text-sm">
+      Embeddings (Jina Code) and next-edit prediction (Sweep 1.5B) run locally for low latency and privacy. The copilot uses Azure-hosted models for the
+      reasoning capability that agentic workflows demand. This hybrid approach keeps the fast feedback loops local while leveraging cloud inference for the
+      tasks that benefit most from larger models.
+    </span>
+  </div>
+  <div>
+    <h4 className="text-lg font-bold text-foreground mb-2">Streaming over batching</h4>
+    <span className="block text-muted-foreground text-sm">
+      The indexing pipeline uses streaming gRPC rather than batch processing. File events flow through tokio channels in FIFO order with no priority system.
+      This keeps the architecture simple and latency low for real-time edits, at the cost of not being able to prioritize currently-open files.
+    </span>
+  </div>
+  <div>
+    <h4 className="text-lg font-bold text-foreground mb-2">Tree-sitter for chunking</h4>
+    <span className="block text-muted-foreground text-sm">
+      Rather than naive line-based splitting, Fleur uses tree-sitter AST parsing to extract semantic units — functions, classes, methods.
+      This produces more meaningful embeddings since each chunk represents a coherent code concept rather than an arbitrary line range.
+    </span>
+  </div>
+  <div>
+    <h4 className="text-lg font-bold text-foreground mb-2">Rust + Python split</h4>
+    <span className="block text-muted-foreground text-sm">
+      File watching, event processing, and the Tauri shell are in Rust for performance. AI inference and vector storage are in Python for ecosystem access
+      (llama.cpp bindings, ChromaDB, tree-sitter). gRPC bridges the two, allowing each layer to use the best tool for the job.
+    </span>
+  </div>
+</div>
+
+---
+
+<span className="block uppercase text-[11px] font-semibold tracking-widest text-muted-foreground/60 mb-4">REFLECTION</span>
+
+## What I Learned
+
+<span className="block text-muted-foreground mb-6">
+  Building Fleur end-to-end — from OS-level file watchers to GPU-accelerated model inference — taught me a few things that wouldn't have been obvious from just using these tools.
+</span>
+
+<div className="space-y-6 my-8">
+  <div>
+    <h4 className="text-base font-semibold text-foreground mb-1">The hard part isn't the model — it's the context.</h4>
+    <span className="block text-muted-foreground text-sm">
+      Model inference is relatively straightforward. The real engineering challenge is figuring out what context to feed the model and when. For next-edit prediction,
+      sending too much context overwhelms the model; too little makes predictions useless. Getting the prompt format, diff history window, and debounce timing right
+      took far more iteration than model integration.
+    </span>
+  </div>
+  <div>
+    <h4 className="text-base font-semibold text-foreground mb-1">Embeddings are surprisingly powerful for code.</h4>
+    <span className="block text-muted-foreground text-sm">
+      Semantic search over code embeddings works remarkably well — even across different languages. A query about "authentication middleware" correctly surfaces
+      relevant handlers in both TypeScript and Python. The quality of chunks matters far more than the embedding model; tree-sitter chunking made a dramatic
+      difference compared to naive splitting.
+    </span>
+  </div>
+  <div>
+    <h4 className="text-base font-semibold text-foreground mb-1">Cross-language systems are humbling.</h4>
+    <span className="block text-muted-foreground text-sm">
+      Coordinating TypeScript, Rust, and Python across gRPC boundaries meant debugging in three different paradigms simultaneously. A mismatched protobuf field
+      in Rust would surface as a cryptic empty response in the React UI. The experience gave me much more empathy for the complexity behind tools like VS Code and Cursor.
+    </span>
+  </div>
+</div>
+
+---
+
+<span className="block uppercase text-[11px] font-semibold tracking-widest text-muted-foreground/60 mb-4">RELATED</span>
 
 ### Related Blog Posts
 
