@@ -90,17 +90,17 @@
 }
 
 .prose h2 {
-  @apply font-semibold tracking-tight text-xl md:text-2xl mt-14 mb-5 pb-3 border-b border-neutral-200;
+  @apply font-bold tracking-tight text-2xl md:text-3xl mt-20 mb-6 pb-4 border-b border-neutral-200;
   color: #171717;
 }
 
 .dark .prose h2 {
   color: #fafafa;
-  border-color: #333;
+  border-color: #262626;
 }
 
 .prose h3 {
-  @apply font-semibold tracking-tight text-lg md:text-xl mt-10 mb-4;
+  @apply font-semibold tracking-tight text-lg md:text-xl mt-12 mb-4;
   color: #262626;
 }
 
@@ -109,12 +109,13 @@
 }
 
 .prose h4 {
-  @apply font-medium tracking-tight text-base md:text-lg mt-8 mb-3;
-  color: #404040;
+  @apply font-semibold text-xs md:text-sm mt-16 mb-4 uppercase;
+  letter-spacing: 0.12em;
+  color: #3b82f6;
 }
 
 .dark .prose h4 {
-  color: #fafafa;
+  color: #60a5fa;
 }
 
 /* Heading links - keep them clean */
@@ -232,15 +233,21 @@
    =================================== */
 
 .prose blockquote {
-  @apply border-l-2 border-l-blue-500/60 pl-6 py-1 my-8 bg-blue-500/5 rounded-r-lg;
+  @apply border-l-[3px] border-l-blue-500/70 pl-6 py-4 my-10 rounded-r-xl;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.04), rgba(99, 102, 241, 0.02));
+}
+
+.dark .prose blockquote {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.06), rgba(99, 102, 241, 0.03));
 }
 
 .prose blockquote p {
-  @apply text-neutral-600 italic text-base leading-relaxed;
+  @apply text-neutral-600 italic text-[1.05rem] leading-relaxed;
+  font-style: italic;
 }
 
 .dark .prose blockquote p {
-  color: #d4d4d4;
+  color: #c0c0c0;
 }
 
 /* ===================================
@@ -397,7 +404,7 @@ code:not([data-theme]):not([data-language]) {
    =================================== */
 
 .prose hr {
-  @apply border-0 h-px bg-gradient-to-r from-transparent via-neutral-300 dark:via-[#444] to-transparent my-12;
+  @apply border-0 h-px bg-gradient-to-r from-transparent via-neutral-300 dark:via-[#333] to-transparent my-20;
 }
 
 /* ===================================
@@ -417,42 +424,59 @@ code:not([data-theme]):not([data-language]) {
    =================================== */
 
 .prose table {
-  @apply w-full my-8 text-sm;
+  @apply w-full my-10 text-sm rounded-xl overflow-hidden;
+  border: 1px solid #e5e7eb;
+}
+
+.dark .prose table {
+  border-color: #262626;
 }
 
 .prose thead {
-  @apply border-b border-neutral-300;
+  background-color: #f9fafb;
 }
 
 .dark .prose thead {
-  border-color: #444;
+  background-color: #141414;
 }
 
 .prose th {
-  @apply text-left font-semibold py-3 px-4;
-  color: #171717;
+  @apply text-left font-semibold py-3.5 px-5 text-xs uppercase;
+  letter-spacing: 0.05em;
+  color: #6b7280;
+  border-bottom: 1px solid #e5e7eb;
 }
 
 .dark .prose th {
-  color: #fafafa;
+  color: #9ca3af;
+  border-bottom-color: #262626;
 }
 
 .prose td {
-  @apply py-3 px-4 border-b border-neutral-200;
+  @apply py-3.5 px-5;
   color: #404040;
+  border-bottom: 1px solid #f3f4f6;
 }
 
 .dark .prose td {
   color: #d4d4d4;
-  border-color: #333;
+  border-bottom-color: #1a1a1a;
 }
 
-.prose tr:hover td {
-  background-color: #f9fafb;
+.prose tbody tr {
+  transition: background-color 0.15s ease;
 }
 
-.dark .prose tr:hover td {
-  background-color: #1f1f1f;
+.prose tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.prose tbody tr:hover td {
+  background-color: #f0f9ff;
+}
+
+.dark .prose tbody tr:hover td {
+  background-color: #0c1929;
 }
 
 /* ===================================
@@ -495,4 +519,18 @@ code:not([data-theme]):not([data-language]) {
   background-color: #252525;
   border-color: #3a3a3a;
   color: #d4d4d4;
+}
+
+.reading-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #3b82f6, #6366f1);
+  z-index: 9999;
+  transition: width 0.1s linear;
+}
+
+.dark .reading-progress {
+  background: linear-gradient(90deg, #60a5fa, #818cf8);
 }
