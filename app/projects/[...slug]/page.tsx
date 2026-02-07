@@ -8,6 +8,7 @@ import "@/styles/mdx.css";
 import { ExternalLink, Github } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { ReadingProgress } from "@/components/blog/reading-progress";
 
 const navLinks = [
     { href: "/blog", label: "Writing" },
@@ -58,6 +59,9 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
     return (
         <div className="min-h-screen bg-white dark:bg-[#0a0a0a] text-neutral-900 dark:text-[#fafafa]">
+            {/* Reading Progress Bar */}
+            <ReadingProgress />
+            
             {/* Theme Toggle */}
             <ThemeToggle />
             
@@ -216,9 +220,9 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                         )}
 
                         {/* Article Content */}
-                        <div className="prose prose-neutral dark:prose-invert prose-lg max-w-none">
-                            <MDXContent code={project.body} />
-                        </div>
+                            <div className="prose prose-neutral dark:prose-invert prose-lg max-w-none">
+                                <MDXContent code={project.body} />
+                            </div>
                     </article>
 
                     {/* Footer */}

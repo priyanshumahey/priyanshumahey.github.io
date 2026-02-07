@@ -4,11 +4,12 @@ import { ThemeToggle } from "@/components/theme-toggle";
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
 
-import { formatDate, sortPosts } from "@/lib/utils";
+import { sortPosts } from "@/lib/utils";
 import "@/styles/mdx.css";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { ReadingProgress } from "@/components/blog/reading-progress";
 
 const navLinks = [
   { href: "/blog", label: "Writing" },
@@ -36,12 +37,6 @@ function getAdjacentPosts(currentSlug: string) {
     prev: currentIndex < sortedPosts.length - 1 ? sortedPosts[currentIndex + 1] : null,
     next: currentIndex > 0 ? sortedPosts[currentIndex - 1] : null,
   };
-}
-
-function estimateReadTime(content: string): number {
-  const wordsPerMinute = 200;
-  const words = content.split(/\s+/).length;
-  return Math.max(1, Math.ceil(words / wordsPerMinute));
 }
 
 export async function generateStaticParams(): Promise<{ slug: string[] }[]> {
@@ -73,10 +68,12 @@ export default async function PostPage({ params }: PostPageProps) {
   }
 
   const { prev, next } = getAdjacentPosts(post.slugAsParams);
-  const readTime = estimateReadTime(post.body);
 
   return (
     <div className="min-h-screen bg-white dark:bg-[#0a0a0a] text-neutral-900 dark:text-[#fafafa]">
+      {/* Reading Progress Bar */}
+      <ReadingProgress />
+      
       {/* Theme Toggle */}
       <ThemeToggle />
 
@@ -104,23 +101,13 @@ export default async function PostPage({ params }: PostPageProps) {
         <main className="px-6 pb-16">
           <article className="py-8">
             {/* Article Header */}
-            <header className="mb-8">
-              <div className="flex items-center gap-3 text-sm text-neutral-400 dark:text-[#a1a1a1] mb-4">
-                <time dateTime={post.date}>{formatDate(post.date)}</time>
-                <span>·</span>
-                <span>{readTime} min read</span>
-              </div>
-              <h1 className="text-3xl font-medium tracking-tight mb-4 leading-tight">
+            <header className="mb-10">
+              <h1 className="text-3xl font-bold tracking-tight mb-4 leading-[1.15]">
                 {post.title}
               </h1>
               {post.description && (
-                <p className="text-lg text-neutral-500 dark:text-[#d4d4d4] leading-relaxed">
+                <p className="text-lg text-neutral-500 dark:text-[#a1a1a1] leading-relaxed">
                   {post.description}
-                </p>
-              )}
-              {post.authors && (
-                <p className="text-sm text-neutral-500 dark:text-[#d4d4d4] mt-4">
-                  By {post.authors.join(", ")}
                 </p>
               )}
             </header>
@@ -139,9 +126,9 @@ export default async function PostPage({ params }: PostPageProps) {
             )}
 
             {/* Article Content */}
-            <div className="prose prose-neutral dark:prose-invert prose-base max-w-none">
-              <MDXContent code={post.body} />
-            </div>
+              <div className="prose prose-neutral dark:prose-invert prose-base max-w-none">
+                <MDXContent code={post.body} />
+              </div>
           </article>
 
           {/* Post Navigation */}
@@ -202,12 +189,12 @@ export default async function PostPage({ params }: PostPageProps) {
 
           <article>
             {/* Article Header */}
-            <header className="mb-12">
-              <h1 className="text-[2.5rem] lg:text-[3rem] font-bold leading-tight tracking-tight mb-6">
+            <header className="mb-16">
+              <h1 className="text-[2.75rem] lg:text-[3.25rem] font-bold leading-[1.1] tracking-tight mb-6">
                 {post.title}
               </h1>
               {post.description && (
-                <p className="text-xl text-neutral-500 dark:text-[#d4d4d4] leading-relaxed">
+                <p className="text-xl text-neutral-500 dark:text-[#a1a1a1] leading-relaxed max-w-2xl">
                   {post.description}
                 </p>
               )}
@@ -227,9 +214,9 @@ export default async function PostPage({ params }: PostPageProps) {
             )}
 
             {/* Article Content */}
-            <div className="prose prose-neutral dark:prose-invert prose-lg max-w-none">
-              <MDXContent code={post.body} />
-            </div>
+              <div className="prose prose-neutral dark:prose-invert prose-lg max-w-none">
+                <MDXContent code={post.body} />
+              </div>
           </article>
 
           {/* Post Navigation */}
