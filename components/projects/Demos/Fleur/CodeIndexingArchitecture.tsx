@@ -156,7 +156,7 @@ function Connection({
     )
 }
 
-export function FleurArchitecture() {
+export function CodeIndexingArchitecture() {
     const [activeSteps, setActiveSteps] = useState<Set<FlowStep>>(new Set())
     const [currentDescription, setCurrentDescription] = useState<FlowStep | "indexing">("idle")
     const [isAnimating, setIsAnimating] = useState(false)

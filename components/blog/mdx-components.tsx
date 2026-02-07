@@ -1,7 +1,7 @@
 import EmploymentCard, { EmploymentCardCompact } from "@/components/employmentCard";
 import { LanguageBar } from "@/components/language-bar";
-import { AgentGrepDemo, ASTVisualizerDemo, FleurDemo, GitflowAnimatedDemo, GrepDemo, IndexingPipelineDemo, IvDemo, NextEditArchitecture, NextEditDemo, SemanticSearchDemo, TreeSitterDemo } from "@/components/projects/Demos";
-import { FleurArchitecture } from "@/components/projects/Demos/Fleur/FleurArchitecture";
+import { AgentGrepDemo, ASTVisualizerDemo, CopilotArchitecture, FileWatcherDemo, FleurDemo, FleurExplodedView, GitflowAnimatedDemo, GrepDemo, IndexingPipelineDemo, IvDemo, NextEditAnimatedDemo, NextEditArchitecture, NextEditDemo, SemanticSearchDemo, TreeSitterDemo } from "@/components/projects/Demos";
+import { CodeIndexingArchitecture } from "@/components/projects/Demos/Fleur/CodeIndexingArchitecture";
 import { GitflowDemo } from "@/components/projects/Demos/GitflowDemo";
 import Image from "next/image";
 import * as runtime from "react/jsx-runtime";
@@ -32,13 +32,17 @@ const components = {
   GrepDemo,
   AgentGrepDemo,
   FleurDemo,
-  FleurArchitecture,
+  CodeIndexingArchitecture,
+  FileWatcherDemo,
+  FleurExplodedView,
+  CopilotArchitecture,
   IndexingPipelineDemo,
   SemanticSearchDemo,
   TreeSitterDemo,
   ASTVisualizerDemo,
   NextEditDemo,
   NextEditArchitecture,
+  NextEditAnimatedDemo,
   LanguageBar,
   GitHubLinkCard,
   BlogLinkCard,

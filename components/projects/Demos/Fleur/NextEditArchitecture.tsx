@@ -17,7 +17,6 @@ const stepDescriptions: Record<FlowStep | "request" | "inference", string> = {
     inference: "Model inference in progress",
 }
 
-// Node component (same style as FleurArchitecture)
 function Node({
     x, y, width, height,
     label, sublabel,
