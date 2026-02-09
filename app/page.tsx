@@ -47,38 +47,16 @@ const workExperiences: ProjectData[] = [
   }
 ]
 
-// Additional full-width gallery projects
+// Additional full-width gallery projects (ordered by date, newest first)
 const galleryProjects: ProjectData[] = [
   {
     title: "Fleur",
     description: "AI-native code editor with embeddings and semantic search.",
-    year: "2025",
+    year: "2026",
     link: "/projects/fleur",
     baseComponent: <FleurHeroCard />,
     hoverComponent: <FleurEditorCard />,
   },
-  {
-    title: "GenWiki",
-    description: "AI-generated wiki that builds and maintains knowledge bases automatically.",
-    year: "2025",
-    image: "/projects/genwiki.png",
-    link: "/projects/genwiki",
-  },
-  {
-    title: "Vibration",
-    description: "AI music composition tool",
-    year: "2025",
-    link: "/projects/vibration",
-    image: "/projects/vibration1.png",
-    hoverImage: "/projects/vibration2.png",
-  },
-  // {
-  //   title: "MS-PAL",
-  //   description: "AI native workflow assistant in a notebook.",
-  //   year: "2025",
-  //   link: "/projects/ms-pal",
-  //   image: "/projects/mspal1.png",
-  // },
   {
     title: "iv",
     description: "Voice to text with real-time audio visualization.",
@@ -94,6 +72,42 @@ const galleryProjects: ProjectData[] = [
     baseComponent: <GitHeroCard />,
     link: "/projects/gitflow",
     hoverComponent: <GitflowDemo />,
+  },
+  // {
+  //   title: "Index",
+  //   description: "AI-native document editor — Cursor for writers.",
+  //   year: "2025",
+  //   baseComponent: <IndexHeroCard />,
+  //   link: "/projects/graphite",
+  // },
+  // {
+  //   title: "MS-PAL",
+  //   description: "AI native workflow assistant in a notebook.",
+  //   year: "2025",
+  //   link: "/projects/ms-pal",
+  //   image: "/projects/mspal1.png",
+  // },
+  // {
+  //   title: "Index Calendar",
+  //   description: "AI-powered calendar and task manager with a native desktop app.",
+  //   year: "2025",
+  //   baseComponent: <IndexCalHeroCard />,
+  //   link: "/projects/index-cal",
+  // },
+  {
+    title: "GenWiki",
+    description: "AI-generated wiki that builds and maintains knowledge bases automatically.",
+    year: "2025",
+    image: "/projects/genwiki.png",
+    link: "/projects/genwiki",
+  },
+  {
+    title: "Vibration",
+    description: "AI music composition tool",
+    year: "2025",
+    link: "/projects/vibration",
+    image: "/projects/vibration1.png",
+    hoverImage: "/projects/vibration2.png",
   },
 ]
 
@@ -161,7 +175,7 @@ export default function Page() {
     <div className="min-h-screen bg-white dark:bg-[#0a0a0a] text-neutral-900 dark:text-[#fafafa]">
       {/* Theme Toggle */}
       <ThemeToggle />
-      
+
       {/* Mobile Layout */}
       <div className="lg:hidden">
         {/* Header */}
@@ -224,7 +238,7 @@ export default function Page() {
               url="https://www.zofiq.com/"
               className="text-neutral-900 dark:text-[#fafafa] hover:text-neutral-600 dark:hover:text-[#a1a1a1] transition-colors font-medium decoration-blue-500 decoration-2 underline-offset-2 underline"
             >
-              Zofiq
+              {"Zofiq (Acquired!)"}
             </LinkPreview>
             , research @ <span className="text-neutral-900 dark:text-[#fafafa] font-medium">UBC</span>.
           </motion.div>
@@ -318,7 +332,7 @@ export default function Page() {
                       url="https://www.zofiq.com/"
                       className="text-neutral-900 dark:text-[#fafafa] hover:text-neutral-600 dark:hover:text-[#d4d4d4] transition-colors font-medium decoration-blue-500 decoration-2 underline-offset-2 underline"
                     >
-                      Zofiq
+                      Zofiq (Acquired!)
                     </LinkPreview>
                     , research @<span className="text-neutral-900 dark:text-[#fafafa] font-medium">UBC</span>.
                   </motion.div>
