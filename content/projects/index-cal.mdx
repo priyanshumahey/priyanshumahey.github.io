@@ -1,0 +1,71 @@
+---
+title: Index Calendar
+description: An AI-powered calendar and task manager with a native desktop app.
+date: 2025-12-18
+published: true
+tags: ["ai", "calendar", "tauri", "next.js", "supabase", "mcp"]
+featured: true
+---
+
+<div className="my-8">
+  <Image src="/projects/index-cal.png" alt="Index Calendar" width={1200} height={675} className="w-full rounded-xl border border-border" />
+</div>
+
+<div className="flex flex-wrap gap-x-12 gap-y-4 my-8 text-sm">
+  <div>
+    <span className="block uppercase text-[11px] font-semibold tracking-widest text-muted-foreground/60 mb-1">Timeline</span>
+    <span className="text-foreground">December 2025</span>
+  </div>
+  <div>
+    <span className="block uppercase text-[11px] font-semibold tracking-widest text-muted-foreground/60 mb-1">Stack</span>
+    <span className="text-foreground">Next.js · Tauri · Rust · TypeScript · Supabase</span>
+  </div>
+  <div>
+    <span className="block uppercase text-[11px] font-semibold tracking-widest text-muted-foreground/60 mb-1">Focus</span>
+    <span className="text-foreground">AI · Productivity · Desktop · MCP</span>
+  </div>
+</div>
+
+<GitHubLinkCard url="https://github.com/priyanshumahey/Index-cal" />
+<LanguageBar languages={[
+  { name: "TypeScript", percentage: 88.0 },
+  { name: "Rust", percentage: 8.0 },
+  { name: "CSS", percentage: 2.5 },
+  { name: "JavaScript", percentage: 1.5 },
+]} />
+
+---
+
+<span className="block uppercase text-[11px] font-semibold tracking-widest text-muted-foreground/60 mb-4">MOTIVATION</span>
+
+## Why build an AI calendar?
+
+Task management and calendaring is fragmented. Your tasks live in Linear, GitHub issues, Notion, Slack reminders, and Google Calendar — all separate tools with separate interfaces. **Index Calendar** unifies everything into a single AI-powered calendar where you can manage your time using natural language.
+
+The copilot understands your schedule and can create, reschedule, and organize events through conversation. Instead of clicking through forms and date pickers, you just tell it what you need.
+
+---
+
+<span className="block uppercase text-[11px] font-semibold tracking-widest text-muted-foreground/60 mb-4">FEATURES</span>
+
+## What Index Calendar does
+
+- **Calendar and Kanban views** for visualizing events and tasks in different ways
+- **AI Copilot** for natural language scheduling — "move my standup to 3pm" or "block off Friday afternoon for deep work"
+- **Drag-and-drop** event and task management with smooth animations
+- **Native desktop app** built with Tauri v2 and Rust, with deep linking, notifications, and OS keychain integration
+- **Command palette** (cmdk) for quick access to any action
+- **Plugin system** designed for syncing with Linear, GitHub, Notion, Slack, and Google Calendar
+- **Auth & storage** via Supabase with SQL migrations for events, recurrence, timezones, and search
+
+---
+
+<span className="block uppercase text-[11px] font-semibold tracking-widest text-muted-foreground/60 mb-4">ARCHITECTURE</span>
+
+## How it's built
+
+The web frontend is **Next.js 16** with **React 19**, using custom calendar components, **dnd-kit** for drag-and-drop, and **Framer Motion** for animations. The UI is built with **Radix UI** primitives and **shadcn/ui** components.
+
+The desktop application uses **Tauri v2** with a Rust backend that handles AES-GCM encryption, OS keychain access via the keyring crate, and native notifications. The frontend is shared between web and desktop.
+
+The AI layer uses the **OpenAI SDK** and **MCP SDK** for structured copilot interactions. Data persistence and auth are powered by **Supabase** with a full SQL migration setup covering event schemas, recurrence rules, timezone handling, and full-text search.

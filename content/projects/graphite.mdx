@@ -1,0 +1,69 @@
+---
+title: Index
+description: An AI-native document editor — Cursor for writers.
+date: 2025-12-15
+published: true
+tags: ["ai", "editor", "next.js", "supabase", "mcp"]
+featured: true
+---
+
+<div className="my-8">
+  <Image src="/projects/index-graphite.png" alt="Index - AI Document Editor" width={1200} height={675} className="w-full rounded-xl border border-border" />
+</div>
+
+<div className="flex flex-wrap gap-x-12 gap-y-4 my-8 text-sm">
+  <div>
+    <span className="block uppercase text-[11px] font-semibold tracking-widest text-muted-foreground/60 mb-1">Timeline</span>
+    <span className="text-foreground">December 2025</span>
+  </div>
+  <div>
+    <span className="block uppercase text-[11px] font-semibold tracking-widest text-muted-foreground/60 mb-1">Stack</span>
+    <span className="text-foreground">Next.js · React · TypeScript · Supabase</span>
+  </div>
+  <div>
+    <span className="block uppercase text-[11px] font-semibold tracking-widest text-muted-foreground/60 mb-1">Focus</span>
+    <span className="text-foreground">AI · Document Editing · MCP</span>
+  </div>
+</div>
+
+<GitHubLinkCard url="https://github.com/priyanshumahey/Index" />
+<LanguageBar languages={[
+  { name: "TypeScript", percentage: 96.5 },
+  { name: "CSS", percentage: 2.0 },
+  { name: "JavaScript", percentage: 1.5 },
+]} />
+
+---
+
+<span className="block uppercase text-[11px] font-semibold tracking-widest text-muted-foreground/60 mb-4">MOTIVATION</span>
+
+## Why build an AI document editor?
+
+Software engineers have Cursor. Writers should have something just as powerful. **Index** (code-named Graphite) is an AI-native document editor that brings the same copilot-driven workflow that developers enjoy to anyone working with text — writers, researchers, students, and knowledge workers.
+
+The idea came from noticing that while AI coding tools have become incredibly sophisticated, writing tools still treat AI as an afterthought — a sidebar chatbot bolted onto a text area. Index is built from the ground up around AI, with a copilot that understands the full context of your document.
+
+---
+
+<span className="block uppercase text-[11px] font-semibold tracking-widest text-muted-foreground/60 mb-4">FEATURES</span>
+
+## What Index does
+
+- **Rich text editing** powered by PlateJS with full formatting support — code blocks, math (KaTeX), markdown, lists, and more
+- **AI Copilot sidebar** that can help draft, edit, summarize, and restructure your documents
+- **MCP integration** with Model Context Protocol for extensible AI capabilities
+- **Exa web search** built in, so the AI can pull in real-time information
+- **Cross-platform** — a Next.js web app paired with an Expo React Native mobile companion
+- **Auth & storage** via Supabase with document management and templates
+
+---
+
+<span className="block uppercase text-[11px] font-semibold tracking-widest text-muted-foreground/60 mb-4">ARCHITECTURE</span>
+
+## How it's built
+
+The web application is built with **Next.js 16** and **React 19**, using **PlateJS** as the rich text editor engine. PlateJS provides a plugin-based architecture allowing features like autoformat, code blocks, markdown shortcuts, math rendering, and indentation to be composed together cleanly.
+
+The AI layer uses the **OpenAI SDK** combined with the **MCP SDK** for structured tool use, and **Exa** for web search grounding. Authentication and data persistence are handled by **Supabase**.
+
+The mobile companion is built with **Expo** and **React Native**, using local SQLite storage for offline-first document editing.
