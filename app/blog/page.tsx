@@ -16,7 +16,7 @@ const socialLinks = [
 
 const navLinks = [
   { href: "/blog", label: "Writing" },
-  // { href: "/fun", label: "Fun" },,
+  // { href: "/fun", label: "Fun" },
   { href: "/about", label: "About" },
   { href: "/resume", label: "Resume" },
 ];
@@ -51,10 +51,10 @@ export default function BlogPage() {
     <div className="min-h-screen bg-white dark:bg-[#0a0a0a] text-neutral-900 dark:text-[#fafafa]">
       {/* Theme Toggle */}
       <ThemeToggle />
-      
+
       {/* Mobile Layout */}
       <div className="lg:hidden">
-        <motion.header 
+        <motion.header
           className="space-y-6 px-6 pt-8"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -72,7 +72,7 @@ export default function BlogPage() {
                   className={`text-sm transition-colors ${link.href === "/blog"
                     ? "text-neutral-900 dark:text-[#fafafa]"
                     : "text-neutral-500 dark:text-[#a1a1a1] hover:text-neutral-900 dark:hover:text-[#fafafa]"
-                  }`}
+                    }`}
                 >
                   {link.label}
                 </Link>
@@ -82,7 +82,7 @@ export default function BlogPage() {
         </motion.header>
 
         <main className="px-6 pb-16">
-          <motion.section 
+          <motion.section
             className="py-12 border-b border-neutral-200 dark:border-[#1a1a1a]"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -94,8 +94,30 @@ export default function BlogPage() {
             </p>
           </motion.section>
 
+          {/* System Design Series */}
+          <motion.div
+            className="py-6 border-b border-neutral-200 dark:border-[#1a1a1a]"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.15, duration: 0.5 }}
+          >
+            <Link
+              href="/system-design"
+              className="group flex items-center justify-between py-3"
+            >
+              <div>
+                <div className="text-xs text-neutral-400 dark:text-[#525252] uppercase tracking-wider font-mono mb-1">Series</div>
+                <h3 className="text-base font-medium text-neutral-900 dark:text-[#fafafa] group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                  System Design
+                </h3>
+                <p className="text-sm text-neutral-500 dark:text-[#a1a1a1] mt-0.5">Fundamentals of system design, from first principles.</p>
+              </div>
+              <ArrowRight className="w-4 h-4 text-neutral-400 dark:text-[#525252] opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200" />
+            </Link>
+          </motion.div>
+
           {/* Post List */}
-          <motion.section 
+          <motion.section
             className="py-8"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -134,7 +156,7 @@ export default function BlogPage() {
             )}
           </motion.section>
 
-          <motion.footer 
+          <motion.footer
             className="flex items-center gap-3 pt-8 pb-6"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -163,7 +185,7 @@ export default function BlogPage() {
       <div className="hidden lg:block">
         <div className="max-w-4xl mx-auto px-8 py-16">
           {/* Header */}
-          <motion.header 
+          <motion.header
             className="flex items-center justify-between mb-16"
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -189,7 +211,7 @@ export default function BlogPage() {
           </motion.header>
 
           {/* Title Section */}
-          <motion.section 
+          <motion.section
             className="mb-16"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -201,11 +223,33 @@ export default function BlogPage() {
             </p>
           </motion.section>
 
+          {/* System Design Series */}
+          <motion.div
+            className="mb-12"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.15, duration: 0.5 }}
+          >
+            <Link
+              href="/system-design"
+              className="group flex items-center justify-between p-5 rounded-xl border border-neutral-200 dark:border-[#1a1a1a] hover:border-neutral-400 dark:hover:border-[#333] transition-all"
+            >
+              <div>
+                <div className="text-xs text-neutral-400 dark:text-[#525252] uppercase tracking-wider font-mono mb-1.5">Series</div>
+                <h3 className="text-lg font-medium text-neutral-900 dark:text-[#fafafa] group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                  System Design Chapters
+                </h3>
+                <p className="text-sm text-neutral-500 dark:text-[#a1a1a1] mt-1">Fundamentals of system design — from first principles to production architectures.</p>
+              </div>
+              <ArrowRight className="w-5 h-5 text-neutral-400 dark:text-[#525252] opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200 shrink-0 ml-4" />
+            </Link>
+          </motion.div>
+
           {/* Posts grouped by year */}
           <section className="space-y-12">
             {postsByYear.length ? (
               postsByYear.map(([year, yearPosts], yearIndex) => (
-                <motion.div 
+                <motion.div
                   key={year}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -254,7 +298,7 @@ export default function BlogPage() {
       </div>
 
       {/* Footer */}
-      <motion.footer 
+      <motion.footer
         className="w-full bg-neutral-100 dark:bg-[#050505] border-t border-neutral-200 dark:border-[#1a1a1a] py-12"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
