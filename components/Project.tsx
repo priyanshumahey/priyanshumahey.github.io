@@ -58,7 +58,7 @@ export const MiniProjectCard = ({
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <div className="relative rounded-xl px-5 py-6 shadow-lg border-2 border-[#dadada] bg-opacity-25 bg-white cursor-pointer">
+          <div className="relative rounded-xl px-5 py-6 shadow-lg border-2 border-neutral-200 dark:border-neutral-700 bg-white/25 dark:bg-neutral-900/25 cursor-pointer">
             <div className="flex flex-row flex-wrap items-start justify-between">
               <h4 className="text-xl font-semibold">{name}</h4>
               {badgeName && (
@@ -67,7 +67,7 @@ export const MiniProjectCard = ({
                     <Link href={badgeUrl}>
                       <Badge
                         variant="outline"
-                        className="bg-blue-100 text-blue-800 px-4 py-2 rounded-md cursor-pointer hover:bg-blue-200"
+                        className="bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 px-4 py-2 rounded-md cursor-pointer hover:bg-blue-200 dark:hover:bg-blue-900/50"
                       >
                         {badgeName}
                       </Badge>
@@ -75,7 +75,7 @@ export const MiniProjectCard = ({
                   ) : (
                     <Badge
                       variant="outline"
-                      className="bg-red-100 text-red-800"
+                      className="bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-300"
                     >
                       {badgeName}
                     </Badge>
@@ -83,7 +83,7 @@ export const MiniProjectCard = ({
                 </div>
               )}
             </div>
-            <p className="text-black">{description}</p>
+            <p className="text-neutral-900 dark:text-neutral-100">{description}</p>
           </div>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[625px]">
@@ -100,7 +100,7 @@ export const MiniProjectCard = ({
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
-        <div className="relative rounded-xl px-5 py-6 shadow-lg border-2 border-[#dadada] bg-opacity-25 bg-white cursor-pointer">
+        <div className="relative rounded-xl px-5 py-6 shadow-lg border-2 border-neutral-200 dark:border-neutral-700 bg-white/25 dark:bg-neutral-900/25 cursor-pointer">
           <div className="flex flex-row flex-wrap items-start justify-between">
             <h4 className="text-xl font-semibold">{name}</h4>
             {badgeName && (
@@ -109,20 +109,20 @@ export const MiniProjectCard = ({
                   <Link href={badgeUrl}>
                     <Badge
                       variant="outline"
-                      className="bg-blue-100 text-blue-800 px-4 py-2 rounded-md cursor-pointer hover:bg-blue-200"
+                      className="bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 px-4 py-2 rounded-md cursor-pointer hover:bg-blue-200 dark:hover:bg-blue-900/50"
                     >
                       {badgeName}
                     </Badge>
                   </Link>
                 ) : (
-                  <Badge variant="outline" className="bg-red-100 text-red-800">
+                  <Badge variant="outline" className="bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-300">
                     {badgeName}
                   </Badge>
                 )}
               </div>
             )}
           </div>
-          <p className="text-black">{description}</p>
+          <p className="text-neutral-900 dark:text-neutral-100">{description}</p>
         </div>
       </DrawerTrigger>
       <DrawerContent>
@@ -174,7 +174,7 @@ export const ProjectCard = ({
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <div className="relative rounded-xl px-5 py-6 shadow-lg border-2 border-[#dadada] bg-opacity-25 bg-white cursor-pointer">
+          <div className="relative rounded-xl px-5 py-6 shadow-lg border-2 border-neutral-200 dark:border-neutral-700 bg-white/25 dark:bg-neutral-900/25 cursor-pointer">
             <div className="flex flex-row flex-wrap items-start justify-between">
               <h4 className="text-xl font-semibold">{name}</h4>
               {badgeName && (
@@ -183,7 +183,7 @@ export const ProjectCard = ({
                     <Link href={badgeUrl}>
                       <Badge
                         variant="outline"
-                        className="bg-blue-100 text-blue-800 px-4 py-2 rounded-md cursor-pointer hover:bg-blue-200"
+                        className="bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 px-4 py-2 rounded-md cursor-pointer hover:bg-blue-200 dark:hover:bg-blue-900/50"
                       >
                         {badgeName}
                       </Badge>
@@ -191,7 +191,7 @@ export const ProjectCard = ({
                   ) : (
                     <Badge
                       variant="outline"
-                      className="bg-red-100 text-red-800"
+                      className="bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-300"
                     >
                       {badgeName}
                     </Badge>
@@ -199,7 +199,7 @@ export const ProjectCard = ({
                 </div>
               )}
             </div>
-            <p className="text-black">{description}</p>
+            <p className="text-neutral-900 dark:text-neutral-100">{description}</p>
             <div className="mt-2 relative aspect-16/10 overflow-hidden rounded-xl">
               <Image
                 className="object-cover"
@@ -224,7 +224,7 @@ export const ProjectCard = ({
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
-        <div className="relative rounded-xl px-5 py-6 shadow-lg border-2 border-[#dadada] bg-opacity-25 bg-white cursor-pointer">
+        <div className="relative rounded-xl px-5 py-6 shadow-lg border-2 border-neutral-200 dark:border-neutral-700 bg-white/25 dark:bg-neutral-900/25 cursor-pointer">
           <div className="flex flex-row flex-wrap items-start justify-between">
             <h4 className="text-xl font-semibold">{name}</h4>
             {badgeName && (
@@ -233,20 +233,20 @@ export const ProjectCard = ({
                   <Link href={badgeUrl}>
                     <Badge
                       variant="outline"
-                      className="bg-blue-100 text-blue-800 px-4 py-2 rounded-md cursor-pointer hover:bg-blue-200"
+                      className="bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 px-4 py-2 rounded-md cursor-pointer hover:bg-blue-200 dark:hover:bg-blue-900/50"
                     >
                       {badgeName}
                     </Badge>
                   </Link>
                 ) : (
-                  <Badge variant="outline" className="bg-red-100 text-red-800">
+                  <Badge variant="outline" className="bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-300">
                     {badgeName}
                   </Badge>
                 )}
               </div>
             )}
           </div>
-          <p className="text-black">{description}</p>
+          <p className="text-neutral-900 dark:text-neutral-100">{description}</p>
           <div className="mt-2 relative aspect-16/10 overflow-hidden rounded-xl">
             <Image
               className="object-cover"

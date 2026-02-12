@@ -1,24 +1,25 @@
 "use client";
 
+import { Card, CardContent } from "@/components/ui/card";
+import { useTheme } from "next-themes";
 import { ReactNode } from "react";
 import {
-  Line,
-  Bar,
-  Pie,
   Area,
-  LineChart,
-  BarChart,
-  PieChart,
   AreaChart,
+  Bar,
+  BarChart,
+  CartesianGrid,
+  Cell,
+  Legend,
+  Line,
+  LineChart,
+  Pie,
+  PieChart,
+  ResponsiveContainer,
+  Tooltip,
   XAxis,
   YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-  Cell,
 } from "recharts";
-import { Card, CardContent } from "@/components/ui/card";
 
 interface ChartProps {
   children?: ReactNode;
@@ -58,17 +59,26 @@ export default function Chart({
   color = "#8884d8",
   ...props
 }: ChartProps) {
+  const { resolvedTheme } = useTheme();
+  const isDark = resolvedTheme === "dark";
+
+  const gridColor = isDark ? "#333" : "#e5e7eb";
+  const axisColor = isDark ? "#a1a1aa" : "#6b7280";
+  const tooltipBg = isDark ? "#1f1f1f" : "#fff";
+  const tooltipBorder = isDark ? "#333" : "#e5e7eb";
+  const tooltipText = isDark ? "#fafafa" : "#171717";
+
   const renderChart = () => {
     switch (type) {
       case "bar":
         return (
           <ResponsiveContainer width="100%" height={height}>
             <BarChart data={data}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey={xAxis} />
-              <YAxis />
-              <Tooltip />
-              <Legend />
+              <CartesianGrid strokeDasharray="3 3" stroke={gridColor} />
+              <XAxis dataKey={xAxis} tick={{ fill: axisColor }} stroke={gridColor} />
+              <YAxis tick={{ fill: axisColor }} stroke={gridColor} />
+              <Tooltip contentStyle={{ backgroundColor: tooltipBg, border: `1px solid ${tooltipBorder}`, color: tooltipText, borderRadius: "8px" }} />
+              <Legend wrapperStyle={{ color: axisColor }} />
               <Bar dataKey={yAxis} fill={color}>
                 {data.map((entry, index) => (
                   <Cell
@@ -92,7 +102,7 @@ export default function Chart({
                 cx="50%"
                 cy="50%"
                 outerRadius={100}
-                label
+                label={{ fill: axisColor }}
               >
                 {data.map((entry, index) => (
                   <Cell
@@ -101,8 +111,8 @@ export default function Chart({
                   />
                 ))}
               </Pie>
-              <Tooltip />
-              <Legend />
+              <Tooltip contentStyle={{ backgroundColor: tooltipBg, border: `1px solid ${tooltipBorder}`, color: tooltipText, borderRadius: "8px" }} />
+              <Legend wrapperStyle={{ color: axisColor }} />
             </PieChart>
           </ResponsiveContainer>
         );
@@ -111,11 +121,11 @@ export default function Chart({
         return (
           <ResponsiveContainer width="100%" height={height}>
             <AreaChart data={data}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey={xAxis} />
-              <YAxis />
-              <Tooltip />
-              <Legend />
+              <CartesianGrid strokeDasharray="3 3" stroke={gridColor} />
+              <XAxis dataKey={xAxis} tick={{ fill: axisColor }} stroke={gridColor} />
+              <YAxis tick={{ fill: axisColor }} stroke={gridColor} />
+              <Tooltip contentStyle={{ backgroundColor: tooltipBg, border: `1px solid ${tooltipBorder}`, color: tooltipText, borderRadius: "8px" }} />
+              <Legend wrapperStyle={{ color: axisColor }} />
               <Area
                 type="monotone"
                 dataKey={yAxis}
@@ -130,11 +140,11 @@ export default function Chart({
         return (
           <ResponsiveContainer width="100%" height={height}>
             <LineChart data={data}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey={xAxis} />
-              <YAxis />
-              <Tooltip />
-              <Legend />
+              <CartesianGrid strokeDasharray="3 3" stroke={gridColor} />
+              <XAxis dataKey={xAxis} tick={{ fill: axisColor }} stroke={gridColor} />
+              <YAxis tick={{ fill: axisColor }} stroke={gridColor} />
+              <Tooltip contentStyle={{ backgroundColor: tooltipBg, border: `1px solid ${tooltipBorder}`, color: tooltipText, borderRadius: "8px" }} />
+              <Legend wrapperStyle={{ color: axisColor }} />
               <Line type="monotone" dataKey={yAxis} stroke={color} />
             </LineChart>
           </ResponsiveContainer>
