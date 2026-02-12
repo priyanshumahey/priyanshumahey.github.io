@@ -95,7 +95,7 @@ export default function BlogPage() {
           </motion.section>
 
           {/* System Design Series */}
-          <motion.div
+          {/* <motion.div
             className="py-6 border-b border-neutral-200 dark:border-[#1a1a1a]"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -114,7 +114,7 @@ export default function BlogPage() {
               </div>
               <ArrowRight className="w-4 h-4 text-neutral-400 dark:text-[#525252] opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200" />
             </Link>
-          </motion.div>
+          </motion.div> */}
 
           {/* Post List */}
           <motion.section
@@ -224,7 +224,7 @@ export default function BlogPage() {
           </motion.section>
 
           {/* System Design Series */}
-          <motion.div
+          {/* <motion.div
             className="mb-12"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -243,7 +243,7 @@ export default function BlogPage() {
               </div>
               <ArrowRight className="w-5 h-5 text-neutral-400 dark:text-[#525252] opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200 shrink-0 ml-4" />
             </Link>
-          </motion.div>
+          </motion.div> */}
 
           {/* Posts grouped by year */}
           <section className="space-y-12">
