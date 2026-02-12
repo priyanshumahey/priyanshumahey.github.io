@@ -75,6 +75,42 @@ const projects = defineCollection({
     .transform(computedFields),
 });
 
+const chapters = defineCollection({
+  name: "Chapter",
+  pattern: "system-design/**/*.mdx",
+  schema: s
+    .object({
+      slug: s.path(),
+      title: s.string().max(99),
+      description: s.string().max(999).optional(),
+      date: s.isodate(),
+      published: s.boolean().default(true),
+      chapter: s.number(),
+      group: s.string().max(99),
+      groupId: s.number(),
+      groupDescription: s.string().max(999).optional(),
+      wordCount: s.string().optional(),
+      video: s.string().optional(),
+      body: s.mdx(),
+    })
+    .transform(computedFields),
+});
+
+const examples = defineCollection({
+  name: "Example",
+  pattern: "system-design-examples/**/*.mdx",
+  schema: s
+    .object({
+      slug: s.path(),
+      title: s.string().max(99),
+      description: s.string().max(999).optional(),
+      date: s.isodate(),
+      published: s.boolean().default(true),
+      body: s.mdx(),
+    })
+    .transform(computedFields),
+});
+
 export default defineConfig({
   root: "content",
   output: {
@@ -84,7 +120,7 @@ export default defineConfig({
     name: "[name]-[hash:6].[ext]",
     clean: true,
   },
-  collections: { posts, works, projects },
+  collections: { posts, works, projects, chapters, examples },
   mdx: {
     rehypePlugins: [
       rehypeSlug,

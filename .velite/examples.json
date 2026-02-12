@@ -1,0 +1,29 @@
+[
+  {
+    "slug": "system-design-examples/design-onedrive",
+    "title": "Design OneDrive/Google Drive",
+    "description": "Designing a scalable file storage and synchronization service.",
+    "date": "2026-02-11T00:00:00.000Z",
+    "published": true,
+    "body": "const{Fragment:n,jsx:e,jsxs:i}=arguments[0];function _createMdxContent(r){const o={a:\"a\",em:\"em\",h1:\"h1\",li:\"li\",p:\"p\",ul:\"ul\",...r.components};return i(n,{children:[e(o.h1,{id:\"design-onedrivegoogle-drive\",children:e(o.a,{className:\"subheading-anchor\",\"aria-label\":\"Link to section\",href:\"#design-onedrivegoogle-drive\",children:\"Design OneDrive/Google Drive\"})}),\"\\n\",e(o.p,{children:\"This tutorial architecture for a cloud file storage service, covering:\"}),\"\\n\",i(o.ul,{children:[\"\\n\",e(o.li,{children:\"Block storage and chunking\"}),\"\\n\",e(o.li,{children:\"Synchronization protocols\"}),\"\\n\",e(o.li,{children:\"Deduplication strategies\"}),\"\\n\",e(o.li,{children:\"Version control and consistency\"}),\"\\n\"]}),\"\\n\",e(o.p,{children:e(o.em,{children:\"(Content coming soon)\"})})]})}return{default:function(n={}){const{wrapper:i}=n.components||{};return i?e(i,{...n,children:e(_createMdxContent,{...n})}):_createMdxContent(n)}};",
+    "slugAsParams": "design-onedrive"
+  },
+  {
+    "slug": "system-design-examples/design-twitter",
+    "title": "Design Twitter",
+    "description": "A system design deep dive into building a scalable real-time feed system.",
+    "date": "2026-02-11T00:00:00.000Z",
+    "published": true,
+    "body": "const{Fragment:n,jsx:e,jsxs:t}=arguments[0];function _createMdxContent(i){const r={a:\"a\",em:\"em\",h1:\"h1\",li:\"li\",p:\"p\",ul:\"ul\",...i.components};return t(n,{children:[e(r.h1,{id:\"design-twitter\",children:e(r.a,{className:\"subheading-anchor\",\"aria-label\":\"Link to section\",href:\"#design-twitter\",children:\"Design Twitter\"})}),\"\\n\",e(r.p,{children:\"This tutorial covers the system design of Twitter, focusing on:\"}),\"\\n\",t(r.ul,{children:[\"\\n\",e(r.li,{children:\"Fan-out on write vs fan-out on read\"}),\"\\n\",e(r.li,{children:\"Handling celebrity tweets (hot keys)\"}),\"\\n\",e(r.li,{children:\"Timeline generation\"}),\"\\n\",e(r.li,{children:\"Search infrastructure\"}),\"\\n\"]}),\"\\n\",e(r.p,{children:e(r.em,{children:\"(Content coming soon)\"})})]})}return{default:function(n={}){const{wrapper:t}=n.components||{};return t?e(t,{...n,children:e(_createMdxContent,{...n})}):_createMdxContent(n)}};",
+    "slugAsParams": "design-twitter"
+  },
+  {
+    "slug": "system-design-examples/design-uber",
+    "title": "Design Uber",
+    "description": "Architecting a geospatial matchmaking service at scale.",
+    "date": "2026-02-11T00:00:00.000Z",
+    "published": true,
+    "body": "const{Fragment:e,jsx:n,jsxs:i}=arguments[0];function _createMdxContent(r){const t={a:\"a\",em:\"em\",h1:\"h1\",li:\"li\",p:\"p\",ul:\"ul\",...r.components};return i(e,{children:[n(t.h1,{id:\"design-uberlyft\",children:n(t.a,{className:\"subheading-anchor\",\"aria-label\":\"Link to section\",href:\"#design-uberlyft\",children:\"Design Uber/Lyft\"})}),\"\\n\",n(t.p,{children:\"This tutorial explores the system design for a ride-sharing service:\"}),\"\\n\",i(t.ul,{children:[\"\\n\",n(t.li,{children:\"Geospatial indexing (Quadtrees, Geohashes)\"}),\"\\n\",n(t.li,{children:\"Matchmaking algorithms\"}),\"\\n\",n(t.li,{children:\"Driver location updates and tracking\"}),\"\\n\",n(t.li,{children:\"Pricing surge systems\"}),\"\\n\"]}),\"\\n\",n(t.p,{children:n(t.em,{children:\"(Content coming soon)\"})})]})}return{default:function(e={}){const{wrapper:i}=e.components||{};return i?n(i,{...e,children:n(_createMdxContent,{...e})}):_createMdxContent(e)}};",
+    "slugAsParams": "design-uber"
+  }
+]

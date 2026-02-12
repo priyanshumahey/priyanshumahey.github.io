@@ -1,0 +1,212 @@
+---
+title: "What is System Design?"
+description: "An introduction to thinking about systems at scale — why it matters and how to approach it."
+date: 2026-02-11
+published: true
+chapter: 1
+group: "Fundamentals"
+groupId: 1
+groupDescription: "The building blocks of system design — how we think about scale, reliability, and the trade-offs that shape every architecture decision."
+wordCount: "2.8K"
+video: "/system-design/stock/example.mp4"
+---
+
+*System design is the art of making decisions about how to build software that works — for millions of users, under real-world constraints, at scale.*
+
+---
+
+## Why System Design?
+
+Every piece of software is a system. Even the simplest web application makes choices about where to store data, how to handle concurrent users, and what happens when things go wrong. As the number of users grows, these choices become critical.
+
+System design is the discipline of thinking about these choices before you start writing code. It's about understanding the trade-offs, constraints, and requirements that shape an architecture — and making deliberate decisions rather than accidental ones.
+
+A well-designed system is not just one that works today. It's one that can evolve, scale, and survive the inevitable surprises that come with running software in production. A poorly designed system might work for a demo, but it will crumble under the weight of real-world traffic, failures, and changing requirements.
+
+The best engineers don't just write code — they design systems. They think about the whole picture: the database, the cache, the load balancer, the message queue, the monitoring, the deployment pipeline, and how all of these pieces fit together.
+
+---
+
+## Thinking at Scale
+
+Scale changes everything. An approach that works perfectly for 100 users might completely fall apart at 100,000. A database query that takes 10 milliseconds with 1,000 rows might take 10 seconds with 10 million. A server that handles 50 requests per second might need to handle 50,000.
+
+Thinking at scale means anticipating these inflection points and designing systems that can grow gracefully. It doesn't mean over-engineering everything from day one — that's a different kind of mistake. It means understanding what will break first and having a plan for when it does.
+
+There are two fundamental approaches to scaling: vertical and horizontal. Vertical scaling means making a single machine more powerful — more CPU, more RAM, faster disks. It's simple but has hard limits. Horizontal scaling means adding more machines and distributing the work across them. It's more complex but theoretically unlimited.
+
+Most real-world systems use a combination of both. You scale vertically until it becomes too expensive or hits a ceiling, then you scale horizontally. The art is knowing when to make that transition and how to design your system so the transition isn't painful.
+
+```
+   VERTICAL SCALING                    HORIZONTAL SCALING
+   ┌──────────────┐                    ┌──────┐ ┌──────┐ ┌──────┐
+   │              │                    │      │ │      │ │      │
+   │              │                    │  S1  │ │  S2  │ │  S3  │
+   │    BIG       │                    │      │ │      │ │      │
+   │    SERVER    │                    └──┬───┘ └──┬───┘ └──┬───┘
+   │              │                       │       │       │
+   │              │                    ┌──┴───────┴───────┴──┐
+   │              │                    │    LOAD BALANCER     │
+   └──────┬───────┘                    └──────────┬──────────┘
+          │                                       │
+          ▼                                       ▼
+      ┌───────┐                               ┌───────┐
+      │  DB   │                               │  DB   │
+      └───────┘                               └───────┘
+```
+
+---
+
+## Trade-offs Everywhere
+
+If there's one thing to internalize about system design, it's this: every decision is a trade-off. There is no perfect architecture, no universal best practice, no one-size-fits-all solution. Every choice you make optimizes for some things at the expense of others.
+
+Want strong consistency? You'll pay for it with latency. Want low latency? You might have to accept eventual consistency. Want high availability? You'll need redundancy, which costs money. Want to save money? You might have to accept some downtime.
+
+This is famously captured by the CAP theorem, which states that a distributed system can only guarantee two out of three properties: Consistency, Availability, and Partition tolerance. Since network partitions are inevitable in distributed systems, you're really choosing between consistency and availability.
+
+The mark of a good system designer is not knowing the "right" answer — it's understanding the trade-offs well enough to make an informed decision for the specific problem at hand. Context is everything.
+
+---
+
+## The Anatomy of a System
+
+Most web-scale systems share a common set of building blocks. Learning these building blocks and understanding when to use each one is the foundation of system design.
+
+```
+                           ┌─────────────┐
+                           │   CLIENTS   │
+                           └──────┬──────┘
+                                  │
+                           ┌──────┴──────┐
+                           │     CDN     │
+                           └──────┬──────┘
+                                  │
+                           ┌──────┴──────┐
+                           │  LOAD BAL.  │
+                           └──────┬──────┘
+                                  │
+                  ┌───────────────┼───────────────┐
+                  │               │               │
+           ┌──────┴──────┐┌──────┴──────┐┌──────┴──────┐
+           │  APP SRV 1  ││  APP SRV 2  ││  APP SRV 3  │
+           └──────┬──────┘└──────┬──────┘└──────┬──────┘
+                  │               │               │
+                  └───────┬───────┴───────┬───────┘
+                          │               │
+                   ┌──────┴──────┐ ┌──────┴──────┐
+                   │    CACHE    │ │   MSG QUEUE  │
+                   └──────┬──────┘ └──────┬──────┘
+                          │               │
+                   ┌──────┴──────┐ ┌──────┴──────┐
+                   │  DATABASE   │ │   WORKERS   │
+                   └─────────────┘ └─────────────┘
+```
+
+**Load Balancers** distribute incoming requests across multiple servers. They ensure no single server is overwhelmed and provide fault tolerance — if one server goes down, traffic is routed to the others.
+
+**Application Servers** handle the business logic. These are typically stateless — they don't store any user-specific data locally, which makes them easy to scale horizontally. Any server can handle any request.
+
+**Caches** store frequently accessed data in memory for fast retrieval. They sit between your application servers and your database, intercepting reads and reducing the load on the database.
+
+**Databases** are the source of truth. They persist data durably and provide querying capabilities. The choice of database — relational, document, key-value, graph — depends heavily on your data model and access patterns.
+
+**Message Queues** decouple components by allowing asynchronous communication. Instead of one service calling another directly and waiting for a response, it drops a message on a queue and moves on. A worker picks up the message and processes it independently.
+
+---
+
+## How to Approach Design
+
+There's a methodology to system design that, once you internalize it, makes even the most daunting design problems tractable. It starts with understanding what you're building and ends with iterating on your design as constraints change.
+
+**1. Clarify requirements.** What does the system need to do? Who are the users? How many are there? What are the access patterns? What are the latency requirements? What are the availability requirements?
+
+**2. Estimate scale.** Back-of-the-envelope calculations are your friend. How many requests per second? How much data? How much storage? These numbers inform every design decision.
+
+**3. Design the high-level architecture.** Start with the big boxes and arrows. What are the major components? How do they communicate? Where does data live?
+
+**4. Deep dive into components.** For each major component, think about the specific technology choices, data models, APIs, and failure modes.
+
+**5. Identify bottlenecks and iterate.** Where will the system break first? What happens under extreme load? What happens when a component fails? Design for these scenarios.
+
+In the chapters that follow, we'll dive deep into each of these building blocks — databases, caching, load balancing, message queues, and more. By the end, you'll have the vocabulary and mental models to design systems that can handle whatever the real world throws at them.
+
+---
+
+## Designing for Failure
+
+One of the most important mindsets in system design is assuming that everything will fail. Hard drives crash, networks drop packets, data centers lose power, and code has bugs. If your system assumes everything works perfectly, it is fragile. If it assumes things will break, it can be resilient.
+
+Reliability is not about preventing failures (which is impossible) but about preventing failures from becoming outages. This involves several layers of defense:
+
+1.  **Redundancy**: Never have a single point of failure. If you need one database, run two (a primary and a replica). If you need one server, run three.
+2.  **Isolation**: Bulkheads prevent a failure in one part of the system from cascading to others. If the image processing service crashes, it shouldn't take down the user login service.
+3.  **Graceful Degradation**: When things go wrong, the system should still try to provide as much value as possible. If the recommendation engine is down, show the user a static list of popular items instead of an error page.
+4.  **Monitoring**: You can't fix what you can't see. Comprehensive logging, metrics, and alerting are essential for detecting issues before users do.
+
+---
+
+## The Role of Consistency Models
+
+When data is replicated across multiple machines, keeping it in sync becomes a challenge. Consistency models define the rules for how and when updates propagate through the system.
+
+**Strong Consistency** guarantees that after a write is confirmed, all subsequent reads will see that value. This is intuitive but expensive in terms of latency and availability.
+
+**Eventual Consistency** guarantees that if no new updates are made, eventually all accesses will return the last updated value. This allows for high availability and low latency but requires the application to handle stale data.
+
+**Causal Consistency** ensures that operations that are causally related are seen by every node in the same order. Unrelated operations can be seen in any order.
+
+Choosing the right consistency model is a key trade-off. A banking system transferring money needs strong consistency. A social media feed updating "likes" probably only needs eventual consistency.
+
+---
+
+## Data Partitioning and Sharding
+
+As data grows beyond the capacity of a single server, we must split it up. This is called partitioning or sharding.
+
+**Horizontal Partitioning (Sharding)** splits rows of a table across multiple database instances. For example, users with IDs 1-1,000,000 go to Shard A, and users 1,000,001-2,000,000 go to Shard B.
+
+Challenges of sharding include:
+*   **Resharding**: Moving data when a shard gets full is complex and risky.
+*   **Celebrity Problem**: If one user has millions of followers, their shard might become a "hotspot" while others are idle.
+*   **Joins**: Joining data across shards is slow and difficult.
+
+**Vertical Partitioning** splits tables by feature. User profiles might live on one database server, while photos live on another. This is easier to implement but has a lower scaling ceiling than sharding.
+
+---
+
+## Caching Strategies
+
+Caching is one of the most effective ways to improve performance, but it introduces complexity. There are several strategies for reading and writing to a cache:
+
+**Cache-Aside (Lazy Loading)**: The application looks for data in the cache. If it's not there (miss), it reads from the database and updates the cache. This is flexible and resilient but can cause a "thundering herd" if the cache fails.
+
+**Write-Through**: The application writes to the cache and the database synchronously. This ensures strong consistency between cache and DB but adds latency to writes.
+
+**Write-Behind (Write-Back)**: The application writes only to the cache, which asynchronously updates the database. This creates very fast writes but risks data loss if the cache crashes before syncing.
+
+**Refresh-Ahead**: The cache automatically refreshes data before it expires. This is great for predicting access patterns but can waste resources if the data isn't actually needed.
+
+---
+
+## Asynchronous Processing
+
+Synchronous systems are tightly coupled—the caller waits for the receiver. Asynchronous systems are loosely coupled—the caller sends a message and moves on. This is crucial for scalability.
+
+Message queues (like RabbitMQ, Kafka, SQS) act as buffers. If a sudden spike in traffic occurs, the queue absorbs the load, and the workers process it at their own pace. This "load leveling" prevents your backend from being overwhelmed.
+
+Asynchronous processing works well for:
+*   Sending emails/notifications.
+*   Generating reports or PDFs.
+*   Transcoding videos.
+*   Updating search indexes.
+
+---
+
+## Conclusion: It's a Journey
+
+Mastering system design doesn't happen overnight. It comes from reading, building, and, inevitably, breaking things.
+
+Start by understanding the core components. Then, study real-world architectures (companies like Netflix, Uber, and Twitter often publish detailed engineering blogs). Finally, practice designing systems yourself—even if just on a whiteboard.
+
+The goal isn't to memorize a checklist of technologies but to develop the intuition for how data flows, where bottlenecks form, and how to balance competing constraints to build something that lasts.

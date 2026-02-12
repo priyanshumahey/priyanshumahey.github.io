@@ -12,3 +12,9 @@ export declare const works: Work[]
 
 export type Project = Collections['projects']['schema']['_output']
 export declare const projects: Project[]
+
+export type Chapter = Collections['chapters']['schema']['_output']
+export declare const chapters: Chapter[]
+
+export type Example = Collections['examples']['schema']['_output']
+export declare const examples: Example[]

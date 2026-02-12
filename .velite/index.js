@@ -3,3 +3,5 @@
 export { default as posts } from './posts.json' with { type: 'json' }
 export { default as works } from './works.json' with { type: 'json' }
 export { default as projects } from './projects.json' with { type: 'json' }
+export { default as chapters } from './chapters.json' with { type: 'json' }
+export { default as examples } from './examples.json' with { type: 'json' }
