@@ -275,24 +275,148 @@ function StatBlock({ label, value }: { label: string; value: string }) {
   );
 }
 
+// Extract content structure from compiled MDX body
+type ContentItem = { type: "h2" | "h3" | "p" | "li" | "code"; text: string };
+
+function extractContentPreview(body: string): ContentItem[] {
+  const items: ContentItem[] = [];
+
+  // Detect variable names from compiled MDX
+  const varsMatch = body.match(/const\{Fragment:(\w+),jsx:(\w+),jsxs:(\w+)\}/);
+  const objMatch = body.match(/function _createMdxContent\(\w+\)\{const (\w+)=\{/);
+  if (!varsMatch || !objMatch) return items;
+
+  const jsxFn = varsMatch[2];
+  const obj = objMatch[1];
+
+  const o = obj.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const j = jsxFn.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+  const regex = new RegExp(
+    `${o}\\.(h2|h3|p|li),\\{(?:[^}]*children:${j}\\(${o}\\.a,\\{[^}]*children:"([^"]+)"\\}\\)|[^}]*children:"([^"]+)")`,
+    'g'
+  );
+
+  let match;
+  while ((match = regex.exec(body)) !== null) {
+    const type = match[1] as ContentItem["type"];
+    const text = match[2] || match[3];
+    if (text && text.length > 2 && !text.includes("\u250c") && !text.includes("\u2502") && !text.includes("\u2514")) {
+      items.push({ type, text });
+    }
+  }
+  return items;
+}
+
+function hasCodeBlocks(body: string): boolean {
+  return body.includes("data-language") || body.includes('a.pre,');
+}
+
+function ContentPreviewBlock({ body }: { body: string }) {
+  const items = extractContentPreview(body);
+  const showCode = hasCodeBlocks(body);
+
+  const previewItems: ContentItem[] = [];
+  for (const item of items) {
+    previewItems.push(item);
+    if (previewItems.length >= 20) break;
+  }
+
+  return (
+    <div className="flex-1 flex flex-col gap-[6px] overflow-hidden min-h-0">
+      {previewItems.map((item, i) => {
+        if (item.type === "h2") {
+          return (
+            <div key={i} className={`${i > 0 ? "mt-[6px]" : ""}`}>
+              <div className="text-[5px] sm:text-[6px] font-bold leading-normal truncate text-neutral-600 dark:text-[#888]">
+                {item.text}
+              </div>
+              <div className="w-full h-px mt-[3px] bg-neutral-200 dark:bg-[#1f1f1f] opacity-60" />
+            </div>
+          );
+        }
+        if (item.type === "h3") {
+          return (
+            <div key={i} className={`${i > 0 ? "mt-[4px]" : ""}`}>
+              <div className="text-[4.5px] sm:text-[5.5px] font-semibold leading-normal truncate text-neutral-600 dark:text-[#888] opacity-80">
+                {item.text}
+              </div>
+            </div>
+          );
+        }
+        if (item.type === "li") {
+          return (
+            <div key={i} className="flex items-start gap-[3px]">
+              <div className="w-[2px] h-[2px] rounded-full mt-[4px] shrink-0 bg-neutral-300 dark:bg-[#444]" />
+              <div className="text-[4px] sm:text-[5px] leading-relaxed truncate text-neutral-500 dark:text-[#555]">
+                {item.text}
+              </div>
+            </div>
+          );
+        }
+        return (
+          <div key={i} className="text-[4px] sm:text-[5px] leading-relaxed truncate text-neutral-500 dark:text-[#555]">
+            {item.text}
+          </div>
+        );
+      })}
+
+      {showCode && (
+        <div className="rounded border px-1.5 py-1 mt-[3px] bg-neutral-50 dark:bg-[#121212] border-neutral-200 dark:border-[#222]">
+          <div className="flex items-center gap-1 mb-[2px]">
+            <div className="w-[3px] h-[3px] rounded-full bg-red-300 dark:bg-red-800/50" />
+            <div className="w-[3px] h-[3px] rounded-full bg-yellow-300 dark:bg-yellow-800/50" />
+            <div className="w-[3px] h-[3px] rounded-full bg-green-300 dark:bg-green-800/50" />
+          </div>
+          <div className="space-y-[2px]">
+            <div className="h-[1px] w-[60%] rounded-full bg-neutral-300 dark:bg-[#2a2a2a]" />
+            <div className="h-[1px] w-[80%] rounded-full bg-neutral-300 dark:bg-[#2a2a2a]" />
+            <div className="h-[1px] w-[45%] rounded-full bg-neutral-300 dark:bg-[#2a2a2a]" />
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 function ExampleCard({
   example,
 }: {
   example: (typeof examples)[number];
 }) {
   const PagePreview = () => (
-    <div className="aspect-[4/5] w-full rounded border flex flex-col items-center justify-center p-4 gap-2 transition-colors bg-white dark:bg-[#0e0e0e] border-neutral-200 dark:border-[#222] group-hover:border-neutral-400 dark:group-hover:border-[#444]">
-      <div className="h-[3px] w-3/5 rounded-full bg-neutral-300 dark:bg-[#333]" />
-      <div className="w-full space-y-[5px] mt-1">
-        {[0.85, 0.92, 0.78, 0.88, 0.6, 0.9, 0.72].map((w, i) => (
-          <div
-            key={i}
-            className="h-[2px] rounded-full bg-neutral-200 dark:bg-[#252525]"
-            style={{ width: `${w * 100}%` }}
-          />
-        ))}
+    <div className="aspect-[4/5] w-full rounded-lg border flex flex-col overflow-hidden transition-all duration-200 bg-white dark:bg-[#0e0e0e] border-neutral-200 dark:border-[#222] group-hover:border-neutral-400 dark:group-hover:border-[#444] group-hover:shadow-lg dark:group-hover:shadow-[0_8px_24px_rgba(0,0,0,0.4)] group-hover:scale-[1.02]">
+      {/* Color accent strip */}
+      <div className="h-[3px] w-full bg-amber-400 dark:bg-amber-500 opacity-80" />
+
+      {/* Mini header bar */}
+      <div className="flex items-center gap-1.5 px-3 py-1.5 border-b border-neutral-100 dark:border-[#1a1a1a] bg-neutral-50/80 dark:bg-[#090909]">
+        <div className="flex gap-1">
+          <div className="w-1.5 h-1.5 rounded-full bg-neutral-300 dark:bg-[#333]" />
+          <div className="w-1.5 h-1.5 rounded-full bg-neutral-300 dark:bg-[#333]" />
+          <div className="w-1.5 h-1.5 rounded-full bg-neutral-300 dark:bg-[#333]" />
+        </div>
+        <span className="text-[5px] font-mono px-1 py-0.5 rounded bg-amber-50 dark:bg-amber-950/20 text-amber-600 dark:text-amber-400">
+          Case Study
+        </span>
+        <span className="text-[6px] font-mono ml-auto text-neutral-400 dark:text-[#444]">
+          Example
+        </span>
       </div>
-      <div className="w-4/5 aspect-[3/2] mt-auto rounded bg-neutral-100 dark:bg-[#1a1a1a]" />
+
+      {/* Content area */}
+      <div className="flex-1 flex flex-col p-2.5 gap-1 overflow-hidden">
+        {/* Title preview */}
+        <div className="text-[7px] sm:text-[8px] font-bold leading-tight truncate text-neutral-700 dark:text-[#ccc]">
+          {example.title}
+        </div>
+
+        {/* Separator under title */}
+        <div className="w-10 h-px bg-neutral-200 dark:bg-[#333]" />
+
+        {/* Content preview — real text from MDX */}
+        <ContentPreviewBlock body={example.body} />
+      </div>
     </div>
   );
 

@@ -272,44 +272,213 @@ function StatBlock({ label, value }: { label: string; value: string }) {
   );
 }
 
+// Group accent colors
+const groupAccents: Record<number, { bg: string; text: string; darkBg: string; darkText: string }> = {
+  1: { bg: "bg-blue-50", text: "text-blue-600", darkBg: "dark:bg-blue-950/20", darkText: "dark:text-blue-400" },
+  2: { bg: "bg-emerald-50", text: "text-emerald-600", darkBg: "dark:bg-emerald-950/20", darkText: "dark:text-emerald-400" },
+  3: { bg: "bg-violet-50", text: "text-violet-600", darkBg: "dark:bg-violet-950/20", darkText: "dark:text-violet-400" },
+  4: { bg: "bg-amber-50", text: "text-amber-600", darkBg: "dark:bg-amber-950/20", darkText: "dark:text-amber-400" },
+  5: { bg: "bg-rose-50", text: "text-rose-600", darkBg: "dark:bg-rose-950/20", darkText: "dark:text-rose-400" },
+};
+
+const accentBarColors: Record<number, string> = {
+  1: "bg-blue-400 dark:bg-blue-500",
+  2: "bg-emerald-400 dark:bg-emerald-500",
+  3: "bg-violet-400 dark:bg-violet-500",
+  4: "bg-amber-400 dark:bg-amber-500",
+  5: "bg-rose-400 dark:bg-rose-500",
+};
+
+// Extract content structure from compiled MDX body
+type ContentItem = { type: "h2" | "h3" | "p" | "li" | "code"; text: string };
+
+function extractContentPreview(body: string): ContentItem[] {
+  const items: ContentItem[] = [];
+
+  // Detect variable names from compiled MDX
+  // Pattern: const{Fragment:X,jsx:Y,jsxs:Z}=arguments[0];function _createMdxContent(A){const B={...
+  const varsMatch = body.match(/const\{Fragment:(\w+),jsx:(\w+),jsxs:(\w+)\}/);
+  const objMatch = body.match(/function _createMdxContent\(\w+\)\{const (\w+)=\{/);
+  if (!varsMatch || !objMatch) return items;
+
+  const jsxFn = varsMatch[2]; // the jsx() function name
+  const obj = objMatch[1]; // the element object variable name
+
+  // Escape for regex
+  const o = obj.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const j = jsxFn.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+  // Match: obj.h2,{...children:jsxFn(obj.a,{...children:"text"})}) — headings with anchor
+  // Match: obj.p,{children:"text"}) — simple paragraphs
+  // Match: obj.li,{children:"text"}) — list items
+  const regex = new RegExp(
+    `${o}\\.(h2|h3|p|li),\\{(?:[^}]*children:${j}\\(${o}\\.a,\\{[^}]*children:"([^"]+)"\\}\\)|[^}]*children:"([^"]+)")`,
+    'g'
+  );
+
+  let match;
+  while ((match = regex.exec(body)) !== null) {
+    const type = match[1] as ContentItem["type"];
+    const text = match[2] || match[3];
+    if (text && text.length > 2 && !text.includes("┌") && !text.includes("│") && !text.includes("└")) {
+      items.push({ type, text });
+    }
+  }
+  return items;
+}
+
+function hasCodeBlocks(body: string): boolean {
+  return body.includes("data-language") || body.includes('a.pre,');
+}
+
+// Tiny markdown-styled content preview
+function ContentPreviewBlock({ body, muted }: { body: string; muted?: boolean }) {
+  const allItems = extractContentPreview(body);
+  const showCode = hasCodeBlocks(body);
+
+  // Curate a balanced preview: for each heading section, keep the heading + up to 2 body items
+  // This avoids paragraph-heavy pages from becoming a giant wall of text
+  const previewItems: ContentItem[] = [];
+  let bodyInSection = 0;
+  for (const item of allItems) {
+    if (item.type === "h2" || item.type === "h3") {
+      bodyInSection = 0;
+      previewItems.push(item);
+    } else {
+      bodyInSection++;
+      if (bodyInSection <= 2) {
+        previewItems.push(item);
+      }
+    }
+    if (previewItems.length >= 18) break;
+  }
+  // If the first item is a paragraph (before any heading), include it
+  if (allItems.length > 0 && allItems[0].type === "p" && (previewItems.length === 0 || previewItems[0] !== allItems[0])) {
+    previewItems.unshift(allItems[0]);
+  }
+
+  const textColor = muted ? "text-neutral-300 dark:text-[#282828]" : "text-neutral-500 dark:text-[#555]";
+  const headingColor = muted ? "text-neutral-300 dark:text-[#2a2a2a]" : "text-neutral-600 dark:text-[#888]";
+  const lineColor = muted ? "bg-neutral-200 dark:bg-[#181818]" : "bg-neutral-200 dark:bg-[#1f1f1f]";
+  const codeColor = muted ? "bg-neutral-100 dark:bg-[#0f0f0f] border-neutral-200 dark:border-[#1a1a1a]" : "bg-neutral-50 dark:bg-[#121212] border-neutral-200 dark:border-[#222]";
+
+  return (
+    <div className="flex-1 flex flex-col gap-[6px] overflow-hidden min-h-0">
+      {previewItems.map((item, i) => {
+        if (item.type === "h2") {
+          return (
+            <div key={i} className={`${i > 0 ? "mt-[6px]" : ""}`}>
+              <div className={`text-[5px] sm:text-[6px] font-bold leading-normal truncate ${headingColor}`}>
+                {item.text}
+              </div>
+              <div className={`w-full h-px mt-[3px] ${lineColor} opacity-60`} />
+            </div>
+          );
+        }
+        if (item.type === "h3") {
+          return (
+            <div key={i} className={`${i > 0 ? "mt-[4px]" : ""}`}>
+              <div className={`text-[4.5px] sm:text-[5.5px] font-semibold leading-normal truncate ${headingColor} opacity-80`}>
+                {item.text}
+              </div>
+            </div>
+          );
+        }
+        if (item.type === "li") {
+          return (
+            <div key={i} className="flex items-start gap-[3px]">
+              <div className={`w-[2px] h-[2px] rounded-full mt-[4px] shrink-0 ${muted ? "bg-neutral-250 dark:bg-[#222]" : "bg-neutral-300 dark:bg-[#444]"}`} />
+              <div className={`text-[4px] sm:text-[5px] leading-relaxed truncate ${textColor}`}>
+                {item.text}
+              </div>
+            </div>
+          );
+        }
+        // paragraph
+        return (
+          <div key={i} className={`text-[4px] sm:text-[5px] leading-relaxed truncate ${textColor}`}>
+            {item.text}
+          </div>
+        );
+      })}
+
+      {/* Code block indicator if content has code */}
+      {showCode && (
+        <div className={`rounded border px-1.5 py-1 mt-[4px] ${codeColor}`}>
+          <div className="flex items-center gap-1 mb-[2px]">
+            <div className={`w-[3px] h-[3px] rounded-full ${muted ? "bg-neutral-200 dark:bg-[#1a1a1a]" : "bg-red-300 dark:bg-red-800/50"}`} />
+            <div className={`w-[3px] h-[3px] rounded-full ${muted ? "bg-neutral-200 dark:bg-[#1a1a1a]" : "bg-yellow-300 dark:bg-yellow-800/50"}`} />
+            <div className={`w-[3px] h-[3px] rounded-full ${muted ? "bg-neutral-200 dark:bg-[#1a1a1a]" : "bg-green-300 dark:bg-green-800/50"}`} />
+          </div>
+          <div className="space-y-[2px]">
+            <div className={`h-[1px] w-[60%] rounded-full ${muted ? "bg-neutral-200 dark:bg-[#181818]" : "bg-neutral-300 dark:bg-[#2a2a2a]"}`} />
+            <div className={`h-[1px] w-[80%] rounded-full ${muted ? "bg-neutral-200 dark:bg-[#181818]" : "bg-neutral-300 dark:bg-[#2a2a2a]"}`} />
+            <div className={`h-[1px] w-[45%] rounded-full ${muted ? "bg-neutral-200 dark:bg-[#181818]" : "bg-neutral-300 dark:bg-[#2a2a2a]"}`} />
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 function ChapterCard({
   chapter,
 }: {
   chapter: (typeof chapters)[number];
 }) {
   const isPublished = chapter.published;
+  const accent = groupAccents[chapter.groupId] || groupAccents[1];
+  const accentBar = accentBarColors[chapter.groupId] || accentBarColors[1];
 
   const PagePreview = ({ muted }: { muted?: boolean }) => (
     <div
-      className={`aspect-[4/5] w-full rounded border flex flex-col items-center justify-center p-4 gap-2 transition-colors ${muted
-        ? "bg-neutral-100 dark:bg-[#111] border-neutral-200 dark:border-[#1a1a1a]"
-        : "bg-white dark:bg-[#0e0e0e] border-neutral-200 dark:border-[#222] group-hover:border-neutral-400 dark:group-hover:border-[#444]"
-        }`}
+      className={`aspect-[4/5] w-full rounded-lg border flex flex-col overflow-hidden transition-all duration-200 ${
+        muted
+          ? "bg-neutral-100 dark:bg-[#111] border-neutral-200 dark:border-[#1a1a1a]"
+          : "bg-white dark:bg-[#0e0e0e] border-neutral-200 dark:border-[#222] group-hover:border-neutral-400 dark:group-hover:border-[#444] group-hover:shadow-lg dark:group-hover:shadow-[0_8px_24px_rgba(0,0,0,0.4)] group-hover:scale-[1.02]"
+      }`}
     >
-      <div
-        className={`h-[3px] w-3/5 rounded-full ${muted
-          ? "bg-neutral-200 dark:bg-[#1a1a1a]"
-          : "bg-neutral-300 dark:bg-[#333]"
-          }`}
-      />
-      <div className="w-full space-y-[5px] mt-1">
-        {[0.85, 0.92, 0.78, 0.88, 0.6, 0.9, 0.72].map((w, i) => (
-          <div
-            key={i}
-            className={`h-[2px] rounded-full ${muted
-              ? "bg-neutral-150 dark:bg-[#161616]"
-              : "bg-neutral-200 dark:bg-[#252525]"
-              }`}
-            style={{ width: `${w * 100}%` }}
-          />
-        ))}
+      {/* Color accent strip */}
+      <div className={`h-[3px] w-full ${muted ? "bg-neutral-200 dark:bg-[#1a1a1a]" : accentBar} opacity-80`} />
+
+      {/* Mini header bar */}
+      <div className={`flex items-center gap-1.5 px-3 py-1.5 border-b ${
+        muted
+          ? "border-neutral-200 dark:border-[#1a1a1a] bg-neutral-50 dark:bg-[#0c0c0c]"
+          : "border-neutral-100 dark:border-[#1a1a1a] bg-neutral-50/80 dark:bg-[#090909]"
+      }`}>
+        <div className="flex gap-1">
+          <div className={`w-1.5 h-1.5 rounded-full ${muted ? "bg-neutral-200 dark:bg-[#1a1a1a]" : "bg-neutral-300 dark:bg-[#333]"}`} />
+          <div className={`w-1.5 h-1.5 rounded-full ${muted ? "bg-neutral-200 dark:bg-[#1a1a1a]" : "bg-neutral-300 dark:bg-[#333]"}`} />
+          <div className={`w-1.5 h-1.5 rounded-full ${muted ? "bg-neutral-200 dark:bg-[#1a1a1a]" : "bg-neutral-300 dark:bg-[#333]"}`} />
+        </div>
+        {!muted && (
+          <span className={`text-[5px] font-mono px-1 py-0.5 rounded ${accent.bg} ${accent.text} ${accent.darkBg} ${accent.darkText}`}>
+            {chapter.group}
+          </span>
+        )}
+        <span className={`text-[6px] font-mono ml-auto ${
+          muted ? "text-neutral-300 dark:text-[#222]" : "text-neutral-400 dark:text-[#444]"
+        }`}>
+          Ch. {chapter.chapter}
+        </span>
       </div>
-      <div
-        className={`w-4/5 aspect-[3/2] mt-auto rounded ${muted
-          ? "bg-neutral-150 dark:bg-[#131313]"
-          : "bg-neutral-100 dark:bg-[#1a1a1a]"
-          }`}
-      />
+
+      {/* Content area */}
+      <div className="flex-1 flex flex-col p-2.5 gap-1 overflow-hidden">
+        {/* Title preview */}
+        <div className={`text-[7px] sm:text-[8px] font-bold leading-tight truncate ${
+          muted ? "text-neutral-300 dark:text-[#333]" : "text-neutral-700 dark:text-[#ccc]"
+        }`}>
+          {chapter.title}
+        </div>
+
+        {/* Separator under title */}
+        <div className={`w-10 h-px ${muted ? "bg-neutral-200 dark:bg-[#1a1a1a]" : "bg-neutral-200 dark:bg-[#333]"}`} />
+
+        {/* Content preview — real text from MDX */}
+        <ContentPreviewBlock body={chapter.body} muted={muted} />
+      </div>
     </div>
   );
 
