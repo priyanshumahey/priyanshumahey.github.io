@@ -5,6 +5,8 @@ import { projects } from "#site/content";
 import { chapters } from "#site/content";
 import { examples } from "#site/content";
 
+export const dynamic = "force-static";
+
 const BASE_URL = "https://priyanshumahey.github.io";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
