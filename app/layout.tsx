@@ -11,8 +11,36 @@ const fontSans = FontSans({
 
 
 export const metadata: Metadata = {
-  title: "Priyanshu Mahey - AI & Software Engineer",
-  description: "Priyanshu Mahey's personal website",
+  metadataBase: new URL("https://priyanshumahey.github.io"),
+  title: {
+    default: "Priyanshu Mahey - AI & Software Engineer",
+    template: "%s | Priyanshu Mahey",
+  },
+  description: "Priyanshu Mahey's personal website — AI & Software Engineer sharing thoughts on engineering, projects, and system design.",
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "https://priyanshumahey.github.io",
+    siteName: "Priyanshu Mahey",
+    title: "Priyanshu Mahey - AI & Software Engineer",
+    description: "Priyanshu Mahey's personal website — AI & Software Engineer sharing thoughts on engineering, projects, and system design.",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Priyanshu Mahey - AI & Software Engineer",
+    description: "Priyanshu Mahey's personal website — AI & Software Engineer sharing thoughts on engineering, projects, and system design.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
   icons: {
     icon: [
       {
@@ -40,17 +68,6 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <title>Priyanshu Mahey Portfolio</title>
-        <meta
-          name="description"
-          content="Priyanshu Mahey's personal website"
-        />
-        <meta charSet="UTF-8" />
-        <meta name="author" content="Priyanshu Mahey" />
-        <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1.0"
-        />
         <link rel="icon" type="image/ico" href="/favicon.ico" />
       </head>
       <body

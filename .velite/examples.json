@@ -1,14 +1,5 @@
 [
   {
-    "slug": "system-design-examples/design-onedrive",
-    "title": "Design OneDrive/Google Drive",
-    "description": "Designing a scalable file storage and synchronization service.",
-    "date": "2026-02-11T00:00:00.000Z",
-    "published": true,
-    "body": "const{Fragment:n,jsx:e,jsxs:i}=arguments[0];function _createMdxContent(r){const o={a:\"a\",em:\"em\",h1:\"h1\",li:\"li\",p:\"p\",ul:\"ul\",...r.components};return i(n,{children:[e(o.h1,{id:\"design-onedrivegoogle-drive\",children:e(o.a,{className:\"subheading-anchor\",\"aria-label\":\"Link to section\",href:\"#design-onedrivegoogle-drive\",children:\"Design OneDrive/Google Drive\"})}),\"\\n\",e(o.p,{children:\"This tutorial architecture for a cloud file storage service, covering:\"}),\"\\n\",i(o.ul,{children:[\"\\n\",e(o.li,{children:\"Block storage and chunking\"}),\"\\n\",e(o.li,{children:\"Synchronization protocols\"}),\"\\n\",e(o.li,{children:\"Deduplication strategies\"}),\"\\n\",e(o.li,{children:\"Version control and consistency\"}),\"\\n\"]}),\"\\n\",e(o.p,{children:e(o.em,{children:\"(Content coming soon)\"})})]})}return{default:function(n={}){const{wrapper:i}=n.components||{};return i?e(i,{...n,children:e(_createMdxContent,{...n})}):_createMdxContent(n)}};",
-    "slugAsParams": "design-onedrive"
-  },
-  {
     "slug": "system-design-examples/design-twitter",
     "title": "Design Twitter",
     "description": "A system design deep dive into building a scalable real-time feed system.",

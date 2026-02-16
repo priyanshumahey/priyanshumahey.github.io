@@ -42,8 +42,15 @@ export async function generateMetadata({ params }: WorkPageProps): Promise<Metad
     }
 
     return {
-        title: `${work.title} | Priyanshu Mahey`,
+        title: work.title,
         description: work.description,
+        openGraph: {
+            title: work.title,
+            description: work.description,
+            type: "article",
+            url: `https://priyanshumahey.github.io/work/${work.slugAsParams}`,
+            ...(work.image && { images: [{ url: work.image }] }),
+        },
     };
 }
 
