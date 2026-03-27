@@ -49,6 +49,13 @@ const workExperiences: ProjectData[] = [
 
 // Additional full-width gallery projects (ordered by date, newest first)
 const galleryProjects: ProjectData[] = [
+    {
+    title: "Quack",
+    description: "API testing tool ",
+    year: "2026",
+    link: "/projects/quack",
+    image: "/projects/Quack/QuackCard.png",
+  },
   {
     title: "Fleur",
     description: "AI-native code editor with embeddings and semantic search.",
