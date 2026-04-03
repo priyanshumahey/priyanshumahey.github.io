@@ -1,6 +1,6 @@
 import EmploymentCard, { EmploymentCardCompact } from "@/components/employmentCard";
 import { LanguageBar } from "@/components/language-bar";
-import { AgentGrepDemo, ASTVisualizerDemo, CopilotArchitecture, FileWatcherDemo, FleurDemo, FleurExplodedView, GitflowAnimatedDemo, GrepDemo, IndexingPipelineDemo, IvDemo, NextEditAnimatedDemo, NextEditArchitecture, NextEditDemo, PollingDemo, SemanticSearchDemo, SSEDemo, TreeSitterDemo, WebSocketDemo } from "@/components/projects/Demos";
+import { AgentGrepDemo, ASTVisualizerDemo, CopilotArchitecture, FileWatcherDemo, FleurDemo, FleurExplodedView, GitflowAnimatedDemo, GrepDemo, IndexingPipelineDemo, IvDemo, NextEditAnimatedDemo, NextEditArchitecture, NextEditDemo, PollingDemo, RedisCacheDemo, RedisDataTypesDemo, SemanticSearchDemo, SSEDemo, TreeSitterDemo, WebSocketDemo } from "@/components/projects/Demos";
 import { CodeIndexingArchitecture } from "@/components/projects/Demos/Fleur/CodeIndexingArchitecture";
 import { GitflowDemo } from "@/components/projects/Demos/GitflowDemo";
 import Image from "next/image";
@@ -46,6 +46,8 @@ const components = {
   PollingDemo,
   WebSocketDemo,
   SSEDemo,
+  RedisCacheDemo,
+  RedisDataTypesDemo,
   LanguageBar,
   GitHubLinkCard,
   BlogLinkCard,

@@ -13,6 +13,10 @@ featured: true
 
 <div className="flex flex-wrap gap-x-12 gap-y-4 my-8 text-sm">
   <div>
+    <span className="block uppercase text-[11px] font-semibold tracking-widest text-muted-foreground/60 mb-1">Role</span>
+    <span className="text-foreground">Solo Developer</span>
+  </div>
+  <div>
     <span className="block uppercase text-[11px] font-semibold tracking-widest text-muted-foreground/60 mb-1">Timeline</span>
     <span className="text-foreground">December 2025</span>
   </div>
@@ -36,99 +40,80 @@ featured: true
 
 ---
 
+<span className="block uppercase text-[11px] font-semibold tracking-widest text-muted-foreground/60 mb-4">OVERVIEW</span>
+
 ## Why build a git visualization tool?
+
+<span className="block text-muted-foreground text-lg mb-8">
+Making git intuitive through interactive, real-time visualization.
+</span>
 
 A little while back, I was working on a project with someone who was a bit new to git.
 While working with them, I noticed that they were struggling to properly contribute to the project because of git.
 Every time they tried to push, the push would either break or they would have merge conflicts.
 I did some whiteboard drawings to explain how git works and it seemed to help them a bit.
-
-This inspired me to create **Gitflow** — a tool that visualizes git operations and lets you test out git commands in a safe, interactive environment.
+This inspired me to create **Gitflow**, a tool that visualizes git operations and lets you test out git commands in a safe, interactive environment.
 
 Git is a fundamental tool for developers and it's a relatively simple concept. It's easy to learn relatively fast but I found that by just letting others
-play and interact in a test environment, they were able to understand git a lot better. The other thing I thought could be interesting was to give a
-pre-emptive visualization of what a git command would do *before* you actually run it.
-
-There are a few existing git visualization tools out there — [LearnGitBranching](https://learngitbranching.js.org/) being the most well-known. But most of them either re-implement git in JavaScript with simplified behavior, or require a server-side component to run actual git.
-I wanted something that was closer to the real thing, ran entirely in the browser, and looked good doing it.
+play and interact in a test environment, they were able to understand git a lot better. The other thing I thought that could be interesting was to give a 
+pre-emptive visualization of what their git command would do before they actually run it.
 
 **[Try it out live →](https://gitflow-liart.vercel.app/)**
 
 ---
 
-## How it works
+<span className="block uppercase text-[11px] font-semibold tracking-widest text-muted-foreground/60 mb-4">HOW IT WORKS</span>
 
-The core idea is simple: you type a git command, and before you even press enter, the visualization shows you what will happen. This makes it easy to build intuition for
-how branching, merging, rebasing, and other operations actually transform the commit graph.
+## Interactive Git Console
+
+<span className="block text-muted-foreground text-lg mb-8">
+Type a command, see the result before you run it.
+</span>
+
+The user gets a simple console where they can type in git commands.
+When they run a command, the git engine (written in Rust and compiled to WebAssembly) processes the command and updates the git state.
+Before they press enter, the visualization layer pre-emptively shows what the result of the command would be.
 
 <div className="my-8 rounded-xl overflow-hidden h-[650px] md:h-auto md:aspect-video border border-[#1a1a1a]">
   <GitflowAnimatedDemo />
 </div>
 
-The user gets a terminal-style console where they can type git commands. When a command is entered, the git engine (written in Rust and compiled to WebAssembly) processes the command and updates the internal git state.
-The visualization layer then renders the updated commit graph with smooth animated transitions — you can see commits appear, branches fork off, and merges come together in real-time.
+---
 
-### Supported operations
+<span className="block uppercase text-[11px] font-semibold tracking-widest text-muted-foreground/60 mb-4">ARCHITECTURE</span>
 
-The Rust git engine supports a core subset of git that covers the most common workflows:
+## Three layers, one experience
 
-| Operation | What it does |
-|-----------|-------------|
-| `git commit` | Creates a new commit on the current branch |
-| `git branch` | Creates or lists branches |
-| `git checkout` | Switches between branches or creates new ones |
-| `git merge` | Merges one branch into another with automatic commit |
-| `git rebase` | Replays commits from one branch onto another |
-| `git cherry-pick` | Applies a specific commit to the current branch |
-| `git reset` | Moves the branch pointer to a different commit |
-| `git tag` | Creates named labels on specific commits |
+<span className="block text-muted-foreground text-lg mb-8">
+A Rust core compiled to WebAssembly, a React visualization layer, and a clean integration bridge.
+</span>
 
-These aren't approximations — each operation manipulates a real object database with blobs, trees, and commits, following the same semantics as actual git.
+<div className="grid grid-cols-1 md:grid-cols-3 gap-8 my-8">
+  <div>
+    <h4 className="text-lg font-bold text-foreground mb-2">Git Engine (Rust/WASM)</h4>
+    <span className="block text-muted-foreground text-sm">
+      The core git implementation: object database for blobs, trees, and commits; reference management for branches, HEAD, and tags; and operations like merge, rebase, and cherry-pick.
+    </span>
+  </div>
+  <div>
+    <h4 className="text-lg font-bold text-foreground mb-2">Visualization (React)</h4>
+    <span className="block text-muted-foreground text-sm">
+      An SVG-based graph renderer with dynamic layout algorithms, animated transitions, interactive commit nodes, and branch-colored paths with merge indicators.
+    </span>
+  </div>
+  <div>
+    <h4 className="text-lg font-bold text-foreground mb-2">Integration Bridge</h4>
+    <span className="block text-muted-foreground text-sm">
+      WASM bindings exposing a clean API for repository operations, state queries, and event subscriptions for real-time updates. Everything runs client-side.
+    </span>
+  </div>
+</div>
 
 ---
 
-## Architecture
+<span className="block uppercase text-[11px] font-semibold tracking-widest text-muted-foreground/60 mb-4">RELATED</span>
 
-The project is built in three layers that keep concerns cleanly separated:
-
-### Git Engine (Rust → WebAssembly)
-
-The core is a Rust implementation of git's data model. It maintains an **object database** that stores blobs, trees, and commit objects, plus a **reference store** for branches, HEAD, and tags.
-When you run a command, the engine parses it, validates the current state, performs the operation, and returns the new commit graph.
-
-Compiling to WebAssembly means this runs entirely in the browser — there's no server, no git binary, and no filesystem. The object database lives in memory and the WASM module exposes a clean API
-that the frontend calls through JavaScript bindings generated by `wasm-bindgen`.
-
-### Visualization (React + SVG)
-
-The commit graph is rendered as an SVG with a custom layout algorithm. Each branch gets its own column, commits are placed in rows, and edges trace the parent-child relationships between them. The layout
-handles merge commits (which have multiple parents) and rebased commits (which need to visually "move" from one branch to another).
-
-Transitions between states are animated using Framer Motion — when a new commit appears, it fades in; when a branch is created, its line extends smoothly from the fork point. This makes it much easier to follow
-what a command actually *did* compared to a static before/after view.
-
-### Integration Bridge
-
-The bridge layer connects the Rust WASM module to the React UI. It handles serializing commands from the terminal component into the WASM engine, deserializing the resulting git state back into JavaScript
-objects, and triggering re-renders when the graph changes. Everything is client-side — the entire flow from keypress to visual update happens in the browser without any network requests.
-
----
-
-## Why Rust and WebAssembly?
-
-I could have written the git engine in TypeScript. It would have been simpler to set up and wouldn't require a separate build step. But there were a couple of reasons I went with Rust:
-
-1. **Correctness** — Rust's type system made it much easier to model git's data structures accurately. Commits, trees, blobs, and refs all have strict relationships, and Rust catches mistakes at compile time that would have been runtime bugs in JavaScript.
-
-2. **Learning** — I wanted to get more comfortable with Rust and WASM in a real project. Building a non-trivial data structure in Rust and shipping it to the browser through WebAssembly was a good exercise.
-
-3. **Performance** — While performance isn't critical for this use case (the graphs are small), the WASM module handles graph traversals and hash computations faster than equivalent JavaScript would. This matters more as repository histories get longer.
-
-The trade-off is build complexity. The project needs both a Rust/WASM toolchain and a Node.js toolchain, and getting `wasm-pack` to play nice with Vite required some configuration. I wrote about this in more detail in a separate post.
-
----
-
-### Related Blog Post
+### Related Blog Posts
 
 <div className="space-y-3 my-6">
   <BlogLinkCard 

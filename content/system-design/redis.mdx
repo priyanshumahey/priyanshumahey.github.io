@@ -1,0 +1,51 @@
+---
+title: "Redis"
+description: "An in-memory data store used as a database, cache, and message broker."
+date: 2026-03-15
+published: true
+chapter: 16
+group: "Technologies"
+groupId: 6
+groupDescription: "Deep dives into specific technologies commonly used in system design."
+---
+
+## Overview
+
+Redis (**RE**mote **DI**ctionary **S**erver) is an open source in-memory key-value database. 
+It's often used as a cache, message broker, and for real-time analytics.
+Redis supports a variety of different data structures, including strings, hashes, lists, sets, and sorted sets.
+It also provides several key database features such as replication, persistence, and high availability.
+Overall, Redis is a powerful tool for building high-performance applications and it's a popular topic in system design.
+
+Let's break down a couple of key terms before we begin:
+- Key-value database: A type of database that stores data as a collection of key-value pairs, where each key is unique and maps to a specific value.
+- In-memory: Data is stored in the main memory (RAM) of the server
+- Persistence: The ability to save data to disk so that it can be recovered after a restart or crash.
+- Replication: The process of copying data from one server (the master) to one or more other servers (the replicas) to ensure data availability and redundancy.
+
+In many cases, Redis is used as a cache that sits in front of a primary database with the purpose of improving read performance.
+It can help reduce the load on the primary database by serving frequently accessed data from memory, which is much faster than disk-based storage.
+
+## Data Types
+
+As opposed to Memcached, Redis supports a variety of data types. Each of them has it's own use cases and several serve to extend the functionality of Redis beyond a simple key-value store.
+You can consider Redis to be something like a dictionary, where the keys are strings but the values can be of different types.
+Different keys will store different values and the type of value can be different for each key.
+
+<div className="my-8">
+  <RedisDataTypesDemo />
+</div>
+
+## Caching
+
+The most common use of Redis is as a **cache** — a fast, in-memory layer that sits between your application and a slower persistent database like MySQL or PostgreSQL.
+
+The idea is simple: before hitting the database for every read, check Redis first. If the data is there (a **cache hit**), return it immediately. If not (a **cache miss**), fetch it from the database, store it in Redis for next time, and then return it.
+
+This pattern is sometimes called **cache-aside** (or lazy-loading) because the application is responsible for populating the cache on demand.
+
+Step through each scenario below to see how data flows:
+
+<div className="my-8">
+  <RedisCacheDemo />
+</div>
