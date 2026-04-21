@@ -1,0 +1,324 @@
+---
+title: Lookout
+description: A distributed multi-camera video RAG system with on-device multimodal embeddings and peer-to-peer transport over QUIC.
+date: 2026-04-20
+published: true
+tags: ["ai", "rust", "rag", "on-device", "iroh", "cactus", "gemma", "p2p"]
+featured: true
+---
+
+<div className="my-8">
+  <LookoutArchitecture />
+</div>
+
+<div className="flex flex-wrap gap-x-12 gap-y-4 my-8 text-sm">
+  <div>
+    <span className="block uppercase text-[11px] font-semibold tracking-widest text-muted-foreground/60 mb-1">Timeline</span>
+    <span className="text-foreground">April 2026 · 24h hackathon</span>
+  </div>
+  <div>
+    <span className="block uppercase text-[11px] font-semibold tracking-widest text-muted-foreground/60 mb-1">Stack</span>
+    <span className="text-foreground">Rust · iroh · Cactus · Gemma 4 · ChromaDB · React</span>
+  </div>
+  <div>
+    <span className="block uppercase text-[11px] font-semibold tracking-widest text-muted-foreground/60 mb-1">Focus</span>
+    <span className="text-foreground">On-Device AI · Multimodal RAG · P2P Systems</span>
+  </div>
+  <div>
+    <span className="block uppercase text-[11px] font-semibold tracking-widest text-muted-foreground/60 mb-1">Recognition</span>
+    <span className="text-foreground">Grand Prize · Best B2B · Best Technical Hack at Cactus × DeepMind × YC</span>
+  </div>
+</div>
+
+<GitHubLinkCard url="https://github.com/priyanshumahey/voice-agents-hack" />
+<LanguageBar languages={[
+  { name: "Rust", percentage: 79.4 },
+  { name: "TypeScript", percentage: 17.6 },
+  { name: "Shell", percentage: 2.0 },
+  { name: "Other", percentage: 1.0 },
+]} />
+
+---
+
+<span className="block uppercase text-[11px] font-semibold tracking-widest text-muted-foreground/60 mb-4">MOTIVATION</span>
+
+## Why build distributed video RAG?
+
+<span className="block text-muted-foreground text-lg mb-8">
+Watching many cameras at once, without shipping a single raw frame to the cloud.
+</span>
+
+Surveillance, robotics, and "smart space" deployments increasingly involve **many concurrent video feeds**: several rooms, several robots, several cameras on a vehicle.
+Operators need to ask natural-language questions across all of them, like *"when did the package get delivered?"*, *"which camera last saw the red backpack?"*,
+or *"did anyone enter the lab between 3 and 5pm?"*.
+
+Today those questions get answered one of two bad ways: ship every raw frame to the cloud (expensive, privacy-hostile, bandwidth-bound),
+or stay single-camera and lose the cross-feed narrative. Neither works once you care about **privacy, latency, or operating offline**.
+
+**Lookout** treats each camera as a small edge computer. It captures locally, embeds locally with Gemma 4 on Cactus, and only ships
+tiny embedding vectors (not raw video) over a peer-to-peer QUIC link to a central leader. The leader indexes everything into ChromaDB and
+answers natural-language queries over the combined index. Raw clips stay on the camera that recorded them and are only ever streamed on explicit request.
+
+It was built in ~24 hours at the **Cactus × DeepMind × YC hackathon**, where it won **Best B2B**, **Best Technical Hack**, and the **Grand Prize**.
+
+---
+
+<span className="block uppercase text-[11px] font-semibold tracking-widest text-muted-foreground/60 mb-4">OVERVIEW</span>
+
+## The three pieces
+
+<span className="block text-muted-foreground text-lg mb-8">
+A follower lives on every camera. A leader lives on one server. A UI lives in a browser. Everything between them is QUIC.
+</span>
+
+<div className="grid grid-cols-1 md:grid-cols-3 gap-8 my-8">
+  <div>
+    <h4 className="text-lg font-bold text-foreground mb-2">Follower</h4>
+    <span className="block text-muted-foreground text-sm">
+      A Rust binary that runs on each camera node. It captures webcam frames, slides a short window over them, calls Gemma 4 through Cactus to produce a single multimodal embedding per window, and pushes <code>{`{embedding, caption, camera_id, timestamp}`}</code> upstream over iroh. Raw video never leaves the device by default.
+    </span>
+  </div>
+  <div>
+    <h4 className="text-lg font-bold text-foreground mb-2">Leader</h4>
+    <span className="block text-muted-foreground text-sm">
+      A Rust binary that accepts ingest connections from any number of followers over iroh QUIC, dedupes and persists chunks into ChromaDB, and serves a small HTTP API for the UI: <code>GET /api/cameras</code>, <code>GET /api/live/:id</code>, <code>POST /api/query</code>. Query answers are synthesized by Gemma 4 on Cactus, also running on-device.
+    </span>
+  </div>
+  <div>
+    <h4 className="text-lg font-bold text-foreground mb-2">UI</h4>
+    <span className="block text-muted-foreground text-sm">
+      A React + Vite dashboard that shows every connected follower as a live tile, lets the operator ask questions in natural language, and plays back raw clips fetched lazily from the originating camera. It talks only to the leader, so it never has to know anything about the P2P mesh underneath.
+    </span>
+  </div>
+</div>
+
+---
+
+<span className="block uppercase text-[11px] font-semibold tracking-widest text-muted-foreground/60 mb-4">ARCHITECTURE</span>
+
+## System anatomy
+
+<span className="block text-muted-foreground mb-6">
+  The whole system is three processes that could each live on a different continent. Followers dial the leader over iroh, an authenticated QUIC transport with
+  built-in NAT traversal, so there's no port-forwarding, no VPN, and no CA infrastructure to manage. Every peer is identified by its Ed25519 <code>NodeId</code>.
+</span>
+
+<span className="block text-muted-foreground mb-6">
+  The hero animation at the top of this page cycles through the three interactions the system actually supports: steady-state ingest (vectors flowing up), operator queries (UI to leader to ChromaDB to Gemma), and on-demand playback (UI to leader to originating follower). Everything between edge and leader is a single authenticated QUIC connection per camera.
+</span>
+
+---
+
+<span className="block uppercase text-[11px] font-semibold tracking-widest text-muted-foreground/60 mb-4">FOLLOWER</span>
+
+## On-device embedding pipeline
+
+<span className="block text-muted-foreground mb-6">
+  Each follower runs a tight loop: capture, chunk, embed, ship. The embedding step is the interesting one. Gemma 4 runs on-device via Cactus
+  and produces a multimodal vector over a short window of frames in a few hundred milliseconds on Apple Silicon. The same model produces a one-sentence caption
+  that we also embed into a text collection so retrieval can fuse dense video similarity with sparse caption matches.
+</span>
+
+<div className="my-8">
+  <EmbeddingPipeline />
+</div>
+
+<span className="block text-muted-foreground/60 text-xs text-center italic -mt-4 mb-8">Capture, embed, ship. A disk spool keeps ingest at-least-once even over flaky networks.</span>
+
+<div className="my-8 rounded-xl overflow-hidden border border-border">
+  <video src="/projects/lookout/recording.mp4" autoPlay muted loop playsInline className="w-full h-auto" />
+</div>
+
+<span className="block text-muted-foreground/60 text-xs text-center italic -mt-4 mb-8">A follower capturing and embedding a live webcam feed in real time. Only the resulting vectors leave the device.</span>
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-8 my-8">
+  <div>
+    <h4 className="text-lg font-bold text-foreground mb-2">Zero-copy embedding</h4>
+    <span className="block text-muted-foreground text-sm">
+      Gemma 4 on Cactus uses mmap and zero-copy weight loading, which is why a 4B multimodal model comfortably runs on an M-series Mac mini with headroom for the capture pipeline on the same box.
+    </span>
+  </div>
+  <div>
+    <h4 className="text-lg font-bold text-foreground mb-2">Graceful degradation</h4>
+    <span className="block text-muted-foreground text-sm">
+      If inference falls behind real time, the follower drops frame samples first, captions second, and entire chunks last, emitting a metric every time, so the pipeline never silently loses fidelity.
+    </span>
+  </div>
+  <div>
+    <h4 className="text-lg font-bold text-foreground mb-2">Disk spool on disconnect</h4>
+    <span className="block text-muted-foreground text-sm">
+      When the iroh stream errors, chunks are written to a bounded ring buffer on disk and drained oldest-first on reconnect, deduped by <code>chunk_id</code>. Followers on flaky Wi-Fi or LTE recover transparently.
+    </span>
+  </div>
+  <div>
+    <h4 className="text-lg font-bold text-foreground mb-2">Synthetic mode</h4>
+    <span className="block text-muted-foreground text-sm">
+      A <code>--synthetic</code> flag short-circuits Gemma and emits random vectors on the same cadence, so the transport layer and leader can be exercised end-to-end without spinning up the model at all.
+    </span>
+  </div>
+</div>
+
+---
+
+<span className="block uppercase text-[11px] font-semibold tracking-widest text-muted-foreground/60 mb-4">TRANSPORT</span>
+
+## Wire protocol over iroh
+
+<span className="block text-muted-foreground mb-6">
+  Every node-to-node link is a single iroh QUIC connection, identified by an ALPN string and carrying length-prefixed <code>postcard</code>-encoded frames.
+  The leader is the accepting side; followers dial it using a ticket it prints at startup. After the initial <code>Hello</code>, the stream is long-lived and
+  bidirectional: the follower pushes <code>Chunk</code> and <code>FrameResponse</code> frames, the leader pushes <code>Ack</code> and <code>FrameRequest</code> frames.
+</span>
+
+<div className="my-8">
+  <WireProtocolFlow />
+</div>
+
+<span className="block text-muted-foreground/60 text-xs text-center italic -mt-4 mb-8">One long-lived bidirectional QUIC stream per follower carries embeddings up and live-frame requests down.</span>
+
+<span className="block text-muted-foreground mb-6">
+  iroh does the unglamorous plumbing: Ed25519-authenticated TLS 1.3, NAT traversal with relay fallback, connection migration across network changes,
+  and 0-RTT resumption. A follower moving from Wi-Fi to LTE keeps the same logical stream alive. There is no CA, no shared secret, and no port forwarding.
+  The leader prints a dial ticket and that's the whole bootstrap.
+</span>
+
+---
+
+<span className="block uppercase text-[11px] font-semibold tracking-widest text-muted-foreground/60 mb-4">QUERY</span>
+
+## Natural-language retrieval
+
+<span className="block text-muted-foreground mb-6">
+  A query comes in as plain English. The leader embeds it with Gemma on Cactus in text-only mode, runs filtered ANN search across the
+  per-modality collections in ChromaDB, fuses the results with reciprocal rank fusion, and hands the top-K captions plus their <code>(camera, timestamp)</code>
+  metadata back to Gemma for synthesis. The final answer cites specific clips that the UI can play back on demand.
+</span>
+
+<div className="my-8">
+  <QueryRetrievalFlow />
+</div>
+
+<span className="block text-muted-foreground/60 text-xs text-center italic -mt-4 mb-8">Dense video, dense audio, and text caption vectors are fused before Gemma writes the final answer.</span>
+
+<div className="my-8 rounded-xl overflow-hidden border border-border">
+  <video src="/projects/lookout/search.mp4" autoPlay muted loop playsInline className="w-full h-auto" />
+</div>
+
+<span className="block text-muted-foreground/60 text-xs text-center italic -mt-4 mb-8">Asking the leader a natural-language question across every connected camera. Answer, citations, and clip playback in one pass.</span>
+
+### Stage 1: parse the question
+
+<span className="block text-muted-foreground mb-6">
+  Most surveillance questions come with implicit filters: <em>"did anyone enter the lab <strong>between 3 and 5pm</strong>"</em>, <em>"what did <strong>cam-front</strong> see in the <strong>last 30 minutes</strong>"</em>.
+  Before we touch ChromaDB, the leader asks Gemma to rewrite the query into a structured JSON envelope of the form <code>{`{time_start_ms, time_end_ms, camera_ids, top_k}`}</code>. If the user
+  doesn't name a window, the parser defaults to the last 30 minutes; <code>top_k</code> defaults to 20 and is capped at 50. Gemma's output runs through a thinking-marker
+  stripper (<code>&lt;|channel|&gt;analysis</code> / <code>&lt;|message|&gt;</code>) before JSON extraction, because Harmony-style reasoning will otherwise wrap the envelope.
+</span>
+
+### Stage 2: embed the query
+
+<span className="block text-muted-foreground mb-6">
+  The remaining text is embedded by the same Gemma 4 instance that captions incoming chunks, just invoked in text-only mode. The call stays on the leader's hardware,
+  L2-normalizes the output, rejects non-finite or zero-norm vectors, and goes through a 128-entry LRU on the raw query string. The cache matters more than it sounds:
+  during iteration and demos you re-ask the same question many times, and a warm cache turns the embed step into a hash lookup.
+</span>
+
+### Stage 3: modality-aware ANN search
+
+<span className="block text-muted-foreground mb-6">
+  Chunks live in two ChromaDB collections, <code>video-clips</code> and <code>audio-clips</code>, indexed under cosine distance. Splitting by modality keeps the query
+  embedding dimension aligned with the stored dimension and lets an audio-only question skip video entirely. The <code>where</code> filter is assembled from the parsed envelope:
+</span>
+
+```json
+{
+  "start_ts_ms": { "$lte": end_ms },
+  "end_ts_ms":   { "$gte": start_ms },
+  "camera_id":   { "$in": ["cam-front", "cam-lab"] }
+}
+```
+
+<span className="block text-muted-foreground mb-6">
+  Each collection is queried with <code>n_results = top_k * 2</code> so we have headroom to fuse. If ChromaDB isn't reachable, the leader degrades to a brute-force cosine
+  scan over the in-memory store. Slower, but the API contract doesn't change.
+</span>
+
+### Stage 4: reciprocal rank fusion and caption boost
+
+<span className="block text-muted-foreground mb-6">
+  Video and audio hit-lists are merged with Reciprocal Rank Fusion (<code>RRF_K = 60</code>), multiplied by a tunable <code>rrf_weight</code> (default <code>2.0</code>, via <code>LEADER_RRF_WEIGHT</code>).
+  The final ranking score per chunk is:
+</span>
+
+```
+score = modality_aware_cosine(q, chunk)
+      + rrf_weight * Σ 1 / (RRF_K + rank_in_modality)
+      + caption_boost
+```
+
+<span className="block text-muted-foreground mb-6">
+  <code>modality_aware_cosine</code> slices the stored embedding back into its video and audio halves (<code>video[0..video_dim] || audio[video_dim..]</code>) so similarity
+  is computed against whichever half matches the collection that produced the hit. <code>caption_boost</code> (default cap <code>0.15</code>, via <code>LEADER_CAPTION_BOOST</code>)
+  adds a lightweight keyword-overlap term between the query and the chunk caption (stop-words under 3 characters ignored) so exact phrases like "red backpack" don't get
+  drowned out by near-neighbors in vector space.
+</span>
+
+### Stage 5: synthesize the answer
+
+<span className="block text-muted-foreground mb-6">
+  The top 10 chunks are flattened into a numbered caption list of the form <code>{`{idx}. [{camera_id} {start_ts_ms}ms..{end_ts_ms}ms] {caption}`}</code> and passed to Gemma
+  with <code>max_tokens = 256</code>, <code>temperature = 0.2</code>, and a terse system prompt that requires citations in the form <code>(#2, cam-lab)</code>.
+  Deliberately, only captions go in. No re-sent JPEGs. An early version that re-attached thumbnails for each citation candidate caused Gemma to ignore the question and
+  start describing the scene instead. Text-only synthesis was both faster <em>and</em> more accurate.
+</span>
+
+<span className="block text-muted-foreground mb-6">
+  If fewer than <code>top_k</code> hits clear a score floor of <code>0.3</code>, the prompt requires Gemma to answer <em>"No, the captured footage does not show that."</em>
+  rather than confabulate. If Cactus isn't loaded at all, the endpoint falls through to <code>"Found N chunks (LLM not loaded)"</code> so the UI still renders hits.
+</span>
+
+### Splitting retrieve from synthesize
+
+<span className="block text-muted-foreground mb-6">
+  The HTTP surface exposes three endpoints rather than one. <code>POST /api/search</code> returns hits only (~100-500ms); <code>POST /api/answer</code> takes a list of chunk ids
+  and runs synthesis (~1-5s); <code>POST /api/query</code> does both in a single call. The UI calls search first so the grid of citations lights up immediately, then
+  calls answer in the background. The perceived latency is the cheap half, not the Gemma half. A typical end-to-end <code>/api/query</code> p95 lands under 5 seconds on a single
+  Mac mini against a week of 8-camera data, which was the latency bar we set going into the build.
+</span>
+
+---
+
+<span className="block uppercase text-[11px] font-semibold tracking-widest text-muted-foreground/60 mb-4">KEY DECISIONS</span>
+
+## What I Learned
+
+<span className="block text-muted-foreground mb-6">
+  Shipping a distributed multimodal RAG system in 24 hours forced a lot of decisions that would normally get over-engineered. A few things I'll carry forward:
+</span>
+
+<div className="space-y-6 my-8">
+  <div>
+    <h4 className="text-base font-semibold text-foreground mb-1">On-device multimodal is genuinely ready.</h4>
+    <span className="block text-muted-foreground text-sm">
+      Gemma 4 on Cactus produces useful video and audio embeddings on consumer hardware fast enough for soft-real-time ingest. The "send raw frames to a hosted vision model" era of video understanding is ending. The interesting systems push inference to the edge and only centralize vectors.
+    </span>
+  </div>
+  <div>
+    <h4 className="text-base font-semibold text-foreground mb-1">P2P transport is a superpower for enterprise demos.</h4>
+    <span className="block text-muted-foreground text-sm">
+      Plugging four laptops into four different networks and watching them all connect to one leader with zero configuration (no port forwarding, no VPN, no firewall rules) is the single most compelling demo moment. It's also the feature judges and customers latched onto fastest.
+    </span>
+  </div>
+  <div>
+    <h4 className="text-base font-semibold text-foreground mb-1">The hard part is the retrieval, not the model.</h4>
+    <span className="block text-muted-foreground text-sm">
+      Swapping the embedding cadence or the synthetic backend was easy. Getting multi-camera, time-filtered, multi-modal retrieval to produce <em>good</em> top-K results took the most iteration. Window size, caption quality, and fusion weights all mattered more than any individual knob on the model.
+    </span>
+  </div>
+  <div>
+    <h4 className="text-base font-semibold text-foreground mb-1">Feature flags are how you demo fast.</h4>
+    <span className="block text-muted-foreground text-sm">
+      Having <code>--synthetic</code>, <code>--no-camera</code>, and a <code>cactus</code> feature flag meant the system ran end-to-end on any machine in the room within two minutes. That flexibility was worth more during the hackathon than any single piece of the pipeline.
+    </span>
+  </div>
+</div>

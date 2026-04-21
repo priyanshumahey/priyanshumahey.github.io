@@ -3,6 +3,7 @@
 import { GallerySection, GitflowDemo, IvDemo, WorkSection, type ProjectData } from "@/components/projects"
 import { FleurEditorCard, FleurHeroCard } from "@/components/projects/ProjectCards/FleurHero"
 import { GitHeroCard } from "@/components/projects/ProjectCards/GitflowHero"
+import { LookoutArchitecture } from "@/components/projects/Demos/Lookout/LookoutArchitecture"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { LinkPreview } from "@/components/ui/link-preview"
 import { motion } from "framer-motion"
@@ -49,6 +50,13 @@ const workExperiences: ProjectData[] = [
 
 // Additional full-width gallery projects (ordered by date, newest first)
 const galleryProjects: ProjectData[] = [
+  {
+    title: "Lookout",
+    description: "Distributed multi-camera video RAG with on-device embeddings over P2P QUIC.",
+    year: "2026",
+    link: "/projects/lookout",
+    baseComponent: <LookoutArchitecture />,
+  },
     {
     title: "Quack",
     description: "API testing tool ",

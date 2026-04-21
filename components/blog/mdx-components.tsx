@@ -1,6 +1,6 @@
 import EmploymentCard, { EmploymentCardCompact } from "@/components/employmentCard";
 import { LanguageBar } from "@/components/language-bar";
-import { AgentGrepDemo, ASTVisualizerDemo, CopilotArchitecture, FileWatcherDemo, FleurDemo, FleurExplodedView, GitflowAnimatedDemo, GrepDemo, IndexingPipelineDemo, IvDemo, NextEditAnimatedDemo, NextEditArchitecture, NextEditDemo, PollingDemo, RedisCacheDemo, RedisDataTypesDemo, SemanticSearchDemo, SSEDemo, TreeSitterDemo, WebSocketDemo } from "@/components/projects/Demos";
+import { AgentGrepDemo, ASTVisualizerDemo, CopilotArchitecture, EmbeddingPipeline, EmbeddingSpaceDemo, FileWatcherDemo, FleurDemo, FleurExplodedView, GitflowAnimatedDemo, GrepDemo, IndexingPipelineDemo, IvDemo, LookoutArchitecture, MultiCameraTimelineDemo, NextEditAnimatedDemo, NextEditArchitecture, NextEditDemo, P2PMeshDemo, PollingDemo, QueryRetrievalFlow, RedisCacheDemo, RedisDataTypesDemo, SemanticSearchDemo, SSEDemo, TreeSitterDemo, WebSocketDemo, WireProtocolFlow } from "@/components/projects/Demos";
 import { CodeIndexingArchitecture } from "@/components/projects/Demos/Fleur/CodeIndexingArchitecture";
 import { GitflowDemo } from "@/components/projects/Demos/GitflowDemo";
 import Image from "next/image";
@@ -48,6 +48,13 @@ const components = {
   SSEDemo,
   RedisCacheDemo,
   RedisDataTypesDemo,
+  LookoutArchitecture,
+  EmbeddingPipeline,
+  WireProtocolFlow,
+  QueryRetrievalFlow,
+  EmbeddingSpaceDemo,
+  MultiCameraTimelineDemo,
+  P2PMeshDemo,
   LanguageBar,
   GitHubLinkCard,
   BlogLinkCard,
