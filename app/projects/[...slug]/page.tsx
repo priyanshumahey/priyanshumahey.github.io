@@ -46,12 +46,23 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
     return {
         title: project.title,
         description: project.description,
+        alternates: {
+            canonical: `https://priyanshumahey.github.io/projects/${project.slugAsParams}`,
+        },
+        authors: [{ name: "Priyanshu Mahey", url: "https://priyanshumahey.github.io" }],
         openGraph: {
             title: project.title,
             description: project.description,
             type: "article",
             url: `https://priyanshumahey.github.io/projects/${project.slugAsParams}`,
             ...(project.image && { images: [{ url: project.image }] }),
+        },
+        twitter: {
+            card: "summary_large_image",
+            title: project.title,
+            description: project.description,
+            creator: "@PriyanshuMahey",
+            ...(project.image && { images: [project.image] }),
         },
     };
 }
@@ -64,8 +75,27 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
         notFound();
     }
 
+    const projectJsonLd = {
+        "@context": "https://schema.org",
+        "@type": "CreativeWork",
+        name: project.title,
+        description: project.description,
+        url: `https://priyanshumahey.github.io/projects/${project.slugAsParams}`,
+        dateCreated: project.date,
+        author: {
+            "@type": "Person",
+            name: "Priyanshu Mahey",
+            url: "https://priyanshumahey.github.io",
+        },
+        ...(project.image && { image: [project.image] }),
+    };
+
     return (
         <div className="min-h-screen bg-white dark:bg-[#0a0a0a] text-neutral-900 dark:text-[#fafafa]">
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(projectJsonLd) }}
+            />
             {/* Reading Progress Bar */}
             <ReadingProgress />
             

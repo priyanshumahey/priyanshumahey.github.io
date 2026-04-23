@@ -56,11 +56,16 @@ export async function generateMetadata({ params }: PostPageProps): Promise<Metad
   return {
     title: post.title,
     description: post.description,
+    alternates: {
+      canonical: `https://priyanshumahey.github.io/blog/${post.slugAsParams}`,
+    },
+    authors: [{ name: "Priyanshu Mahey", url: "https://priyanshumahey.github.io" }],
     openGraph: {
       title: post.title,
       description: post.description,
       type: "article",
       publishedTime: post.date,
+      authors: ["Priyanshu Mahey"],
       url: `https://priyanshumahey.github.io/blog/${post.slugAsParams}`,
       ...(post.image && {
         images: [{ url: post.image }],
@@ -70,6 +75,7 @@ export async function generateMetadata({ params }: PostPageProps): Promise<Metad
       card: "summary_large_image",
       title: post.title,
       description: post.description,
+      creator: "@PriyanshuMahey",
       ...(post.image && {
         images: [post.image],
       }),
@@ -87,8 +93,37 @@ export default async function PostPage({ params }: PostPageProps) {
 
   const { prev, next } = getAdjacentPosts(post.slugAsParams);
 
+  const articleJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: post.title,
+    description: post.description,
+    datePublished: post.date,
+    dateModified: post.date,
+    author: {
+      "@type": "Person",
+      name: "Priyanshu Mahey",
+      url: "https://priyanshumahey.github.io",
+    },
+    publisher: {
+      "@type": "Person",
+      name: "Priyanshu Mahey",
+      url: "https://priyanshumahey.github.io",
+    },
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": `https://priyanshumahey.github.io/blog/${post.slugAsParams}`,
+    },
+    url: `https://priyanshumahey.github.io/blog/${post.slugAsParams}`,
+    ...(post.image && { image: [post.image] }),
+  };
+
   return (
     <div className="min-h-screen bg-white dark:bg-[#0a0a0a] text-neutral-900 dark:text-[#fafafa]">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+      />
       {/* Reading Progress Bar */}
       <ReadingProgress />
       
