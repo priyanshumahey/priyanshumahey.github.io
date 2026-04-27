@@ -1,6 +1,7 @@
 "use client"
 
 import { GallerySection, GitflowDemo, IvDemo, WorkSection, type ProjectData } from "@/components/projects"
+import { AnthillHeroCard } from "@/components/projects/ProjectCards/AnthillHero"
 import { FleurEditorCard, FleurHeroCard } from "@/components/projects/ProjectCards/FleurHero"
 import { GitHeroCard } from "@/components/projects/ProjectCards/GitflowHero"
 import { LookoutArchitecture } from "@/components/projects/Demos/Lookout/LookoutArchitecture"
@@ -50,6 +51,13 @@ const workExperiences: ProjectData[] = [
 
 // Additional full-width gallery projects (ordered by date, newest first)
 const galleryProjects: ProjectData[] = [
+  {
+    title: "Anthill",
+    description: "Collaborative research-paper editor where AI agents edit the document over a shared Yjs CRDT.",
+    year: "2026",
+    link: "/projects/anthill",
+    baseComponent: <AnthillHeroCard />,
+  },
   {
     title: "Lookout",
     description: "Distributed multi-camera video RAG with on-device embeddings over P2P QUIC.",

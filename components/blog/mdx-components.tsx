@@ -1,6 +1,6 @@
 import EmploymentCard, { EmploymentCardCompact } from "@/components/employmentCard";
 import { LanguageBar } from "@/components/language-bar";
-import { AgentGrepDemo, ASTVisualizerDemo, CopilotArchitecture, EmbeddingPipeline, EmbeddingSpaceDemo, FileWatcherDemo, FleurDemo, FleurExplodedView, GitflowAnimatedDemo, GrepDemo, IndexingPipelineDemo, IvDemo, LookoutArchitecture, MultiCameraTimelineDemo, NextEditAnimatedDemo, NextEditArchitecture, NextEditDemo, P2PMeshDemo, PollingDemo, QueryRetrievalFlow, RedisCacheDemo, RedisDataTypesDemo, SemanticSearchDemo, SSEDemo, TreeSitterDemo, WebSocketDemo, WireProtocolFlow } from "@/components/projects/Demos";
+import { AgentGrepDemo, AnthillAutoCiteDemo, AnthillBridgeSequence, AnthillCitationStates, AnthillConnectDialog, AnthillEditOpPlayground, AnthillEditOpsTable, AnthillEditorAnatomy, AnthillEmbeddingPipeline, AnthillLiteratureSearchPanel, AnthillNiaSchemaDemo, AnthillNiaSequence, AnthillPresence, AnthillReviewMockup, AnthillReviewSequence, AnthillSystemDiagram, AnthillTrySearch, ASTVisualizerDemo, CopilotArchitecture, EmbeddingPipeline, EmbeddingSpaceDemo, FileWatcherDemo, FleurDemo, FleurExplodedView, GitflowAnimatedDemo, GrepDemo, IndexingPipelineDemo, IvDemo, LookoutArchitecture, MultiCameraTimelineDemo, NextEditAnimatedDemo, NextEditArchitecture, NextEditDemo, P2PMeshDemo, PollingDemo, QueryRetrievalFlow, RedisCacheDemo, RedisDataTypesDemo, SemanticSearchDemo, SSEDemo, TreeSitterDemo, WebSocketDemo, WireProtocolFlow } from "@/components/projects/Demos";
 import { CodeIndexingArchitecture } from "@/components/projects/Demos/Fleur/CodeIndexingArchitecture";
 import { GitflowDemo } from "@/components/projects/Demos/GitflowDemo";
 import Image from "next/image";
@@ -55,6 +55,22 @@ const components = {
   EmbeddingSpaceDemo,
   MultiCameraTimelineDemo,
   P2PMeshDemo,
+  AnthillSystemDiagram,
+  AnthillEmbeddingPipeline,
+  AnthillEditorAnatomy,
+  AnthillAutoCiteDemo,
+  AnthillConnectDialog,
+  AnthillCitationStates,
+  AnthillLiteratureSearchPanel,
+  AnthillReviewMockup,
+  AnthillBridgeSequence,
+  AnthillNiaSequence,
+  AnthillReviewSequence,
+  AnthillEditOpsTable,
+  AnthillNiaSchemaDemo,
+  AnthillEditOpPlayground,
+  AnthillTrySearch,
+  AnthillPresence,
   LanguageBar,
   GitHubLinkCard,
   BlogLinkCard,

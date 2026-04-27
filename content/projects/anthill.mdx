@@ -1,0 +1,328 @@
+---
+title: Anthill
+description: A collaborative research-paper editor where AI agents edit the document directly over a shared Yjs CRDT, with citations grounded against the actual cited PDF.
+date: 2026-04-26
+published: true
+tags: ["ai", "collaboration", "yjs", "rag", "agents", "hackathon"]
+featured: true
+---
+
+<div className="my-8">
+  <AnthillEditorAnatomy />
+</div>
+
+<div className="flex flex-wrap gap-x-12 gap-y-4 my-8 text-sm">
+  <div>
+    <span className="block uppercase text-[11px] font-semibold tracking-widest text-muted-foreground/60 mb-1">Timeline</span>
+    <span className="text-foreground">April 2026 · weekend hackathon</span>
+  </div>
+  <div>
+    <span className="block uppercase text-[11px] font-semibold tracking-widest text-muted-foreground/60 mb-1">Stack</span>
+    <span className="text-foreground">Next.js · Plate · Yjs · Hocuspocus · FastAPI · ChromaDB · llama.cpp · Supabase</span>
+  </div>
+  <div>
+    <span className="block uppercase text-[11px] font-semibold tracking-widest text-muted-foreground/60 mb-1">Focus</span>
+    <span className="text-foreground">Multi-agent collaboration · Citation grounding · CRDTs · Reviewer-driven revision</span>
+  </div>
+  <div>
+    <span className="block uppercase text-[11px] font-semibold tracking-widest text-muted-foreground/60 mb-1">Partners</span>
+    <span className="text-foreground">Nia (cited Q&A) · AgentMail (review inbox)</span>
+  </div>
+</div>
+
+<GitHubLinkCard url="https://github.com/priyanshumahey/anthill" />
+<LanguageBar languages={[
+  { name: "TypeScript", percentage: 83.5 },
+  { name: "Python", percentage: 15.8 },
+  { name: "Other", percentage: 0.7 },
+]} />
+
+---
+
+<span className="block uppercase text-[11px] font-semibold tracking-widest text-muted-foreground/60 mb-4">MOTIVATION</span>
+
+## Why put AI inside the document?
+
+<span className="block text-muted-foreground text-lg mb-8">
+Writing a research paper is mostly context-switching, and the tools we use treat AI like a sidebar.
+</span>
+
+A normal revision loop looks like this. Draft a paragraph. Tab away to find prior work. Tab away again to format the citation. Tab away a third time to read the reviewer's email and figure out which paragraph it's actually about. By the time you get back to the document, you've forgotten what you were trying to say. Most of the published research about *"AI for writing"* has measured the wrong thing: it has measured the quality of the suggestion, not the cost of leaving the page to ask for one.
+
+Today's AI writing tools all share the same shape. A chat panel sits next to the document and *talks about* it without ever touching it. The chat suggests, the user copies, the user pastes, the user formats. The chrome is different but the cost is the same.
+
+**Anthill** is a research-paper editor that puts the AI on the same surface as the human. It is built on Plate over a Yjs CRDT, and it exposes a small HTTP bridge that lets agents read the live document and write back into it as Yjs transactions. The browser sees agent edits the same way it sees a collaborator's edits: they appear in real time, with an avatar in the corner attributing the change. There is no copy, no paste, and no sidebar. Citations, reviewer feedback, and literature search all happen on the same page as the prose.
+
+It was built over a weekend at the **Anthropic × Nia × AgentMail hackathon**, and the post below is the system end-to-end: the embedding store, the agent bridge, the auto-cite plugin, Nia-grounded verification, and the review-response agent.
+
+---
+
+<span className="block uppercase text-[11px] font-semibold tracking-widest text-muted-foreground/60 mb-4">OVERVIEW</span>
+
+## The four pieces
+
+<span className="block text-muted-foreground text-lg mb-8">
+A Plate editor in the browser, a Bun process holding the CRDT, a FastAPI backend behind a dev tunnel, and one shared Postgres.
+</span>
+
+<div className="grid grid-cols-1 md:grid-cols-3 gap-8 my-8">
+  <div>
+    <h4 className="text-lg font-bold text-foreground mb-2">Editor (web)</h4>
+    <span className="block text-muted-foreground text-sm">
+      A Next.js + Plate editor with a citation-suggest plugin, a five-state citation badge, an agents panel, and a "connect agent" dialog. Live edits flow over a WebSocket; agent runs stream over Server-Sent Events. The browser never talks to the FastAPI backend or to Nia directly.
+    </span>
+  </div>
+  <div>
+    <h4 className="text-lg font-bold text-foreground mb-2">Collab (collab/)</h4>
+    <span className="block text-muted-foreground text-sm">
+      One Bun process exposing two ports. Hocuspocus on the WebSocket handles Yjs sync and presence. The agent bridge on <code>:8889</code> accepts HTTP edit ops and writes them into the same <code>Y.Doc</code> via <code>openDirectConnection</code>. That colocation is what makes "agents and humans share one CRDT" cheap.
+    </span>
+  </div>
+  <div>
+    <h4 className="text-lg font-bold text-foreground mb-2">Backend (backend/)</h4>
+    <span className="block text-muted-foreground text-sm">
+      FastAPI on a laptop, exposed via dev tunnel. Hosts the Harrier-embedded local arXiv corpus, the <code>/search</code> and <code>/embed</code> endpoints, and an agent runner that spawns one of eight named agents per call and streams events back through a per-run SSE channel.
+    </span>
+  </div>
+</div>
+
+<div className="my-8">
+  <AnthillSystemDiagram />
+</div>
+
+<span className="block text-muted-foreground/60 text-xs text-center italic -mt-4 mb-8">Three processes, two HTTP secrets, one Postgres, and one shared CRDT. Agents and humans converge on the same <code>Y.Doc</code>.</span>
+
+---
+
+<span className="block uppercase text-[11px] font-semibold tracking-widest text-muted-foreground/60 mb-4">CORPUS</span>
+
+## A thousand papers, embedded locally
+
+<span className="block text-muted-foreground text-lg mb-8">
+The retrieval substrate is ~1,000 cs.AI papers, embedded with Harrier-OSS-v1 270M through llama.cpp.
+</span>
+
+<span className="block text-muted-foreground mb-6">
+  At hackathon scale you embed once and query a thousand times, and the GPU sits right under the desk. So the embedding step lives in the same FastAPI process that serves search, and the index is a single Chroma collection on disk. The chunker walks each PDF with PyMuPDF, slides a 512-word window with 64-word overlap, and writes <code>{`(arxiv_id, chunk_index, char_start, char_end)`}</code> alongside every vector. Storing char offsets per chunk costs nothing during ingest and pays for itself the first time someone wants a citation badge that deep-links to the source PDF.
+</span>
+
+<div className="my-8">
+  <AnthillEmbeddingPipeline />
+</div>
+
+<span className="block text-muted-foreground/60 text-xs text-center italic -mt-4 mb-8">PDF in, L2-normalized vector out. The same Harrier instance handles both index-time and query-time embeddings.</span>
+
+<span className="block text-muted-foreground mb-6">
+  Two implementation gotchas were worth more time than the rest of the pipeline combined. Harrier expects an instruction prefix on every query (<code>{'"Instruct: Given a scientific query, retrieve relevant paper passages\\nQuery: "'}</code>); without it the cosine scores collapse because the query vectors land in a different region of the space than the indexed chunks. And llama.cpp's batched embedding path errors on this model, so the script falls back to one <code>create_embedding(text)</code> call per chunk. Slower, reliable, and worth the warm-up time on the first <code>/search</code> request.
+</span>
+
+---
+
+<span className="block uppercase text-[11px] font-semibold tracking-widest text-muted-foreground/60 mb-4">AUTO-CITE</span>
+
+## Type, pause, Tab
+
+<span className="block text-muted-foreground text-lg mb-8">
+The smallest moving part in the system, and the one that makes the editor feel alive.
+</span>
+
+<span className="block text-muted-foreground mb-6">
+  The Plate plugin in <code>citation-suggest-kit.tsx</code> tracks the active block in module-scope refs (no React re-renders on every keystroke). After 1.2 seconds of inactivity on a paragraph with at least 30 characters, the block text is sent to the FastAPI <code>/search</code> endpoint via a Next.js proxy that holds the shared secret. The top hit becomes a ghost-text pill anchored at the caret. Tab inserts it as a Plate <code>citation</code> inline element carrying the full search trace. Esc dismisses, and the plugin remembers the dismissed text in a <code>{`Map<blockId, lastQueriedText>`}</code> so it doesn't re-fire on the next keystroke that lands the cursor back on the block.
+</span>
+
+<div className="my-8">
+  <AnthillAutoCiteDemo />
+</div>
+
+<span className="block text-muted-foreground/60 text-xs text-center italic -mt-4 mb-8">Live config, lifted from <code>DEFAULT_OPTIONS</code> in the plugin source.</span>
+
+<span className="block text-muted-foreground mb-6">
+  Three small behaviors took most of the time. The plugin re-checks <code>refs.blockId</code> and <code>refs.blockText</code> when the response comes back, so if the user kept typing while the request was in flight, the result is dropped and no ghost pill appears. The same memoization map prevents re-querying an unchanged paragraph after every cursor move. And when the top-k contains several closely-tied scores (<code>top.score - score ≤ 0.08</code>), Tab inserts up to <code>maxInsert = 3</code> badges instead of one, because most paragraphs cite one paper but the ones that need a cluster *really* need a cluster.
+</span>
+
+<span className="block text-muted-foreground mb-6">
+  The inserted citation node carries the entire search trace (query, latency, top-k candidates), so clicking the badge opens a popover that shows *why* the agent picked this paper. That trace is the affordance that makes auto-cite trustworthy enough to leave on while you write.
+</span>
+
+---
+
+<span className="block uppercase text-[11px] font-semibold tracking-widest text-muted-foreground/60 mb-4">VERIFICATION</span>
+
+## Five badge states
+
+<span className="block text-muted-foreground text-lg mb-8">
+Embeddings are good for "probably relevant" and bad for "actually supports the claim". That's where Nia comes in.
+</span>
+
+<span className="block text-muted-foreground mb-6">
+  The moment a citation is accepted, the editor fires a <code>ground_citation</code> agent run with the inserted node's identity and the surrounding paragraph as a claim. Nia's <code>document/agent</code> endpoint reads the actual cited PDF and returns a structured verdict against a JSON schema we hand it. The browser is listening on the agent's SSE stream; when a <code>finding</code> event arrives with <code>kind: 'grounded_citation'</code>, the verification driver finds the matching node by <code>(arxivId, chunkIndex, searchedAt)</code> (stable across Yjs reorderings) and merges the verdict into its <code>verification</code> field. The badge re-renders in place.
+</span>
+
+<div className="my-8">
+  <AnthillCitationStates />
+</div>
+
+<span className="block text-muted-foreground/60 text-xs text-center italic -mt-4 mb-8">The five terminal states. <code>not_ready</code> exists because Nia silently hallucinates if you query a still-indexing source.</span>
+
+<span className="block text-muted-foreground mb-6">
+  The schema we send is intentionally strict, so the agent has to answer the verification question rather than wax on. Page number and section path nullable, confidence bounded to <code>[0, 1]</code>, exact quote required (with the contract that it must be verbatim, not paraphrased).
+</span>
+
+<div className="my-8">
+  <AnthillNiaSchemaDemo />
+</div>
+
+<span className="block text-muted-foreground/60 text-xs text-center italic -mt-4 mb-8">Schema in, structured verdict out, plus the war stories from <code>nia_client.py</code>.</span>
+
+<div className="my-8">
+  <AnthillNiaSequence />
+</div>
+
+<span className="block text-muted-foreground/60 text-xs text-center italic -mt-4 mb-8">The verification round-trip. Cache the source id in SQLite and Nia stays cheap on reloads.</span>
+
+---
+
+<span className="block uppercase text-[11px] font-semibold tracking-widest text-muted-foreground/60 mb-4">BRIDGE</span>
+
+## How agents share the CRDT
+
+<span className="block text-muted-foreground text-lg mb-8">
+The naive way to put an agent in a doc is to give it a tool that calls <code>setValue(plate_value)</code>. That nukes anyone else's in-flight edits. The Anthill bridge does something more careful.
+</span>
+
+<span className="block text-muted-foreground mb-6">
+  The bridge opens a Hocuspocus direct connection to the live document and mutates the Yjs fragment inside a <code>Y.transact</code> block, with the agent's identity stamped on the origin so undo and presence stay sane. It is a small Bun HTTP server with a deliberately small surface: discovery, snapshot, full state, edit, presence, and a dev-only repair endpoint. Edits are validated, applied as a single transaction, and broadcast through the same WebSocket every browser is already on.
+</span>
+
+<div className="my-8">
+  <AnthillEditOpPlayground />
+</div>
+
+<span className="block text-muted-foreground/60 text-xs text-center italic -mt-4 mb-8">Pick an op, see the request body and the document mutation. The 9 ops in the playground match <code>collab/src/types.ts</code> exactly.</span>
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-8 my-8">
+  <div>
+    <h4 className="text-lg font-bold text-foreground mb-2">Stable block refs</h4>
+    <span className="block text-muted-foreground text-sm">
+      Every snapshot exposes blocks as <code>b1, b2, ...</code> by ordinal position. Agents reason about *"the third paragraph"*, not about Slate paths that shift on every keystroke. Snapshots also carry inline children (citations, mentions) so the agent knows what would be lost on a destructive edit.
+    </span>
+  </div>
+  <div>
+    <h4 className="text-lg font-bold text-foreground mb-2">Optimistic locking</h4>
+    <span className="block text-muted-foreground text-sm">
+      Every snapshot returns a <code>baseRevision</code>: a content-hashed token derived from the Yjs state. Pass it on <code>POST /edit</code> and the bridge refuses stale writes with <code>409 STALE_REVISION</code>. That's how we avoid an agent stomping on a human typing in the same paragraph.
+    </span>
+  </div>
+  <div>
+    <h4 className="text-lg font-bold text-foreground mb-2">Idempotency keys</h4>
+    <span className="block text-muted-foreground text-sm">
+      Every edit requires an <code>Idempotency-Key</code>. Same key with the same body returns the cached response, so a flaky network never double-applies. Same key with a different body returns <code>409 IDEMPOTENCY_KEY_REUSED_DIFFERENT_BODY</code>, so a buggy agent can't quietly mutate history.
+    </span>
+  </div>
+  <div>
+    <h4 className="text-lg font-bold text-foreground mb-2">Carry-inlines on destructive edits</h4>
+    <span className="block text-muted-foreground text-sm">
+      <code>replaceBlock</code> and <code>setBlockText</code> auto-reattach existing inline citations to the new text. <code>deleteBlock</code> refuses with <code>409 INLINE_ELEMENTS_WOULD_BE_LOST</code> when the block carries inlines, unless the agent passes <code>dropInlineElements: true</code>. Agents reading text-only snapshots rarely know inlines exist; silently losing them would destroy the bibliography.
+    </span>
+  </div>
+</div>
+
+<div className="my-8">
+  <AnthillBridgeSequence />
+</div>
+
+<span className="block text-muted-foreground/60 text-xs text-center italic -mt-4 mb-8">A representative round-trip: snapshot, embed, edit, broadcast.</span>
+
+<span className="block text-muted-foreground mb-6">
+  Because the bridge is just HTTP and a documented op vocabulary, *any* agent can drive the document. The "Connect agent" dialog in the editor hands you a copy-paste prompt prefilled with this document's bridge URL, ID, headers, and op reference, ready to paste into Claude Code or ChatGPT. Within a minute of opening the dialog, you can have an external LLM rewriting your introduction in real time.
+</span>
+
+<div className="my-8">
+  <AnthillConnectDialog />
+</div>
+
+<span className="block text-muted-foreground/60 text-xs text-center italic -mt-4 mb-8">The actual prompt. Copy, paste into Claude Code, watch the editor fill in.</span>
+
+---
+
+<span className="block uppercase text-[11px] font-semibold tracking-widest text-muted-foreground/60 mb-4">PRESENCE</span>
+
+## One CRDT, many cursors
+
+<span className="block text-muted-foreground text-lg mb-8">
+Agents publish to the same Yjs awareness map every human is on. The editor doesn't care what kind of client you are.
+</span>
+
+<span className="block text-muted-foreground mb-6">
+  Hocuspocus is the only thing that owns presence. Browsers publish their cursors through the standard <code>@platejs/yjs</code> awareness binding. Agents publish through the bridge's <code>POST /presence</code> endpoint, which writes into the same awareness map from the bridge's <code>openDirectConnection</code> handle. The avatar stack in the top-right of the editor renders both the same way (a colored circle with initials, agents marked with a soft pulse ring).
+</span>
+
+<div className="my-8">
+  <AnthillPresence />
+</div>
+
+<span className="block text-muted-foreground/60 text-xs text-center italic -mt-4 mb-8">The awareness map is the awareness map. Humans, agents, all in the same row.</span>
+
+---
+
+<span className="block uppercase text-[11px] font-semibold tracking-widest text-muted-foreground/60 mb-4">SEARCH</span>
+
+## Plan, discover, rank
+
+<span className="block text-muted-foreground text-lg mb-8">
+Auto-cite handles paragraphs you've written. The literature-search agent handles the inverse: <em>"I want to write about X, what's out there?"</em>
+</span>
+
+<span className="block text-muted-foreground mb-6">
+  The agent in <code>literature_search.py</code> is a planner-then-searcher with optional discovery. The planner uses <code>gpt-4o-mini</code> (cheap, fast, perfectly fine at this; the rest of the system uses Claude Sonnet 4 but the planner doesn't need it) to fan the topic out into 4 short sub-queries. Each sub-query gets its own Chroma top-k pass, and the results are merged best-per-paper so you don't see the same arXiv ID four times.
+</span>
+
+<div className="my-8">
+  <AnthillTrySearch />
+</div>
+
+<span className="block text-muted-foreground/60 text-xs text-center italic -mt-4 mb-8">Pick a topic, watch the planner expand. Same SSE shape as the live agent's <code>plan_done</code> event.</span>
+
+<span className="block text-muted-foreground mb-6">
+  The interesting bit is discovery. If the user opts in, the agent also queries arXiv directly for fresh papers that aren't in the local Chroma yet. Each candidate is downloaded, chunked, embedded with Harrier, and inserted into the same collection *during* the run. By the time the search step runs, the new papers are queryable like everything else. Every step of the way (<code>plan</code>, <code>discover</code>, <code>discover_ingest</code>, <code>search</code>, <code>rank</code>, each <code>finding</code>) is published as an SSE event, so the agents panel renders the run live: planner queries appear, new papers download, the rankings update.
+</span>
+
+<div className="my-8">
+  <AnthillLiteratureSearchPanel />
+</div>
+
+<span className="block text-muted-foreground/60 text-xs text-center italic -mt-4 mb-8">A real run from start to finish, rendered the same way the dashboard renders it.</span>
+
+---
+
+<span className="block uppercase text-[11px] font-semibold tracking-widest text-muted-foreground/60 mb-4">REVIEW</span>
+
+## Reviewer email to tracked changes
+
+<span className="block text-muted-foreground text-lg mb-8">
+A peer reviewer sends an email. Four tracked-change cards appear in the doc, anchored to the right paragraphs.
+</span>
+
+<span className="block text-muted-foreground mb-6">
+  This is the AgentMail integration, and it is the feature that most concretely shows the value of the bridge: an external event becomes a document event with no human in the loop. The shipped UX is a paste-text form in the agents panel; the agent itself accepts both modes (paste-text or AgentMail by <code>inbox_id</code>+<code>message_id</code>), and the bridge end of the pipeline is identical either way.
+</span>
+
+<span className="block text-muted-foreground mb-6">
+  The agent in <code>review_response.py</code> snapshots the doc, asks Claude Sonnet 4 to map the email into a structured action list (<code>{`{kind, anchor_ref, replacement, rationale}`}</code>), validates each <code>anchor_ref</code> against the snapshot (Claude doesn't get to invent block IDs), and posts each surviving action through the bridge as an <code>addNote</code> op with idempotency key <code>review:{`{run_id}`}:{`{anchor_ref}`}:{`{kind}`}</code>. Same key on retry, same response, no double-applied edits.
+</span>
+
+<div className="my-8">
+  <AnthillReviewMockup />
+</div>
+
+<span className="block text-muted-foreground/60 text-xs text-center italic -mt-4 mb-8">Paste the email on the left, watch the run-detail page on the right fill in with accept/reject suggestions.</span>
+
+<span className="block text-muted-foreground mb-6">
+  The crucial UX decision is that the agent never edits prose destructively. Every textual change goes in as an <code>addNote</code> with <code>kind: 'suggestion'</code>, rendered in the editor as an accept/reject card anchored under the original block. It is the peer-review experience everyone already knows from Word, with an LLM as the proposer instead of a human.
+</span>
+
+<div className="my-8">
+  <AnthillReviewSequence />
+</div>
+
+<span className="block text-muted-foreground/60 text-xs text-center italic -mt-4 mb-8">The full round-trip from inbox to tracked change.</span>
