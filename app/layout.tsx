@@ -3,6 +3,7 @@ import { cn } from "@/lib/utils";
 import "@/styles/globals.css";
 import type { Metadata } from "next";
 import { Inter as FontSans } from "next/font/google";
+import Script from "next/script";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -150,6 +151,11 @@ export default function RootLayout({
         >
           {children}
         </ThemeProvider>
+        <Script
+          defer
+          src="https://fabrical.priyanshu-mahey02.workers.dev/js/script.js"
+          data-site="fkbmdyik8gt0dmj9"
+        />
       </body>
     </html>
   );
